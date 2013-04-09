@@ -4,7 +4,7 @@
 
 // TODO: Import all modules here
 import http = module("http");
-import url = module("url")
+import url = module("url");
 import express = module("express");
 
 import database = module("./database");
@@ -15,20 +15,19 @@ var fitbitOAuth = require("../node_modules/temboo/Library/Fitbit/OAuth");
 var fitbit = require("../node_modules/temboo/Library/Fitbit");
 
 var server = express.createServer();
-//server.use(express.bodyParser()); //ts doesn't like this, gets rid of () on compilation
-foursquare.initFS(server);
-
+server.use(express.bodyParser());
+foursquare.initFoursquare(server);
 
 // Routes
-server.get("/", function(request, response) {
+server.get("/", (request, response) => {
   response.sendfile("static/signin.html");
 });
 
-server.get("/static/:filename", function(request, response) {
+server.get("/static/:filename", (request, response) => {
   response.sendfile("static/" + request.params.filename);
 });
 
-server.get("/fitbit-oauth", function(request, response) {
+server.get("/fitbit-oauth", (request, response) => {
   var initializeOAuthChoreo = new fitbitOAuth.InitializeOAuth(temboo.session);
 
   var initializeOAuthInputs = initializeOAuthChoreo.newInputSet();
@@ -42,7 +41,7 @@ server.get("/fitbit-oauth", function(request, response) {
   initializeOAuthInputs.set_ConsumerSecret("f9f4cfc32cc14ad6bc97057d3000fab2");
   initializeOAuthInputs.set_ForwardingURL("http://fitbitcompleter.omerzach.com:3000/static/signedin.html");
 
-  var success = function(results) {
+  var success = results => {
     console.log("success");
     response.send({
       url: results.get_AuthorizationURL(),
@@ -66,7 +65,7 @@ server.get("/fitbit-oauth", function(request, response) {
     // Run the choreo, specifying success and error callback handlers
     finalizeOAuthChoreo.execute(
       finalizeOAuthInputs,
-      function(results2) {
+      results2 => {
         console.log(results2);
         var getActivitiesChoreo = new fitbit.GetActivities(temboo.session);
 
@@ -84,17 +83,11 @@ server.get("/fitbit-oauth", function(request, response) {
         // Run the choreo, specifying success and error callback handlers
         getActivitiesChoreo.execute(
           getActivitiesInputs,
-          function(results3) {
-            console.log(results3.get_Response());
-          },
-          function(error) {
-            console.log(error)
-          }
+          results3 => console.log(results3.get_Response()),
+          error => console.log(error)
         );
       },
-      function(error) {
-        console.log(error.type);
-      }
+      error => console.log(error.type)
     );
   }
 
@@ -102,18 +95,15 @@ server.get("/fitbit-oauth", function(request, response) {
   initializeOAuthChoreo.execute(
     initializeOAuthInputs,
     success,
-    function(error) {
+    error => {
       console.log("error");
-      response.send({
-        error: error,
-        success: false
-      });
+      response.send({ error: error, success: false });
     }
   );
 });
 
 
-server.listen(3000, function() {
+server.listen(3000, () => {
   console.log(
     "Express server listening on port %d in %s mode",
     3000,
