@@ -22,7 +22,7 @@ export function initFoursquare(app) {
     searchVenuesInputs.set_ClientID("2UBT5JSQ53KR4BPB3KXZCIK2OSTXRQNA2N2SQC322LGVKDNA");
     searchVenuesInputs.set_ClientSecret("WT4CXWCEERR04PQD45M4H3XQVO5C3YSOMH2UOK3DXRJYUULV");
     // Set inputs
-    searchVenuesInputs.set_Query(request.params.query);
+    searchVenuesInputs.set_Query("asian food"/*request.params.query*/);
     searchVenuesInputs.set_Latitude(request.params.latitude);
     searchVenuesInputs.set_Longitude(request.params.longitude);
 
