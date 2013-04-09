@@ -39,19 +39,45 @@ server.get("/fitbit-oauth", function(request, response) {
   initializeOAuthInputs.set_AppKeyValue("61191725-521b-4900-a");
   initializeOAuthInputs.set_ConsumerKey("63678ae84a134e38ad62a70d473a7d57");
   initializeOAuthInputs.set_ConsumerSecret("f9f4cfc32cc14ad6bc97057d3000fab2");
-  console.log(initializeOAuthInputs);
-  // TODO: Forwarding URL
+  initializeOAuthInputs.set_ForwardingURL("http://fitbitcompleter.omerzach.com:3000/static/signedin.html");
+
+  var success = function(results) {
+    console.log("success");
+    response.send({
+      url: results.get_AuthorizationURL(),
+      success: true
+    });
+
+    var finalizeOAuthChoreo = new fitbit.FinalizeOAuth(temboo.session);
+
+    // Instantiate and populate the input set for the choreo
+    var finalizeOAuthInputs = finalizeOAuthChoreo.newInputSet();
+
+    // Set inputs
+    finalizeOAuthInputs.set_AccountName("omer");
+    finalizeOAuthInputs.set_AppKeyName("FitbitCompleter");
+    finalizeOAuthInputs.set_AppKeyValue("61191725-521b-4900-a");
+    finalizeOAuthInputs.set_ConsumerKey("63678ae84a134e38ad62a70d473a7d57");
+    finalizeOAuthInputs.set_ConsumerSecret("f9f4cfc32cc14ad6bc97057d3000fab2");
+    finalizeOAuthInputs.set_OAuthTokenSecret(results.get_OAuthTokenSecret());
+    finalizeOAuthInputs.set_CallbackID(results.get_CallbackID());
+
+    // Run the choreo, specifying success and error callback handlers
+    finalizeOAuthChoreo.execute(
+      finalizeOAuthInputs,
+      function(results2) {
+        console.log(results2);
+      },
+      function(error) {
+        console.log(error.type);
+      }
+    );
+  }
 
   // Run the choreo, specifying success and error callback handlers
   initializeOAuthChoreo.execute(
     initializeOAuthInputs,
-    function(results) {
-      console.log("success");
-      response.send({
-        url: results.get_AuthorizationURL(),
-        success: true
-      });
-    },
+    success,
     function(error) {
       console.log("error");
       response.send({
