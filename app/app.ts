@@ -11,7 +11,8 @@ import database = module("./database");
 import temboo = module("./temboo");
 import foursquare = module("./foursquare");
 
-var fitbit = require("../node_modules/temboo/Library/Fitbit/OAuth");
+var fitbitOAuth = require("../node_modules/temboo/Library/Fitbit/OAuth");
+var fitbit = require("../node_modules/temboo/Library/Fitbit");
 
 var server = express.createServer();
 //server.use(express.bodyParser()); //ts doesn't like this, gets rid of () on compilation
@@ -28,7 +29,7 @@ server.get("/static/:filename", function(request, response) {
 });
 
 server.get("/fitbit-oauth", function(request, response) {
-  var initializeOAuthChoreo = new fitbit.InitializeOAuth(temboo.session);
+  var initializeOAuthChoreo = new fitbitOAuth.InitializeOAuth(temboo.session);
 
   var initializeOAuthInputs = initializeOAuthChoreo.newInputSet();
 
@@ -48,7 +49,7 @@ server.get("/fitbit-oauth", function(request, response) {
       success: true
     });
 
-    var finalizeOAuthChoreo = new fitbit.FinalizeOAuth(temboo.session);
+    var finalizeOAuthChoreo = new fitbitOAuth.FinalizeOAuth(temboo.session);
 
     // Instantiate and populate the input set for the choreo
     var finalizeOAuthInputs = finalizeOAuthChoreo.newInputSet();
@@ -67,6 +68,29 @@ server.get("/fitbit-oauth", function(request, response) {
       finalizeOAuthInputs,
       function(results2) {
         console.log(results2);
+        var getActivitiesChoreo = new fitbit.GetActivities(temboo.session);
+
+        // Instantiate and populate the input set for the choreo
+        var getActivitiesInputs = getActivitiesChoreo.newInputSet();
+
+        // Set inputs
+        getActivitiesInputs.set_AccessToken(results2.get_AccessToken());
+        getActivitiesInputs.set_AccessTokenSecret(results2.get_AccessTokenSecret());
+        getActivitiesInputs.set_ConsumerKey("63678ae84a134e38ad62a70d473a7d57");
+        getActivitiesInputs.set_ConsumerSecret("f9f4cfc32cc14ad6bc97057d3000fab2");
+        getActivitiesInputs.set_Date("2013-04-08");
+        getActivitiesInputs.set_Format("json");
+
+        // Run the choreo, specifying success and error callback handlers
+        getActivitiesChoreo.execute(
+          getActivitiesInputs,
+          function(results3) {
+            console.log(results3.get_Response());
+          },
+          function(error) {
+            console.log(error)
+          }
+        );
       },
       function(error) {
         console.log(error.type);
