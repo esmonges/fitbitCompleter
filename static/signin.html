@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Placeholder Title</title>
+  </head>
+  <body>
+    <a id="fitbit-oauth-link" href="#">Sign in with Fitbit</a>
+
+    <script src="static/jquery-1.9.0.js"></script>
+    <script>
+      window.onload = function() {
+        console.log("Hey");
+        $.ajax({
+          type: "get",
+          url: "fitbit-oauth",
+          success: function(response) {
+            if (response.success) {
+              console.log(response.url);
+              var fitbitOauthLink = $("#fitbit-oauth-link");
+              fitbitOauthLink.attr("href", response.url);
+            } else {
+              console.log(response.error);
+            }
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
+
