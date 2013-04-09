@@ -9,10 +9,14 @@ import express = module("express");
 
 import database = module("./database");
 import temboo = module("./temboo");
+import foursquare = module("./foursquare");
 
 var fitbit = require("../node_modules/temboo/Library/Fitbit/OAuth");
 
 var server = express.createServer();
+//server.use(express.bodyParser()); //ts doesn't like this, gets rid of () on compilation
+foursquare.initFS(server);
+
 
 // Routes
 server.get("/", function(request, response) {
