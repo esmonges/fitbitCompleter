@@ -1,16 +1,12 @@
-//File for foursquare api calls...maybe?
+///<reference path='..\node\node.d.ts' />
 
-// You'll need a single TembooSession object in your code, eg:
-var tsession = require("temboo/core/temboosession");
-var session = new tsession.TembooSession("esmongeski",
-                                         "FitbitCompleter",
-                                         "0e9f96ed-869e-4ebd-a");
+import temboo = module("./temboo");
 
-var Foursquare = require("../node_modules/temboo/Library/Foursquare/Venues");
+var foursquare = require("../node_modules/temboo/Library/Foursquare/Venues");
 
 export function initFS(app) {
   app.get("/fs_venues", function(request, response) {
-    var searchVenuesChoreo = new Foursquare.SearchVenues(session);
+    var searchVenuesChoreo = new foursquare.SearchVenues(temboo.session);
 
     // Instantiate and populate the input set for the choreo
     var searchVenuesInputs = searchVenuesChoreo.newInputSet();
