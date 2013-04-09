@@ -1,6 +1,6 @@
-// Influenced b yhttp://typescript.codeplex.com/SourceControl/changeset/view/ac38ce9e29b3aeaa1beaebdae6729d0bc83ad231#samples/imageboard/db.ts
+// Influenced by http://typescript.codeplex.com/SourceControl/changeset/view/ac38ce9e29b3aeaa1beaebdae6729d0bc83ad231#samples/imageboard/db.ts
 
-import mongodb = module('mongodb');
+import mongodb = module("mongodb");
 
 var server = new mongodb.Server(
   "localhost",
