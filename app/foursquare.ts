@@ -8,9 +8,8 @@ var session = new tsession.TembooSession("esmongeski",
 
 var Foursquare = require("../node_modules/temboo/Library/Foursquare/Venues");
 
-export function initFS(app){
-
-  app.get("/fs_venues", function(request, response){
+export function initFS(app) {
+  app.get("/fs_venues", function(request, response) {
     var searchVenuesChoreo = new Foursquare.SearchVenues(session);
 
     // Instantiate and populate the input set for the choreo
@@ -24,16 +23,19 @@ export function initFS(app){
     searchVenuesInputs.set_Latitude("44");
     searchVenuesInputs.set_Longitude("-79");
 
-    console.log(searchVenuesInputs);
+    var success = function(results) {
+      console.log(results.get_Response());
+    }
 
     // Run the choreo, specifying success and error callback handlers
     searchVenuesChoreo.execute(
       searchVenuesInputs,
-      function(results){console.log(results.get_Response());},
-      function(error){console.log(error.type); console.log(error.message);}
+      success,
+      function(error) {
+        console.log(error);
+        console.log(error.message);
+      }
     );
   });
-
-
-
 }
+
