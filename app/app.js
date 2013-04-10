@@ -4,11 +4,13 @@ var express = require("express")
 
 var temboo = require("./temboo")
 var foursquare = require("./foursquare")
+var googlewalkingdistance = require("./googlewalkingdistance")
 var fitbitOAuth = require("../node_modules/temboo/Library/Fitbit/OAuth");
 var fitbit = require("../node_modules/temboo/Library/Fitbit");
 var server = express.createServer();
 server.use(express.bodyParser());
 foursquare.initFoursquare(server);
+googlewalkingdistance.initGoogleWalkingDistance(server);
 server.get("/", function (request, response) {
     response.sendfile("static/signin.html");
 });

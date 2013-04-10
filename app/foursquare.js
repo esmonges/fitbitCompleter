@@ -5,7 +5,6 @@ function initFoursquare(app) {
     app.get("/foursquare-venues", function (request, response) {
         var searchVenuesChoreo = new foursquare.SearchVenues(temboo.session);
         var searchVenuesInputs = searchVenuesChoreo.newInputSet();
-        console.log("request: " + request);
         var data = request.query;
         var query = data.query;
         var latitude = data.latitude;

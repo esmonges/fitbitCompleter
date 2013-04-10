@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Foursquare Venues Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 <body>
   <form action="javascript:getGeoAndSubmit()">
@@ -11,59 +12,87 @@
   </form>
 
   <div id="results">
-    
+
   </div>
 
   <script src="jquery-1.9.0.js"></script>
 
   <script>
 
-    function getGeoAndSubmit(){
-      navigator.geolocation.getCurrentPosition(submitFSVSearch);
-    }
+  var g = {lat: 0, lon: 0};
 
-    function submitFSVSearch(position){
-      var fsvQuery = $("#fsvQuery");
-      var query = fsvQuery.val();
-      var lat = position.coords.latitude;
-      var lon = position.coords.longitude;
+  function getGeoAndSubmit(){
+    navigator.geolocation.getCurrentPosition(submitFSVSearch);
+  }
 
-      fsvQuery.val("");
+  function submitFSVSearch(position){
+    var fsvQuery = $("#fsvQuery");
+    var query = fsvQuery.val();
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+    g['lat'] = lat;
+    g['lon'] = lon;
 
-      $.ajax({
-        type:"get",
-        data: {query: query, 
-              latitude: lat, 
-              longitude: lon},
+    fsvQuery.val("");
+
+    $.ajax({
+      type:"get",
+      data: {query: query, 
+        latitude: lat, 
+        longitude: lon},
         url:"/foursquare-venues",
         success: function(data){displayResults(data);}
       });
+  }
+
+  function displayResults(data){
+    data.results = JSON.parse(data.results);
+    var venues = data.results.response.venues;
+    var MAXENTRIES = 5;
+    var i;
+
+    var nEntries = Math.min(venues.length, MAXENTRIES);
+    var sortedVenues = venues.sort(function(a,b){
+      return a.location.distance - b.location.distance;
+    });
+
+    getAndDisplayWalkingDistance(sortedVenues.slice(0,nEntries+1))
+  }
+
+  function getAndDisplayWalkingDistance(venues){
+    var queries = "";
+    var origins = "";
+    var i = 0;
+
+console.log(venues);
+    for(i = 0; i < venues.length; i++){
+      queries = queries + venues[i].location.lat + ","
+      + venues[i].location.lng + "|";
+      origins = origins + g.lat + "," + g.lon + "|";
     }
 
-    function displayResults(data){
-      data.results = JSON.parse(data.results);
-      var resultsDiv = $("#results");
-      var venues = data.results.response.venues;
-      var MAXENTRIES = 5;
-      var i;
+    queries = queries.substring(0, queries.length - 1);
+    origins = origins.substring(0, origins.length - 1);
 
-      var nEntries = Math.min(venues.length, MAXENTRIES);
-      var sortedVenues = venues.sort(function(a,b){
-        return a.location.distance - b.location.distance;
-      });
-
-      for(i = 0; i < nEntries; i++){
-        var newDiv = $("<div>");
-        newDiv.html(sortedVenues[i].name + ", Steps: " 
-                    + walkingDistance(sortedVenues[i]));
-        resultsDiv.append(newDiv);
+    $.ajax({
+      type:"get",
+      data:{queries:queries, 
+            origins:origins},
+      url:"/google-walking-distance",
+      success: function(data){
+        var results = JSON.parse(data.results);
+        var resultsDiv = $("#results");
+        resultsDiv.html("");
+        for(i = 0; i < venues.length; i++){
+          var newDiv = $("<div>");
+          newDiv.html(venues[i].name + ", Steps: " 
+                      + results.rows[i].elements[i].distance.text);
+          resultsDiv.append(newDiv);
+        }
       }
+    });
 
-    }
-
-    function walkingDistance(venue){
-      return -1;
-    }
+  }
   </script>
 </body>
 

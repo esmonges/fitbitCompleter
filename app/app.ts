@@ -10,6 +10,7 @@ import express = module("express");
 import database = module("./database");
 import temboo = module("./temboo");
 import foursquare = module("./foursquare");
+import googlewalkingdistance = module("./googlewalkingdistance")
 
 var fitbitOAuth = require("../node_modules/temboo/Library/Fitbit/OAuth");
 var fitbit = require("../node_modules/temboo/Library/Fitbit");
@@ -17,6 +18,7 @@ var fitbit = require("../node_modules/temboo/Library/Fitbit");
 var server = express.createServer();
 server.use(express.bodyParser());
 foursquare.initFoursquare(server);
+googlewalkingdistance.initGoogleWalkingDistance(server);
 
 // Routes
 server.get("/", (request, response) => {
