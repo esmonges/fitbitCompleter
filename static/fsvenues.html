@@ -68,11 +68,12 @@ console.log(venues);
     for(i = 0; i < venues.length; i++){
       queries = queries + venues[i].location.lat + ","
       + venues[i].location.lng + "|";
-      origins = origins + g.lat + "," + g.lon + "|";
     }
 
     queries = queries.substring(0, queries.length - 1);
-    origins = origins.substring(0, origins.length - 1);
+//    origins = origins.substring(0, origins.length - 1);
+
+    origins = origins + g.lat + "," + g.lon;
 
     $.ajax({
       type:"get",
@@ -86,7 +87,7 @@ console.log(venues);
         for(i = 0; i < venues.length; i++){
           var newDiv = $("<div>");
           newDiv.html(venues[i].name + ", Steps: " 
-                      + results.rows[i].elements[i].distance.text);
+                      + results.rows[0].elements[i].distance.text);
           resultsDiv.append(newDiv);
         }
       }
