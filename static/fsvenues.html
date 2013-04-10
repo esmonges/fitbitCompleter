@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Foursquare Venues Demo</title>
+</head>
+<body>
+  <form action="javascript:getGeoAndSubmit()">
+    <input id="fsvQuery" type="text">
+    <input type="submit" value="Find Venues">
+  </form>
+
+  <div id="results">
+    
+  </div>
+
+  <script src="jquery-1.9.0.js"></script>
+
+  <script>
+
+    function getGeoAndSubmit(){
+      navigator.geolocation.getCurrentPosition(submitFSVSearch);
+    }
+
+    function submitFSVSearch(position){
+      var fsvQuery = $("#fsvQuery");
+      var query = fsvQuery.val();
+      var lat = position.coords.latitude;
+      var lon = position.coords.longitude;
+
+      fsvQuery.val("");
+
+      $.ajax({
+        type:"get",
+        data: {query: query, 
+              latitude: lat, 
+              longitude: lon},
+        url:"/foursquare-venues",
+        success: function(data){displayResults(data);}
+      });
+    }
+
+    function displayResults(data){
+      data.results = JSON.parse(data.results);
+      var resultsDiv = $("#results");
+      var venues = data.results.response.venues;
+      var MAXENTRIES = 5;
+      var i;
+
+      var nEntries = Math.min(venues.length, MAXENTRIES);
+      var sortedVenues = venues.sort(function(a,b){
+        return a.location.distance - b.location.distance;
+      });
+
+      for(i = 0; i < nEntries; i++){
+        var newDiv = $("<div>");
+        newDiv.html(sortedVenues[i].name + ", Steps: " 
+                    + walkingDistance(sortedVenues[i]));
+        resultsDiv.append(newDiv);
+      }
+
+    }
+
+    function walkingDistance(venue){
+      return -1;
+    }
+  </script>
+</body>
+
+</html>
