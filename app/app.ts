@@ -85,7 +85,17 @@ server.get("/fitbit-oauth", (request, response) => {
         // Run the choreo, specifying success and error callback handlers
         getActivitiesChoreo.execute(
           getActivitiesInputs,
-          results3 => console.log(results3.get_Response()),
+          results3 => {
+            var response = JSON.parse(results3.get_Response());
+            console.log("Results for user that just authenticated for April 8, 2013");
+            console.log("Net Calories Goal: " + response["goals"]["caloriesOut"]);
+            console.log("Steps Goal: " + response["goals"]["steps"] + "\n");
+
+            console.log("Actual Net Calories: " + response["summary"]["caloriesOut"]);
+            console.log("Actual Steps: " + response["summary"]["steps"]);
+
+            console.log("How many steps in a mile for this user: " + (response["summary"]["steps"]) / response["summary"]["distances"][0]["distance"]);
+          },
           error => console.log(error)
         );
       },
