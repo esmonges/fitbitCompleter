@@ -8,18 +8,34 @@
     <script>
       window.onload = function() {
         console.log("Hey");
+        $.ajax({
+          type: "get",
+          url: "finalize-fitbit-oauth",
+          data: {
+            oauthTokenSecret: localStorage["fitbitCompleter" + "oauthTokenSecret"],
+            callbackId: localStorage["fitbitCompleter" + "callbackId"]
+          },
+          success: function(response) {
+            if (response.success) {
+              console.log("Finalized!");
+            } else {
+              console.log(response.error);
+            }
+          }
+        });
+
         navigator.geolocation.getCurrentPosition(function(position) {
           var myLongitude = position.coords.longitude;
           var myLatitude = position.coords.latitude;
 
-          $.ajax({
+          /*$.ajax({
             type: "get",
             url: "../foursquare-venues/" + myLatitude + "," + myLongitude + "," + "asianfood",
             success: function(response) {
               console.log("success: " + response.results);
             },
             dataType: "json"
-          });
+          });*/
         });
       };
     </script>

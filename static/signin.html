@@ -6,17 +6,19 @@
   <body>
     <a id="fitbit-oauth-link">Sign in with Fitbit</a>
 
-    <script src="static/jquery-1.9.0.js"></script>
+    <script src="jquery-1.9.0.js"></script>
     <script>
       window.onload = function() {
-        console.log("Hey");
         $.ajax({
           type: "get",
-          url: "fitbit-oauth",
+          url: "init-fitbit-oauth",
           success: function(response) {
             if (response.success) {
               console.log(response.url);
               var fitbitOauthLink = $("#fitbit-oauth-link");
+              // TODO: What if no localStorage?
+              localStorage["fitbitCompleter" + "oauthTokenSecret"] = response.oauthTokenSecret;
+              localStorage["fitbitCompleter" + "callbackId"] = response.callbackId;
               fitbitOauthLink.attr("href", response.url);
             } else {
               console.log(response.error);

@@ -25,11 +25,65 @@ server.get("/", (request, response) => {
   response.sendfile("static/signin.html");
 });
 
-server.get("/static/:filename", (request, response) => {
-  response.sendfile("static/" + request.params.filename);
+
+server.get("/finalize-fitbit-oauth", (request, response) => {
+  var oauthTokenSecret = request.query["oauthTokenSecret"];
+  var callbackId = request.query["callbackId"];
+
+  var finalizeOAuthChoreo = new fitbitOAuth.FinalizeOAuth(temboo.session);
+
+  // Instantiate and populate the input set for the choreo
+  var finalizeOAuthInputs = finalizeOAuthChoreo.newInputSet();
+
+  // Set inputs
+  finalizeOAuthInputs.set_AccountName("omer");
+  finalizeOAuthInputs.set_AppKeyName("FitbitCompleter");
+  finalizeOAuthInputs.set_AppKeyValue("61191725-521b-4900-a");
+  finalizeOAuthInputs.set_ConsumerKey("63678ae84a134e38ad62a70d473a7d57");
+  finalizeOAuthInputs.set_ConsumerSecret("f9f4cfc32cc14ad6bc97057d3000fab2");
+  finalizeOAuthInputs.set_OAuthTokenSecret(oauthTokenSecret);
+  finalizeOAuthInputs.set_CallbackID(callbackId);
+
+  // Run the choreo, specifying success and error callback handlers
+  finalizeOAuthChoreo.execute(
+    finalizeOAuthInputs,
+    results2 => {
+      console.log(results2);
+      var getActivitiesChoreo = new fitbit.GetActivities(temboo.session);
+
+      // Instantiate and populate the input set for the choreo
+      var getActivitiesInputs = getActivitiesChoreo.newInputSet();
+
+      // Set inputs
+      getActivitiesInputs.set_AccessToken(results2.get_AccessToken());
+      getActivitiesInputs.set_AccessTokenSecret(results2.get_AccessTokenSecret());
+      getActivitiesInputs.set_ConsumerKey("63678ae84a134e38ad62a70d473a7d57");
+      getActivitiesInputs.set_ConsumerSecret("f9f4cfc32cc14ad6bc97057d3000fab2");
+      getActivitiesInputs.set_Date("2013-04-08");
+      getActivitiesInputs.set_Format("json");
+
+      // Run the choreo, specifying success and error callback handlers
+      getActivitiesChoreo.execute(
+        getActivitiesInputs,
+        results3 => {
+          var response = JSON.parse(results3.get_Response());
+          console.log("Results for user that just authenticated for April 8, 2013");
+          console.log("Net Calories Goal: " + response["goals"]["caloriesOut"]);
+          console.log("Steps Goal: " + response["goals"]["steps"] + "\n");
+
+          console.log("Actual Net Calories: " + response["summary"]["caloriesOut"]);
+          console.log("Actual Steps: " + response["summary"]["steps"]);
+
+          console.log("How many steps in a mile for this user: " + (response["summary"]["steps"]) / response["summary"]["distances"][0]["distance"]);
+        },
+        error => console.log(error)
+      );
+    },
+    error => console.log(error.type)
+  );
 });
 
-server.get("/fitbit-oauth", (request, response) => {
+server.get("/init-fitbit-oauth", (request, response) => {
   var initializeOAuthChoreo = new fitbitOAuth.InitializeOAuth(temboo.session);
 
   var initializeOAuthInputs = initializeOAuthChoreo.newInputSet();
@@ -41,66 +95,16 @@ server.get("/fitbit-oauth", (request, response) => {
   initializeOAuthInputs.set_AppKeyValue("61191725-521b-4900-a");
   initializeOAuthInputs.set_ConsumerKey("63678ae84a134e38ad62a70d473a7d57");
   initializeOAuthInputs.set_ConsumerSecret("f9f4cfc32cc14ad6bc97057d3000fab2");
-  initializeOAuthInputs.set_ForwardingURL("http://fitbitcompleter.omerzach.com:3000/static/signedin.html");
+  initializeOAuthInputs.set_ForwardingURL("http://fitbitcompleter.omerzach.com:3000/signedin.html");
 
   var success = results => {
     console.log("success");
     response.send({
       url: results.get_AuthorizationURL(),
+      oauthTokenSecret: results.get_OAuthTokenSecret(),
+      callbackId: results.get_CallbackID(),
       success: true
     });
-
-    var finalizeOAuthChoreo = new fitbitOAuth.FinalizeOAuth(temboo.session);
-
-    // Instantiate and populate the input set for the choreo
-    var finalizeOAuthInputs = finalizeOAuthChoreo.newInputSet();
-
-    // Set inputs
-    finalizeOAuthInputs.set_AccountName("omer");
-    finalizeOAuthInputs.set_AppKeyName("FitbitCompleter");
-    finalizeOAuthInputs.set_AppKeyValue("61191725-521b-4900-a");
-    finalizeOAuthInputs.set_ConsumerKey("63678ae84a134e38ad62a70d473a7d57");
-    finalizeOAuthInputs.set_ConsumerSecret("f9f4cfc32cc14ad6bc97057d3000fab2");
-    finalizeOAuthInputs.set_OAuthTokenSecret(results.get_OAuthTokenSecret());
-    finalizeOAuthInputs.set_CallbackID(results.get_CallbackID());
-
-    // Run the choreo, specifying success and error callback handlers
-    finalizeOAuthChoreo.execute(
-      finalizeOAuthInputs,
-      results2 => {
-        console.log(results2);
-        var getActivitiesChoreo = new fitbit.GetActivities(temboo.session);
-
-        // Instantiate and populate the input set for the choreo
-        var getActivitiesInputs = getActivitiesChoreo.newInputSet();
-
-        // Set inputs
-        getActivitiesInputs.set_AccessToken(results2.get_AccessToken());
-        getActivitiesInputs.set_AccessTokenSecret(results2.get_AccessTokenSecret());
-        getActivitiesInputs.set_ConsumerKey("63678ae84a134e38ad62a70d473a7d57");
-        getActivitiesInputs.set_ConsumerSecret("f9f4cfc32cc14ad6bc97057d3000fab2");
-        getActivitiesInputs.set_Date("2013-04-08");
-        getActivitiesInputs.set_Format("json");
-
-        // Run the choreo, specifying success and error callback handlers
-        getActivitiesChoreo.execute(
-          getActivitiesInputs,
-          results3 => {
-            var response = JSON.parse(results3.get_Response());
-            console.log("Results for user that just authenticated for April 8, 2013");
-            console.log("Net Calories Goal: " + response["goals"]["caloriesOut"]);
-            console.log("Steps Goal: " + response["goals"]["steps"] + "\n");
-
-            console.log("Actual Net Calories: " + response["summary"]["caloriesOut"]);
-            console.log("Actual Steps: " + response["summary"]["steps"]);
-
-            console.log("How many steps in a mile for this user: " + (response["summary"]["steps"]) / response["summary"]["distances"][0]["distance"]);
-          },
-          error => console.log(error)
-        );
-      },
-      error => console.log(error.type)
-    );
   }
 
   // Run the choreo, specifying success and error callback handlers
@@ -114,6 +118,13 @@ server.get("/fitbit-oauth", (request, response) => {
   );
 });
 
+server.get("/:filename", (request, response) => {
+  response.sendfile("static/" + request.params.filename);
+});
+
+server.get("/static/:filename", (request, response) => {
+  response.sendfile("static/" + request.params.filename);
+});
 
 server.listen(3000, () => {
   console.log(
