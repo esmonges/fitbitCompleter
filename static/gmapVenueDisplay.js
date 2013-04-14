@@ -42,3 +42,7 @@
       title: "Destiniation"
     });
   }
+
+  function generateDirectionsFromFSV(venue){
+    
+  }

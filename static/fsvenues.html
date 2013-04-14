@@ -57,18 +57,21 @@
         longitude: lon},
         url:"/foursquare-venues",
         success: function(data){
-          displayResults(data);
+          var results = JSON.parse(data.results);
+          var venues = results.response.venues;
+          getWalkingDistances(venues);
           initGmap(lat, lon);}
         });
   }
 
-  function displayResults(data){
+  function displayVenuesAndDistances(venues, distObjs){
     data.results = JSON.parse(data.results);
     var venues = data.results.response.venues;
     var MAXENTRIES = 5;
     var i;
 
     var nEntries = Math.min(venues.length, MAXENTRIES);
+
     var sortedVenues = venues.sort(function(a,b){
       return a.location.distance - b.location.distance;
     });
@@ -76,6 +79,42 @@
     g.sortedVenues = sortedVenues;
 
     getAndDisplayWalkingDistance(sortedVenues.slice(0,nEntries+1))
+  }
+
+  function getWalkingDistances(venues){
+    var queries = "";
+    var origins;
+    var i = 0;
+
+    for(i = 0; i < venues.length; i++){
+      queries = queries + venues[i].location.lat + ","
+      + venues[i].location.lng + "|";
+    }
+
+    queries = queries.substring(0, queries.length - 1);
+
+    origins = g.lat + "," + g.lon;
+
+    $.ajax({
+      type:"get",
+      data:{queries:queries, origins:origins},
+      url:"/google-walking-distance",
+      success: function(data){
+        var results = JSON.parse(data.results);
+        var distObjs = results.rows[0].elements;
+
+        var resultsDiv = $("#results");
+        resultsDiv.html("");
+        for(i = 0; i < venues.length; i++){
+          var newDiv = $("<li>");
+          newDiv.attr("id", i);
+          newDiv.onButtonTap(markerHandler);
+          newDiv.html(venues[i].name + ", Steps: " 
+            + results.rows[0].elements[i].distance.text);
+          resultsDiv.append(newDiv);
+          }
+        }
+      });
   }
 
   function getAndDisplayWalkingDistance(venues){
