@@ -48,7 +48,6 @@ server.get("/finalize-fitbit-oauth", (request, response) => {
   finalizeOAuthChoreo.execute(
     finalizeOAuthInputs,
     results => {
-      console.log(results);
       response.send({
         success: true,
         accessToken: results.get_AccessToken(),
@@ -75,7 +74,6 @@ server.get("/init-fitbit-oauth", (request, response) => {
   initializeOAuthInputs.set_ForwardingURL("http://fitbitcompleter.omerzach.com:3000/signedin.html");
 
   var success = results => {
-    console.log("success");
     response.send({
       url: results.get_AuthorizationURL(),
       oauthTokenSecret: results.get_OAuthTokenSecret(),
@@ -88,10 +86,7 @@ server.get("/init-fitbit-oauth", (request, response) => {
   initializeOAuthChoreo.execute(
     initializeOAuthInputs,
     success,
-    error => {
-      console.log("error");
-      response.send({ error: error, success: false });
-    }
+    error => response.send({ error: error, success: false })
   );
 });
 
@@ -122,7 +117,6 @@ server.get("/get-steps-data", (request, response) => {
   var getActivitiesInputs = getActivitiesChoreo.newInputSet();
 
   // Set inputs
-  console.log("Access token: " + request.query["accessToken"]);
   getActivitiesInputs.set_AccessToken(request.query["accessToken"]);
   getActivitiesInputs.set_AccessTokenSecret(request.query["accessTokenSecret"]);
   getActivitiesInputs.set_ConsumerKey("63678ae84a134e38ad62a70d473a7d57");
@@ -136,14 +130,12 @@ server.get("/get-steps-data", (request, response) => {
     results => {
       var fitbitActivities = JSON.parse(results.get_Response());
       var stepsPerMile = (fitbitActivities["summary"]["steps"]) / fitbitActivities["summary"]["distances"][0]["distance"];
-      console.log("Successfully retrieved activities data");
       response.send({
         success: true,
         goalSteps: fitbitActivities["goals"]["steps"],
         actualSteps: fitbitActivities["summary"]["steps"],
         stepsPerMile: stepsPerMile
       });
-      console.log("Sent activities data to client");
 
       //console.log("Net Calories Goal: " + fitbitActivities["goals"]["caloriesOut"]);
       //console.log("Actual Net Calories: " + fitbitActivities["summary"]["caloriesOut"]);
