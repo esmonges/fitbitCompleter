@@ -47,16 +47,24 @@ server.get("/finalize-fitbit-oauth", (request, response) => {
   // Run the choreo, specifying success and error callback handlers
   finalizeOAuthChoreo.execute(
     finalizeOAuthInputs,
-    results2 => {
-      console.log(results2);
+    results => {
+      console.log(results);
+      response.send({
+        success: true,
+        accessToken: results.get_AccessToken(),
+        accessTokenSecret: results.get_AccessTokenSecret(),
+        userId: results.get_UserID()
+      });
+
+      /*
       var getActivitiesChoreo = new fitbit.GetActivities(temboo.session);
 
       // Instantiate and populate the input set for the choreo
       var getActivitiesInputs = getActivitiesChoreo.newInputSet();
 
       // Set inputs
-      getActivitiesInputs.set_AccessToken(results2.get_AccessToken());
-      getActivitiesInputs.set_AccessTokenSecret(results2.get_AccessTokenSecret());
+      getActivitiesInputs.set_AccessToken(results.get_AccessToken());
+      getActivitiesInputs.set_AccessTokenSecret(results.get_AccessTokenSecret());
       getActivitiesInputs.set_ConsumerKey("63678ae84a134e38ad62a70d473a7d57");
       getActivitiesInputs.set_ConsumerSecret("f9f4cfc32cc14ad6bc97057d3000fab2");
       getActivitiesInputs.set_Date("2013-04-08");
@@ -65,21 +73,24 @@ server.get("/finalize-fitbit-oauth", (request, response) => {
       // Run the choreo, specifying success and error callback handlers
       getActivitiesChoreo.execute(
         getActivitiesInputs,
-        results3 => {
-          var response = JSON.parse(results3.get_Response());
-          console.log("Results for user that just authenticated for April 8, 2013");
-          console.log("Net Calories Goal: " + response["goals"]["caloriesOut"]);
-          console.log("Steps Goal: " + response["goals"]["steps"] + "\n");
+        results2 => {
+          var fitbitActivities = JSON.parse(results2.get_Response());
+          var stepsPerMile = (response["summary"]["steps"]) / response["summary"]["distances"][0]["distance"]);
+          response.send({
+            success: true,
+            goalSteps: response["goals"]["steps"],
+            actualSteps: response["summary"]["steps"],
+            stepsPerMile: stepsPerMile
+          });
 
-          console.log("Actual Net Calories: " + response["summary"]["caloriesOut"]);
-          console.log("Actual Steps: " + response["summary"]["steps"]);
-
-          console.log("How many steps in a mile for this user: " + (response["summary"]["steps"]) / response["summary"]["distances"][0]["distance"]);
+          //console.log("Net Calories Goal: " + response["goals"]["caloriesOut"]);
+          //console.log("Actual Net Calories: " + response["summary"]["caloriesOut"]);
         },
-        error => console.log(error)
+        error => response.send({ success: false, error: error })
       );
+      */
     },
-    error => console.log(error.type)
+    error => response.send({ success: false, error: error })
   );
 });
 
