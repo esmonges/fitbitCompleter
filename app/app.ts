@@ -18,8 +18,8 @@ var server = express.createServer();
 server.use(express.bodyParser());
 fitbitOAuth.init(server);
 fitbitSteps.init(server);
-foursquare.initFoursquare(server);
-googlewalkingdistance.initGoogleWalkingDistance(server);
+foursquare.init(server);
+googlewalkingdistance.init(server);
 
 // Routes
 server.get("/", (request, response) => {

@@ -5,8 +5,8 @@ import express = module("express");
 
 var foursquare = require("../node_modules/temboo/Library/Foursquare/Venues");
 
-export function initFoursquare(app) {
-  app.get("/foursquare-venues", (request, response) => {
+export function init(server) {
+  server.get("/foursquare-venues", (request, response) => {
     var searchVenuesChoreo = new foursquare.SearchVenues(temboo.session);
 
     var searchVenuesInputs = searchVenuesChoreo.newInputSet();

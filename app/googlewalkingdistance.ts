@@ -3,8 +3,8 @@ import express = module("express");
 
 var Google = require("temboo/Library/Google/DistanceMatrix");
 
-export function initGoogleWalkingDistance(app) {
-  app.get("/google-walking-distance", function(request, response) {
+export function init(server) {
+  server.get("/google-walking-distance", function(request, response) {
     var walkingDistanceMatrixChoreo = new Google.WalkingDistanceMatrix(temboo.session);
 
     var walkingDistanceMatrixInputs = walkingDistanceMatrixChoreo.newInputSet();
