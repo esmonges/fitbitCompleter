@@ -16,7 +16,13 @@
 
       <div id="content" class="box">
         <p>
-          So far today you have taken xxxx steps, xxxx steps fewer than your goal of xxxx.
+          So far today you have taken
+          <span id="actualSteps"></span>
+          steps,
+          <span id="remainingSteps"></span>
+          steps fewer than your goal of
+          <span id="goalSteps"></span>
+          steps.
         </p>
 
         <p>
@@ -40,14 +46,29 @@
     <script src="jquery-1.9.0.js"></script>
     <script>
       window.onload = function() {
-        /*$.ajax({
+        $.ajax({
           type: "get",
-          url: "get-steps-data"
-          // TODO
-        });*/
-      }
+          url: "get-steps-data",
+          data: {
+            accessToken: localStorage["fitbitCompleter" + "AccessToken"],
+            accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"]
+          },
+          success: function(response) {
+            if (response.success) {
+              var goalSteps = response.goalSteps;
+              var actualSteps = response.actualSteps;
+              var stepsPerMile = response.stepsForMile;
+              $("#actualSteps").text(actualSteps);
+              $("#remainingSteps").text(goalSteps - actualSteps);
+              $("#goalSteps").text(goalSteps);
+            } else {
+              console.log("Received an error from the server:");
+              console.log(response.error);
+            }
+          }
+        });
+      };
     </script>
-
   </body>
 </html>
 
