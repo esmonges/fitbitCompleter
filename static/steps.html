@@ -58,6 +58,10 @@
               var goalSteps = response.goalSteps;
               var actualSteps = response.actualSteps;
               var stepsPerMile = response.stepsForMile;
+
+              localStorage.remainingSteps = goalSteps - actualSteps;
+              localStorage.stepsPerMile = stepsPerMile;
+
               $("#actualSteps").text(actualSteps);
               $("#remainingSteps").text(goalSteps - actualSteps);
               $("#goalSteps").text(goalSteps);

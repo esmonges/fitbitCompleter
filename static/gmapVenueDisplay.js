@@ -25,8 +25,8 @@
     console.log(event);
     var i = event.target.id;
     console.log(i);
-    var lat = g.displayedVenues[i].location.lat;
-    var lng = g.displayedVenues[i].location.lng;
+    var lat = g.displayedVenues[i].venue.location.lat;
+    var lng = g.displayedVenues[i].venue.location.lng;
     putMarker(lat, lng);
   }
 
