@@ -134,12 +134,20 @@ localStorage.remainingSteps = 2000;
   function displaySuggestion(s, i){
     var resultsDiv = $("#results");
     var newDiv = $("<li>");
+    var dirLink = $("<a>");
+    var link;
 
     newDiv.attr("id", i);
     newDiv.onButtonTap(markerHandler);
 
+    link = generateDirectionsFromFSV(s.venue);
+    dirLink.attr("href", link);
+    dirLink.html("Get Directions");
+    dirLink.addClass("hidden");
+
     newDiv.html(s.venue.name + ", Steps (Each Way): " 
       + s.distanceInSteps);
+    newDiv.append(dirLink);
     resultsDiv.append(newDiv);
 
   }

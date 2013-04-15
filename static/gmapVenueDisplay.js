@@ -22,9 +22,17 @@
   }
 
   function markerHandler(event){
-    console.log(event);
+    var visibles = $(".visible");
+    visibles.removeClass("visible");
+    visibles.addClass("hidden");
+
     var i = event.target.id;
-    console.log(i);
+
+    var link = $(event.target).children();
+
+    link.removeClass("hidden");
+    link.addClass("visible");
+
     var lat = g.displayedVenues[i].venue.location.lat;
     var lng = g.displayedVenues[i].venue.location.lng;
     putMarker(lat, lng);
@@ -43,6 +51,14 @@
     });
   }
 
-  function generateDirectionsFromFSV(venue){
-    
+  function generateDirectionsFromFSV(FSvenue){
+    var saddr = "";
+    var daddr = "";
+
+    saddr = g.lat + "," + g.lon;
+    daddr = FSvenue.location.lat + "," + FSvenue.location.lng;
+
+    return "https://maps.google.com/maps?saddr=" + saddr
+           + "&daddr=" + daddr 
+           + "&dirflg=w";
   }
