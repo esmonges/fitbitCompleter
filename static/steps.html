@@ -1,78 +1,92 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Steps &mdash; Fitbit Completer</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<head>
+  <title>Steps &mdash; Fitbit Completer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <link href="reset.css" rel="stylesheet" type="text/css">
-    <link href="steps.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
-    <div id="container">
-      <div id="header" class="box">
-        Fitbit Completer
-      </div>
-
-      <div id="content" class="box">
-        <p>
-          So far today you have taken
-          <span id="actualSteps"></span>
-          steps,
-          <span id="remainingSteps"></span>
-          steps fewer than your goal of
-          <span id="goalSteps"></span>
-          steps.
-        </p>
-
-        <p>
-          Here are some places to walk to in order to get closer to your goal:
-        </p>
-        <ul id="suggestions">
-          <li>Idea #1</li>
-          <li>Idea #2</li>
-          <li>Idea #3</li>
-        </ul>
-      </div>
-
-      <div id="footer">
-        <div class="tab">Home</div>
-        <div class="tab">Steps</div>
-        <div class="tab">Food</div>
-        <div class="tab">Activity</div>
-      </div>
+  <link href="reset.css" rel="stylesheet" type="text/css">
+  <link href="steps.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div id="header" class="box">
+      Fitbit Completer
     </div>
 
-    <script src="jquery-1.9.0.js"></script>
-    <script>
-      window.onload = function() {
-        $.ajax({
-          type: "get",
-          url: "get-steps-data",
-          data: {
-            accessToken: localStorage["fitbitCompleter" + "AccessToken"],
-            accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"]
-          },
-          success: function(response) {
-            if (response.success) {
-              var goalSteps = response.goalSteps;
-              var actualSteps = response.actualSteps;
-              var stepsPerMile = response.stepsForMile;
+    <div id="content" class="box">
+      <p>
+        So far today you have taken
+        <span id="actualSteps"></span>
+        steps,
+        <span id="remainingSteps"></span>
+        steps fewer than your goal of
+        <span id="goalSteps"></span>
+        steps.
+      </p>
 
-              localStorage.remainingSteps = goalSteps - actualSteps;
-              localStorage.stepsPerMile = stepsPerMile;
+      <p>
+        What would you like to do?
+        <form action="javascript:getGeoAndSubmit()">
+          <input id="fsvQuery" type="text">
+          <input type="submit" value="Find Venues">
+        </form>
+      </p>
 
-              $("#actualSteps").text(actualSteps);
-              $("#remainingSteps").text(goalSteps - actualSteps);
-              $("#goalSteps").text(goalSteps);
-            } else {
-              console.log("Received an error from the server:");
-              console.log(response.error);
-            }
-          }
-        });
-      };
-    </script>
-  </body>
+      <ul id="suggestions">
+
+      </ul>
+
+    </div>
+
+    <div id="map-canvas" class="content hiddenMap">
+
+    </div>
+
+    <div id="footer">
+      <div class="tab">Home</div>
+      <div class="tab">Steps</div>
+      <div class="tab">Food</div>
+      <div class="tab">Activity</div>
+    </div>
+  </div>
+
+  <script src="jquery-1.9.0.js"></script>
+  <script src="addTappableJQPlugin.js"></script>
+  <script type="text/javascript"
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtjE9cT2HWJpuf745-cYh7rP_E1CPRE-c&sensor=true"></script>
+  <script src="gmapVenueDisplay.js"></script>
+  <script src="stepFinder.js" type="text/javascript"></script>
+  <script>
+  window.onload = function() {
+    $.ajax({
+      type: "get",
+      url: "get-steps-data",
+      data: {
+        accessToken: localStorage["fitbitCompleter" + "AccessToken"],
+        accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"]
+      },
+      success: function(response) {
+        if (response.success) {
+          var goalSteps = response.goalSteps;
+          var actualSteps = response.actualSteps;
+          var stepsPerMile = response.stepsForMile;
+
+          localStorage.remainingSteps = goalSteps - actualSteps;
+          localStorage.stepsPerMile = stepsPerMile;
+
+          $("#actualSteps").text(actualSteps);
+          $("#remainingSteps").text(goalSteps - actualSteps);
+          $("#goalSteps").text(goalSteps);
+        } else {
+          console.log("Received an error from the server:");
+          console.log(response.error);
+        }
+      }
+    });
+  };
+  </script>
+</body>
 </html>
 

@@ -120,7 +120,7 @@ localStorage.remainingSteps = 2000;
     var end = Math.min(index + g.NSUGGESTIONS, g.sortedPL.length);
     var i;
     var gdvIndex = 0;
-    var resultsDiv = $("#results");
+    var resultsDiv = $("#suggestions");
 
     resultsDiv.html("");
     g.displayedVenues = [];
@@ -132,7 +132,7 @@ localStorage.remainingSteps = 2000;
   }
 
   function displaySuggestion(s, i){
-    var resultsDiv = $("#results");
+    var resultsDiv = $("#suggestions");
     var newDiv = $("<li>");
     var dirLink = $("<a>");
     var link;

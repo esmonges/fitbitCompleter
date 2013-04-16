@@ -4,6 +4,10 @@
    */
 
   function initGmap(lat, lng){
+    var mapDiv = $("#map-canvas");
+    mapDiv.removeClass("hiddenMap");
+    mapDiv.addClass("visibleMap");
+
     var mapOptions ={
       center: new google.maps.LatLng(lat, lng),
       zoom: 14,
