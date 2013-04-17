@@ -1,10 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Placeholder Title</title>
+    <title>Fitbit Completer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link href="reset.css" rel="stylesheet" type="text/css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="signin.css" rel="stylesheet" type="text/css">
   </head>
   <body>
-    <a id="fitbit-oauth-link">Sign in with Fitbit</a>
+  <div id="container">
+    <div id="header" class="box">
+      <img src="fitbit.png" alt="Fitbit" /> Completer
+    </div>
+
+    <div class="content box">
+      <p>Welcome to Fitbit Completer, where you can easily find ways to complete your Fitbit goals.</p>
+
+      <p>
+        Fitbit helps challenge you to take a certain number of steps every day and eat and exercise healthily, but it
+        tends to do this in an un-actionable way. Do you really know how many steps away Starbucks is or how many calories
+        14 push-ups burns?
+      </p>
+
+      <p>
+        We'll help you by converting abstract goals like "1300 steps" or "eat 400 calories" to real-world
+        ones like "walk to Central Park and back" or "try one serving of spinach". Good luck!
+      </p>
+    </div>
+
+    <div id="sign-in-box" class="box">
+    </div>
+  </div>
+
 
     <script src="jquery-1.9.0.js"></script>
     <script>
@@ -15,11 +44,11 @@
           success: function(response) {
             if (response.success) {
               console.log(response.url);
-              var fitbitOauthLink = $("#fitbit-oauth-link");
+              var signInBox = $("#sign-in-box");
               // TODO: What if no localStorage?
               localStorage["fitbitCompleter" + "oauthTokenSecret"] = response.oauthTokenSecret;
               localStorage["fitbitCompleter" + "callbackId"] = response.callbackId;
-              fitbitOauthLink.attr("href", response.url);
+              signInBox.append("<a id='fitbit-oauth-link' href='" + response.url + "'>Sign in with <img src='fitbit.png' alt='Fitbit' /></a>");
             } else {
               console.log(response.error);
             }
