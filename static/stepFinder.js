@@ -96,7 +96,7 @@ function getWalkingDistances(venues) {
     data: {
       queries: queries,
       origins: origins,
-      units:"imperial"
+      units: "imperial"
     },
     url:"/google-walking-distance",
     success: function(data) {
