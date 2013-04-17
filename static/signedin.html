@@ -1,68 +1,79 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Home &mdash; Fitbit Completer </title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <head>
+    <title>Home &mdash; Fitbit Completer </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-  <link href="reset.css" rel="stylesheet" type="text/css">
-  <link href="style.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-  <div id="container">
-    <div id="header" class="box">
-      <img src="fitbit.png" alt="Fitbit" /> Completer
+    <link href="reset.css" rel="stylesheet" type="text/css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div id="container">
+      <div id="header" class="box">
+        <img src="fitbit.png" alt="Fitbit" /> Completer
+      </div>
+
+      <div class="content box">
+        <p>Welcome to Fitbit Completer, where you can easily find ways to complete your Fitbit goals.</p>
+
+        <p>
+          Fitbit helps challenge you to take a certain number of steps every day and eat and exercise healthily, but it
+          tends to do this in an un-actionable way. Do you really know how many steps away Starbucks is or how many calories
+          14 push-ups burns?
+        </p>
+
+        <p>
+          We'll help you by converting abstract goals like "1300 steps" or "eat 400 calories" to real-world
+          ones like "walk to Central Park and back" or "try one serving of spinach". Good luck!
+        </p>
+      </div>
+
+      <div id="footer">
+        <div id="current-page" class="tab"><a href="signedin.html">Home</a></div>
+        <div class="tab"><a href="steps.html">Steps</a></div>
+        <div class="tab"><a href="calories.html">Calories</a></div>
+        <div class="tab"><a href="activity.html">Activity</a></div>
+      </div>
     </div>
 
-    <div class="content box">
-      Welcome to Fitbit Completer, where you can easily find ways to complete your Fitbit goals!
-    </div>
-
-    <div id="footer">
-      <div id="current-page" class="tab"><a href="signedin.html">Home</a></div>
-      <div class="tab"><a href="steps.html">Steps</a></div>
-      <div class="tab"><a href="calories.html">Calories</a></div>
-      <div class="tab"><a href="activity.html">Activity</a></div>
-    </div>
-  </div>
-
-  <script src="jquery-1.9.0.js"></script>
-  <script>
-  window.onload = function() {
-    console.log("Hey");
-    $.ajax({
-      type: "get",
-      url: "finalize-fitbit-oauth",
-      data: {
-        oauthTokenSecret: localStorage["fitbitCompleter" + "oauthTokenSecret"],
-        callbackId: localStorage["fitbitCompleter" + "callbackId"]
-      },
-      success: function(response) {
-        if (response.success) {
-          localStorage["fitbitCompleter" + "AccessToken"] = response.accessToken;
-          localStorage["fitbitCompleter" + "AccessTokenSecret"] = response.accessTokenSecret;
-          localStorage["fitbitCompleter" + "UserID"] = response.userId;
-        } else {
-          console.log(response.error);
+    <script src="jquery-1.9.0.js"></script>
+    <script>
+    window.onload = function() {
+      console.log("Hey");
+      $.ajax({
+        type: "get",
+        url: "finalize-fitbit-oauth",
+        data: {
+          oauthTokenSecret: localStorage["fitbitCompleter" + "oauthTokenSecret"],
+          callbackId: localStorage["fitbitCompleter" + "callbackId"]
+        },
+        success: function(response) {
+          if (response.success) {
+            localStorage["fitbitCompleter" + "AccessToken"] = response.accessToken;
+            localStorage["fitbitCompleter" + "AccessTokenSecret"] = response.accessTokenSecret;
+            localStorage["fitbitCompleter" + "UserID"] = response.userId;
+          } else {
+            console.log(response.error);
+          }
         }
-      }
-    });
+      });
 
-        /*navigator.geolocation.getCurrentPosition(function(position) {
-          var myLongitude = position.coords.longitude;
-          var myLatitude = position.coords.latitude;
+          /*navigator.geolocation.getCurrentPosition(function(position) {
+            var myLongitude = position.coords.longitude;
+            var myLatitude = position.coords.latitude;
 
-          $.ajax({
-            type: "get",
-            url: "../foursquare-venues/" + myLatitude + "," + myLongitude + "," + "asianfood",
-            success: function(response) {
-              console.log("success: " + response.results);
-            },
-            dataType: "json"
-          });
-});*/
-};
-</script>
-</body>
+            $.ajax({
+              type: "get",
+              url: "../foursquare-venues/" + myLatitude + "," + myLongitude + "," + "asianfood",
+              success: function(response) {
+                console.log("success: " + response.results);
+              },
+              dataType: "json"
+            });
+  });*/
+  };
+  </script>
+  </body>
 </html>
 
