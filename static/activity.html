@@ -1,18 +1,36 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>Activities &mdash; Fitbit Completer</title>
-  <link rel="stylesheet" href="steps.css">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <link href="reset.css" rel="stylesheet" type="text/css">
+  <link href="steps.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+  <div id="container">
+    <div id="header" class="box">
+      <img src="fitbit.png" alt="Fitbit" /> Completer
+    </div>
 
-  <div id="footer">
-    <div class="tab"><a href="signedin.html">Home</a></div>
-    <div class="tab"><a href="steps.html">Steps</a></div>
-    <div class="tab"><a href="calories.html">Calories</a></div>
-    <div class="tab"><a href="activity.html">Activity</a></div>
+    <div class="content box">
+      You currently have 
+      <span id="actualCalories"></span>
+      calories toward your goal of
+      <span id="caloriesGoal"></span>
+      calories today. You have
+      <span id="remainingCalories"></span>
+      calories remaining today.
+    </div>
+
+    <div id="footer">
+      <div class="tab"><a href="signedin.html">Home</a></div>
+      <div class="tab"><a href="steps.html">Steps</a></div>
+      <div class="tab"><a href="calories.html">Calories</a></div>
+      <div id="current-page" class="tab"><a href="activity.html">Activity</a></div>
+    </div>
   </div>
-  
 </body>
 </html>
