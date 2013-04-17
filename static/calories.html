@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calories &mdash; FitbitCompleter</title>
+  <link rel="stylesheet" href="steps.css">
+</head>
+<body>
+
+  <div class="content box">
+    You currently have 
+    <span id="remainingCalories"></span>
+    calories remaining today.
+  </div>
+
+  <div id="footer">
+    <div class="tab"><a href="signedin.html">Home</a></div>
+    <div class="tab"><a href="steps.html">Steps</a></div>
+    <div class="tab"><a href="calories.html">Calories</a></div>
+    <div class="tab"><a href="activity.html">Activity</a></div>
+  </div>
+
+  <script src="jquery-1.9.0.js"></script>
+  <script src="addTappableJQPlugin.js"></script>
+  <script>
+  var g = {};
+
+  window.onload = function(){
+    $.ajax({
+      type:"get",
+      url:"get-foods-data",
+      success: function(response){
+        if(response.success){
+          g.calorieGoal = response.data.goals.calories;
+        }
+        else{
+          g.calorieData = 1000;
+        }
+        displayCalorieData();
+      }
+    });
+  };
+
+  function displayCalorieData(){
+    var cspan = $("#remainingCalories");
+    cspan.html = g.calorieGoal;
+  }
+
+  </script>
+</body>
+</html>
