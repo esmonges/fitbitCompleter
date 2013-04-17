@@ -43,7 +43,13 @@ export function init(server) {
       getActivitiesInputs,
       results => {
         var fitbitActivities = JSON.parse(results.get_Response());
-        var stepsPerMile = (fitbitActivities["summary"]["steps"]) / fitbitActivities["summary"]["distances"][0]["distance"];
+        var stepsPerMile;
+        if (fitbitActivities["summary"]["distances"][0]["distance"] === 0) {
+          // TODO: Should use previous day's data instead
+          stepsPerMile = 1000;
+        } else {
+          stepsPerMile = (fitbitActivities["summary"]["steps"]) / fitbitActivities["summary"]["distances"][0]["distance"];
+        }
         response.send({
           success: true,
           goalSteps: fitbitActivities["goals"]["steps"],
