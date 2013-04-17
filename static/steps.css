@@ -1,6 +1,7 @@
 /* for gmaps */
-html { 
+html {
   height: 100%;
+  background-color: black;
 }
 
 #map-canvas {
@@ -8,12 +9,12 @@ html {
   width: 100%;
 }
 
-.hidden{
+.hidden {
   visibility: hidden;
 }
 
-.hiddenMap{
-  visibility: : hidden;
+.hiddenMap {
+  visibility: hidden;
 }
 
 .visible{
@@ -43,12 +44,15 @@ body {
 }
 
 #header {
+  height: 2.5rem;
+
+  background-color: white;
   text-align: center;
-  font-size: 2rem;
-  height: 7%;
+  font-size: 25px;
 }
 
 .box {
+  background-color: white;
   border-width: 2px;
   border-radius: 6px;
   border-style: solid;
