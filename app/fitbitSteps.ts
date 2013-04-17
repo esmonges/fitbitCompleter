@@ -2,7 +2,7 @@ import temboo = module("./temboo");
 import express = module("express");
 
 var fitbit = require("../node_modules/temboo/Library/Fitbit");
-var fitbitFoods = require("../node_modules/temboo/Library/Fitbit/Foods");
+//var fitbitFoods = require("../node_modules/temboo/Library/Fitbit/Foods");
 
 var getCurrentFitbitDate = (): string => {
   var today = new Date();
@@ -25,7 +25,7 @@ var getCurrentFitbitDate = (): string => {
 }
 
 export function init(server) {
-  server.get("/get-steps-data", (request, response) => {
+  server.get("/get-fitbit-data", (request, response) => {
     var getActivitiesChoreo = new fitbit.GetActivities(temboo.session);
 
     // Instantiate and populate the input set for the choreo
@@ -55,7 +55,9 @@ export function init(server) {
           success: true,
           goalSteps: fitbitActivities["goals"]["steps"],
           actualSteps: fitbitActivities["summary"]["steps"],
-          stepsPerMile: stepsPerMile
+          stepsPerMile: stepsPerMile,
+          caloriesGoal: fitbitActivities["goals"]["caloriesOut"],
+          actualCalories: fitbitActivities["summary"]["caloriesOut"]
         });
 
         //console.log("Net Calories Goal: " + fitbitActivities["goals"]["caloriesOut"]);
@@ -65,6 +67,7 @@ export function init(server) {
     );
   });
 
+/*
   server.get("/get-foods-data", (request, response) => {
     var getFoodGoalChoreo = new fitbitFoods.GetFoodGoal(temboo.session);
     var getFoodGoalInputs = new getFoodGoalChoreo.newInputSet();
@@ -84,6 +87,7 @@ export function init(server) {
       }
     );
   });
+*/
 
 }
 

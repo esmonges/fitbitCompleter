@@ -9,6 +9,10 @@
 
   <div class="content box">
     You currently have 
+    <span id="actualCalories"></span>
+    calories toward your goal of
+    <span id="caloriesGoal"></span>
+    calories today. You have
     <span id="remainingCalories"></span>
     calories remaining today.
   </div>
@@ -28,13 +32,15 @@
   window.onload = function(){
     $.ajax({
       type:"get",
-      url:"get-foods-data",
+      url:"get-fitbit-data",
       success: function(response){
         if(response.success){
-          g.calorieGoal = response.data.goals.calories;
+          g.caloriesGoal = response.caloriesGoal;
+          g.actualCalories = response.actualCalories;
         }
         else{
-          g.calorieData = 1000;
+          g.caloriesGoal = 2000;
+          g.actualCalories = 200;
         }
         displayCalorieData();
       }
@@ -42,8 +48,12 @@
   };
 
   function displayCalorieData(){
-    var cspan = $("#remainingCalories");
-    cspan.html = g.calorieGoal;
+    var cActSpan = $("#actualCalories");
+    var cGoalSpan = $("#caloriesGoal");
+    var cRemSpan = $("#remainingCalories");
+    cActSpan.html(g.actualCalories);
+    cGoalSpan.html(g.caloriesGoal);
+    cRemSpan.html(g.caloriesGoal - g.actualCalories);
   }
 
   </script>

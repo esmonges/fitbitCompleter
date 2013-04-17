@@ -1,7 +1,6 @@
 var temboo = require("./temboo")
 
 var fitbit = require("../node_modules/temboo/Library/Fitbit");
-var fitbitFoods = require("../node_modules/temboo/Library/Fitbit/Foods");
 var getCurrentFitbitDate = function () {
     var today = new Date();
     var day;
@@ -20,7 +19,7 @@ var getCurrentFitbitDate = function () {
     return "" + year + "-" + month + "-" + day;
 };
 function init(server) {
-    server.get("/get-steps-data", function (request, response) {
+    server.get("/get-fitbit-data", function (request, response) {
         var getActivitiesChoreo = new fitbit.GetActivities(temboo.session);
         var getActivitiesInputs = getActivitiesChoreo.newInputSet();
         getActivitiesInputs.set_AccessToken(request.query["accessToken"]);
@@ -41,26 +40,12 @@ function init(server) {
                 success: true,
                 goalSteps: fitbitActivities["goals"]["steps"],
                 actualSteps: fitbitActivities["summary"]["steps"],
-                stepsPerMile: stepsPerMile
+                stepsPerMile: stepsPerMile,
+                caloriesGoal: fitbitActivities["goals"]["caloriesOut"],
+                actualCalories: fitbitActivities["summary"]["caloriesOut"]
             });
         }, function (error) {
             return response.send({
-                success: false,
-                error: error
-            });
-        });
-    });
-    server.get("/get-foods-data", function (request, response) {
-        var getFoodGoalChoreo = new fitbitFoods.GetFoodGoal(temboo.session);
-        var getFoodGoalInputs = new getFoodGoalChoreo.newInputSet();
-        getFoodGoalChoreo.execute(getFoodGoalInputs, function (results) {
-            var calorieData = JSON.parse(results.get_Response());
-            response.send({
-                success: true,
-                data: calorieData
-            });
-        }, function (error) {
-            response.send({
                 success: false,
                 error: error
             });
