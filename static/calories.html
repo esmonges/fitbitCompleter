@@ -24,6 +24,16 @@
       calories remaining today.
     </div>
 
+    <form action="javascript:searchFoods()" class="content box">
+      <input type="text" id="foodQuery">
+      <input type="submit" value="Search for foods!">
+    </form>
+
+
+    <div id="foodSuggestions" class="content box">
+
+    </div>
+
     <div id="footer">
       <div class="tab"><a href="signedin.html">Home</a></div>
       <div class="tab"><a href="steps.html">Steps</a></div>
@@ -58,20 +68,7 @@
       }
     });
 
-    $.ajax({
-      type: "get",
-      url: "get-fitbit-foods",
-      data: {
-        query: "chocolate" // TODO
-      },
-      success: function(response) {
-        if (response.success) {
-          console.log(response);
-        } else {
-          console.log("Error");
-        }
-      }
-    });
+    
   };
 
   function displayCalorieData() {
@@ -80,8 +77,58 @@
     var cRemSpan = $("#remainingCalories");
     cActSpan.html(g.actualCalories);
     cGoalSpan.html(g.caloriesGoal);
-    cRemSpan.html(g.caloriesGoal - g.actualCalories);
+    g.targetCalories = g.caloriesGoal - g.actualCalories;
+    cRemSpan.html(g.targetCalories);
+
   }
+
+  function searchFoods(){
+    var foodQuery = $("#foodQuery");
+    var searchQuery = foodQuery.val();
+
+    foodQuery.val("");
+
+    $.ajax({
+      type: "get",
+      url: "get-fitbit-foods",
+      data: {
+        query: searchQuery // TODO
+      },
+      success: function(response) {
+        if (response.success) {
+          console.log(response);
+          g.foods = response.foods;
+          displayFoodSuggestions();
+        } else {
+          console.log("Error");
+        }
+      }
+    });
+  }
+
+  function displayFoodSuggestions(){
+    var sortedFoods = g.foods.sort(function(a,b){
+      var adiff = Math.abs(a.calories - g.targetCalories);
+      var bdiff = Math.abs(b.calories - g.targetCalories);
+      return adiff - bdiff;
+    });
+
+    var i;
+    //REPLACE 5 WITH CONST
+    var nEntries = Math.min(sortedFoods.length, 5);
+    var suggestions = $("#foodSuggestions");
+    var newSuggestion;
+
+    suggestions.html("");
+
+    for(i = 0; i < nEntries; i++){
+      newSuggestion = $("<div>");
+      newSuggestion.html(sortedFoods[i].name + ", Calories per serving: "
+        + sortedFoods[i].calories);
+      suggestions.append(newSuggestion);
+    }
+  }
+
   </script>
 </body>
 </html>
