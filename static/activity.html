@@ -32,5 +32,59 @@
       <div id="current-page" class="tab"><a href="activity.html">Activity</a></div>
     </div>
   </div>
+
+  <script src="jquery-1.9.0.js"></script>
+  <script src="addTappableJQPlugin.js"></script>
+  <script>
+  var g = {};
+
+  window.onload = function() {
+    $.ajax({
+      type: "get",
+      url: "get-fitbit-data",
+      data: {
+        accessToken: localStorage["fitbitCompleter" + "AccessToken"],
+        accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"]
+      },
+      success: function(response) {
+        if (response.success) {
+          g.caloriesGoal = response.caloriesGoal;
+          g.actualCalories = response.actualCalories;
+        } else {
+          console.log("ERROR");
+          g.caloriesGoal = 2000;
+          g.actualCalories = 200;
+        }
+        displayCalorieData();
+      }
+    });
+
+    $.ajax({
+      type: "get",
+      url: "get-fitbit-exercises",
+      data: {
+        accessToken: localStorage["fitbitCompleter" + "AccessToken"],
+        accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"],
+      },
+      success: function(response) {
+        if (response.success) {
+          console.log(response);
+        } else {
+          console.log("Error");
+        }
+      }
+    });
+  };
+
+  function displayCalorieData() {
+    var cActSpan = $("#actualCalories");
+    var cGoalSpan = $("#caloriesGoal");
+    var cRemSpan = $("#remainingCalories");
+    cActSpan.html(g.actualCalories);
+    cGoalSpan.html(g.caloriesGoal);
+    cRemSpan.html(g.caloriesGoal - g.actualCalories);
+  }
+  </script>
+
 </body>
 </html>
