@@ -41,6 +41,10 @@
     $.ajax({
       type: "get",
       url: "get-fitbit-data",
+      data: {
+        accessToken: localStorage["fitbitCompleter" + "AccessToken"],
+        accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"]
+      },
       success: function(response) {
         if (response.success) {
           g.caloriesGoal = response.caloriesGoal;
@@ -51,6 +55,21 @@
           g.actualCalories = 200;
         }
         displayCalorieData();
+      }
+    });
+
+    $.ajax({
+      type: "get",
+      url: "get-fitbit-foods",
+      data: {
+        query: "chocolate" // TODO
+      },
+      success: function(response) {
+        if (response.success) {
+          console.log(response);
+        } else {
+          console.log("Error");
+        }
       }
     });
   };

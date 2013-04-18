@@ -13,11 +13,13 @@ import foursquare = module("./foursquare");
 import googlewalkingdistance = module("./googlewalkingdistance");
 import fitbitOAuth = module("./fitbitOAuth");
 import fitbitSteps = module("./fitbitSteps");
+import fitbitFoods = module("./fitbitFoods");
 
 var server = express.createServer();
 server.use(express.bodyParser());
 fitbitOAuth.init(server);
 fitbitSteps.init(server);
+fitbitFoods.init(server);
 foursquare.init(server);
 googlewalkingdistance.init(server);
 
