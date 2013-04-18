@@ -25,6 +25,10 @@
       calories remaining today.
     </div>
 
+    <div id="activitySuggestions" class="content box">
+      
+    </div>
+
     <div id="footer">
       <div class="tab"><a href="signedin.html">Home</a></div>
       <div class="tab"><a href="steps.html">Steps</a></div>
@@ -78,7 +82,7 @@
 
     $.ajax({
       type: "get",
-      url: "get-fitbit-exercises",
+      url: "/get-fitbit-exercises",
       data: {
         accessToken: localStorage["fitbitCompleter" + "AccessToken"],
         accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"],
@@ -86,6 +90,8 @@
       success: function(response) {
         if (response.success) {
           console.log(response);
+          g.exercises = response.exercises;
+          displayActivities();
         } else {
           console.log("Error");
         }
@@ -97,9 +103,30 @@
     var cActSpan = $("#actualCalories");
     var cGoalSpan = $("#caloriesGoal");
     var cRemSpan = $("#remainingCalories");
+    g.caloriesTarget = g.caloriesGoal - g.actualCalories;
     cActSpan.html(g.actualCalories);
     cGoalSpan.html(g.caloriesGoal);
-    cRemSpan.html(g.caloriesGoal - g.actualCalories);
+    cRemSpan.html(g.caloriesTarget);
+  }
+
+  function displayActivities(){
+    var activitySuggestions = $("#activitySuggestions");
+    var newSuggestion;
+    var sortedActivities = g.exercises.sort(function(a,b){
+      var adiff = Math.abs((a.mets * 60) - (- g.caloriesTarget));
+      var bdiff = Math.abs((b.mets * 60) - (- g.caloriesTarget));
+      return adiff - bdiff;
+    });
+
+    var nEntries = Math.min(sortedActivities.length, 5); //TODO MAKE A CONSTANT
+    var i;
+
+    for(i = 0; i < nEntries; i++){
+      newSuggestion = $("<div>");
+      newSuggestion.html(sortedActivities[i].name + ", " 
+        + (sortedActivities[i].mets * 60) + " Calories per hour");
+      activitySuggestions.append(newSuggestion);
+    }
   }
   </script>
 
