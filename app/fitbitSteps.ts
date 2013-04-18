@@ -15,7 +15,7 @@ var getCurrentFitbitDate = (): string => {
 
   var month;
   if ((today.getMonth() + 1) < 10) {
-    month = "0" + (today.getMonth() + 1).toString();
+    month = "0" + (today.getMonth()).toString();
   } else {
     month = (today.getMonth() + 1).toString();
   }
@@ -33,10 +33,13 @@ export function init(server) {
 
     // Set inputs
     getActivitiesInputs.set_AccessToken(request.query["accessToken"]);
+    console.log(request.query["accessToken"]);
     getActivitiesInputs.set_AccessTokenSecret(request.query["accessTokenSecret"]);
+    console.log(request.query["accessTokenSecret"]);
     getActivitiesInputs.set_ConsumerKey("63678ae84a134e38ad62a70d473a7d57");
     getActivitiesInputs.set_ConsumerSecret("f9f4cfc32cc14ad6bc97057d3000fab2");
     getActivitiesInputs.set_Date(getCurrentFitbitDate());
+    console.log(getCurrentFitbitDate());
     getActivitiesInputs.set_Format("json");
 
     // Run the choreo, specifying success and error callback handlers

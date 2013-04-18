@@ -37,16 +37,16 @@
   <script>
   var g = {};
 
-  window.onload = function(){
+  window.onload = function() {
     $.ajax({
-      type:"get",
-      url:"get-fitbit-data",
-      success: function(response){
-        if(response.success){
+      type: "get",
+      url: "get-fitbit-data",
+      success: function(response) {
+        if (response.success) {
           g.caloriesGoal = response.caloriesGoal;
           g.actualCalories = response.actualCalories;
-        }
-        else{
+        } else {
+          console.log("ERROR");
           g.caloriesGoal = 2000;
           g.actualCalories = 200;
         }
@@ -55,7 +55,7 @@
     });
   };
 
-  function displayCalorieData(){
+  function displayCalorieData() {
     var cActSpan = $("#actualCalories");
     var cGoalSpan = $("#caloriesGoal");
     var cRemSpan = $("#remainingCalories");
@@ -63,7 +63,7 @@
     cGoalSpan.html(g.caloriesGoal);
     cRemSpan.html(g.caloriesGoal - g.actualCalories);
   }
-
   </script>
 </body>
 </html>
+
