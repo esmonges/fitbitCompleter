@@ -15,6 +15,7 @@ import fitbitOAuth = module("./fitbitOAuth");
 import fitbitSteps = module("./fitbitSteps");
 import fitbitFoods = module("./fitbitFoods");
 import fitbitExercises = module("./fitbitExercises");
+import fitbitWeight = module("./fitbitWeight");
 
 var server = express.createServer();
 server.use(express.bodyParser());
@@ -22,6 +23,7 @@ fitbitOAuth.init(server);
 fitbitSteps.init(server);
 fitbitFoods.init(server);
 fitbitExercises.init(server);
+fitbitWeight.init(server);
 foursquare.init(server);
 googlewalkingdistance.init(server);
 

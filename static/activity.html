@@ -41,6 +41,23 @@
   window.onload = function() {
     $.ajax({
       type: "get",
+      url: "get-fitbit-weight",
+      data: {
+        accessToken: localStorage["fitbitCompleter" + "AccessToken"],
+        accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"]
+      },
+      success: function(response) {
+        if (response.success) {
+          localStorage["fitbitCompleter" + "weight"] = response.weight;
+        } else {
+          console.log("ERROR");
+        }
+      }
+    });
+
+
+    $.ajax({
+      type: "get",
       url: "get-fitbit-data",
       data: {
         accessToken: localStorage["fitbitCompleter" + "AccessToken"],

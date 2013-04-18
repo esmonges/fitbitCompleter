@@ -53,7 +53,6 @@
       <div class="tab"><a href="steps.html">Steps</a></div>
       <div class="tab"><a href="calories.html">Calories</a></div>
       <div class="tab"><a href="activity.html">Activity</a></div>
-
     </div>
 
 
@@ -83,18 +82,21 @@
       }
     });
 
-    function getFitbitData(){
+    function getFitbitData() {
       $.ajax({
         type: "get",
         url: "get-fitbit-data",
-        success: function(response){
-          if(response.success){
+        data: {
+          accessToken: localStorage["fitbitCompleter" + "AccessToken"],
+          accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"]
+        },
+        success: function(response) {
+          if (response.success) {
             g.caloriesGoal = response.caloriesGoal;
             g.actualCalories = response.actualCalories;
             g.goalSteps = response.goalSteps;
             g.actualSteps = response.actualSteps;
-          }
-          else{
+          } else {
             g.caloriesGoal = 2000;
             g.actualCalories = 200;
             g.goalSteps = 5000;
