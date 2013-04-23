@@ -77,20 +77,14 @@ p {
 }
 
 .suggestion {
-  border-bottom: 2px;
-  border-width: 1px;
+  border-bottom: 1px;
   border-style: solid;
   border-color: #8C8C8B;
   padding: 0.5rem;
 }
 
-.suggestion:first {
-  border-radius: 8px;
-  border-top: 1px;
-}
-
-.suggestion:last {
-  border-radius: 8px;
+li:last-child {
+  border-bottom: none;
 }
 
 #footer {
