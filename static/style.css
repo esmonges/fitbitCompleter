@@ -80,6 +80,10 @@ p {
   padding: 0px;
 }
 
+#activitySuggestions {
+  padding: 0px;
+}
+
 .suggestion {
   width: 100%;
   border-bottom: 2px;

@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>Activities &mdash; Fitbit Completer</title>
-
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -16,7 +15,7 @@
     </div>
 
     <div class="content box">
-      You currently have 
+      You currently have
       <span id="actualCalories"></span>
       calories toward your goal of
       <span id="caloriesGoal"></span>
@@ -25,8 +24,8 @@
       calories remaining today.
     </div>
 
-    <div id="activitySuggestions" class="content box">
-      
+    <ul id="activitySuggestions" class="content box">
+
     </div>
 
     <div id="footer">
@@ -58,7 +57,6 @@
         }
       }
     });
-
 
     $.ajax({
       type: "get",
@@ -109,26 +107,26 @@
     cRemSpan.html(g.caloriesTarget);
   }
 
-  function displayActivities(){
+  function displayActivities() {
     var activitySuggestions = $("#activitySuggestions");
     var newSuggestion;
-    var sortedActivities = g.exercises.sort(function(a,b){
+    var sortedActivities = g.exercises.sort(function(a, b) {
       var adiff = Math.abs((a.mets * 60) - (- g.caloriesTarget));
       var bdiff = Math.abs((b.mets * 60) - (- g.caloriesTarget));
       return adiff - bdiff;
     });
 
-    var nEntries = Math.min(sortedActivities.length, 5); //TODO MAKE A CONSTANT
+    var nEntries = Math.min(sortedActivities.length, 5); // TODO MAKE A CONSTANT
     var i;
 
-    for(i = 0; i < nEntries; i++){
-      newSuggestion = $("<div>");
-      newSuggestion.html(sortedActivities[i].name + ", " 
-        + (sortedActivities[i].mets * 60) + " Calories per hour");
+    for (i = 0; i < nEntries; i++) {
+      newSuggestion = $("<li>").addClass("suggestion");
+      newSuggestion.html(
+        sortedActivities[i].name + ", "  + (sortedActivities[i].mets * 60) + " Calories per hour"
+      );
       activitySuggestions.append(newSuggestion);
     }
   }
   </script>
-
 </body>
 </html>
