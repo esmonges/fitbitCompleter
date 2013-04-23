@@ -140,7 +140,7 @@ function displaySuggestion(s, i) {
   var dirLink = $("<a>");
   var link;
 
-  newDiv.attr("id", i);
+  newDiv.addClass("suggestion");
   newDiv.onButtonTap(markerHandler);
 
   link = generateDirectionsFromFSV(s.venue);
@@ -151,7 +151,6 @@ function displaySuggestion(s, i) {
   newDiv.html(s.venue.name + ", Steps (Each Way): " + s.distanceInSteps);
   newDiv.append(dirLink);
   resultsDiv.append(newDiv);
-
 }
 
 
