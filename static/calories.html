@@ -106,25 +106,26 @@
     });
   }
 
-  function displayFoodSuggestions(){
-    var sortedFoods = g.foods.sort(function(a,b){
+  function displayFoodSuggestions() {
+    var sortedFoods = g.foods.sort(function(a, b) {
       var adiff = Math.abs(a.calories - g.targetCalories);
       var bdiff = Math.abs(b.calories - g.targetCalories);
       return adiff - bdiff;
     });
 
     var i;
-    //REPLACE 5 WITH CONST
+    // TODO REPLACE 5 WITH CONST
     var nEntries = Math.min(sortedFoods.length, 5);
     var suggestions = $("#foodSuggestions");
     var newSuggestion;
 
     suggestions.html("");
 
-    for(i = 0; i < nEntries; i++){
-      newSuggestion = $("<div>");
-      newSuggestion.html(sortedFoods[i].name + ", Calories per serving: "
-        + sortedFoods[i].calories);
+    for (i = 0; i < nEntries; i++) {
+      newSuggestion = $("<div>").addClass("suggestion");
+      newSuggestion.html(
+        sortedFoods[i].name + ", Calories per serving: " + sortedFoods[i].calories
+      );
       suggestions.append(newSuggestion);
     }
   }
