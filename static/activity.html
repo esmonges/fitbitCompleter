@@ -24,7 +24,7 @@
       calories remaining today.
     </div>
 
-    <ul id="activitySuggestions" class="content box">
+    <ul id="suggestions" class="content box">
 
     </div>
 
@@ -108,7 +108,7 @@
   }
 
   function displayActivities() {
-    var activitySuggestions = $("#activitySuggestions");
+    var activitySuggestions = $("#suggestions");
     var newSuggestion;
     var sortedActivities = g.exercises.sort(function(a, b) {
       var adiff = Math.abs((a.mets * 60) - (- g.caloriesTarget));

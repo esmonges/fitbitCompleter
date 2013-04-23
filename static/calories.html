@@ -29,7 +29,7 @@
       <input type="submit" value="Search for foods!">
     </form>
 
-    <ul id="foodSuggestions" class="content box">
+    <ul id="suggestions" class="content box">
 
     </div>
 
@@ -115,7 +115,7 @@
     var i;
     // TODO REPLACE 5 WITH CONST
     var nEntries = Math.min(sortedFoods.length, 5);
-    var suggestions = $("#foodSuggestions");
+    var suggestions = $("#suggestions");
     var newSuggestion;
 
     suggestions.html("");
