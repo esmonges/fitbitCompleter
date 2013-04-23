@@ -30,7 +30,7 @@
     </form>
 
 
-    <div id="foodSuggestions" class="content box">
+    <ul id="foodSuggestions" class="content box">
 
     </div>
 
@@ -122,7 +122,7 @@
     suggestions.html("");
 
     for (i = 0; i < nEntries; i++) {
-      newSuggestion = $("<div>").addClass("suggestion");
+      newSuggestion = $("<li>").addClass("suggestion");
       newSuggestion.html(
         sortedFoods[i].name + ", Calories per serving: " + sortedFoods[i].calories
       );
