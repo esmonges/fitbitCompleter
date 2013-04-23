@@ -1,7 +1,7 @@
 /* for gmaps */
 html {
   height: 100%;
-  background-color: black;
+  background-color: #45C2C5;
   font-size: 0.9rem;
 }
 
@@ -58,9 +58,10 @@ body {
 
 .box {
   background-color: white;
-  border-width: 2px;
+  border-width: 1px;
   border-radius: 8px;
   border-style: solid;
+  border-color: #8C8C8B;
   padding: 0.5rem;
   margin: 1rem;
 }
@@ -76,9 +77,10 @@ p {
 }
 
 .suggestion {
-  width: 100%;
   border-bottom: 2px;
+  border-width: 1px;
   border-style: solid;
+  border-color: #8C8C8B;
   padding: 0.5rem;
 }
 
@@ -100,8 +102,9 @@ p {
 
   border-top: 1px;
   border-style: solid;
+  border-color: #8C8C8B;
 
-  background-color: black;
+  background-color: #45C2C5;
 }
 
 .tab {
@@ -116,6 +119,7 @@ p {
   border-width: 1px;
   border-radius: 8px;
   border-style: solid;
+  border-color: #8C8C8B;
 
   background-color: white;
 }
