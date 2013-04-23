@@ -64,10 +64,9 @@
           g.actualCalories = 200;
         }
         displayCalorieData();
+        makeSuggestionsHighlightable();
       }
     });
-
-    
   };
 
   function displayCalorieData() {
@@ -78,10 +77,9 @@
     cGoalSpan.html(g.caloriesGoal);
     g.targetCalories = g.caloriesGoal - g.actualCalories;
     cRemSpan.html(g.targetCalories);
-
   }
 
-  function searchFoods(){
+  function searchFoods() {
     var foodQuery = $("#foodQuery");
     var searchQuery = foodQuery.val();
 
@@ -98,6 +96,7 @@
           console.log(response);
           g.foods = response.foods;
           displayFoodSuggestions();
+          makeSuggestionsHighlightable();
         } else {
           console.log("Error");
         }
@@ -129,6 +128,13 @@
     }
   }
 
+  function makeSuggestionsHighlightable() {
+    $.each($(".suggestion"), function (index, suggestion) {
+      var onTap = function() { }; // TODO
+      var onLong = function() { }; // TODO
+      ($(suggestion)).onButtonTap(onTap, onLong);
+    });
+  }
   </script>
 </body>
 </html>

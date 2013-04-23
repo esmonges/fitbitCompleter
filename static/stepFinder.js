@@ -105,6 +105,7 @@ function getWalkingDistances(venues) {
       pairSortAndStore(venues, distObjs);
 
       displaySuggestionsStartingAt(0);
+      makeSuggestionsHighlightable();
 /*        var resultsDiv = $("#results");
         resultsDiv.html("");
         for(i = 0; i < venues.length; i++) {
@@ -153,6 +154,13 @@ function displaySuggestion(s, i) {
   resultsDiv.append(newDiv);
 }
 
+function makeSuggestionsHighlightable() {
+  $.each($(".suggestion"), function (index, suggestion) {
+    var onTap = function() { }; // TODO
+    var onLong = function() { }; // TODO
+    ($(suggestion)).onButtonTap(onTap, onLong);
+  });
+}
 
 // function getAndDisplayWalkingDistance(venues) {
 //   var queries = "";

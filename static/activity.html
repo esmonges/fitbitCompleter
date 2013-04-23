@@ -42,6 +42,8 @@
   var g = {};
 
   window.onload = function() {
+    addTappableJQPlugin(); // TODO: Don't need?
+
     $.ajax({
       type: "get",
       url: "get-fitbit-weight",
@@ -90,6 +92,7 @@
           console.log(response);
           g.exercises = response.exercises;
           displayActivities();
+          makeSuggestionsHighlightable();
         } else {
           console.log("Error");
         }
@@ -127,6 +130,15 @@
       activitySuggestions.append(newSuggestion);
     }
   }
+
+  function makeSuggestionsHighlightable() {
+    $.each($(".suggestion"), function (index, suggestion) {
+      var onTap = function() { }; // TODO
+      var onLong = function() { }; // TODO
+      ($(suggestion)).onButtonTap(onTap, onLong);
+    });
+  }
   </script>
 </body>
 </html>
+
