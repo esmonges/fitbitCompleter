@@ -14,14 +14,16 @@
       <img src="fitbit.png" alt="Fitbit" /> Completer
     </div>
 
-    <div class="content box">
-      You currently have 
-      <span id="actualCalories"></span>
-      calories toward your goal of
-      <span id="caloriesGoal"></span>
-      calories today. You have
-      <span id="remainingCalories"></span>
-      calories remaining today.
+    <div id="summary" class="content box">
+      <p>
+        You currently have 
+        <span id="actualCalories"></span>
+        calories toward your goal of
+        <span id="caloriesGoal"></span>
+        calories today. You have
+        <span id="remainingCalories"></span>
+        calories remaining today.
+      </p>
     </div>
 
     <form action="javascript:searchFoods()" class="content box">
@@ -30,7 +32,6 @@
     </form>
 
     <ul id="suggestions" class="content box">
-
     </div>
 
     <div id="footer">
@@ -73,10 +74,15 @@
     var cActSpan = $("#actualCalories");
     var cGoalSpan = $("#caloriesGoal");
     var cRemSpan = $("#remainingCalories");
-    cActSpan.html(g.actualCalories);
-    cGoalSpan.html(g.caloriesGoal);
     g.targetCalories = g.caloriesGoal - g.actualCalories;
-    cRemSpan.html(g.targetCalories);
+
+    if (g.targetCalories > 0) {
+      cActSpan.html(g.actualCalories);
+      cGoalSpan.html(g.caloriesGoal);
+      cRemSpan.html(g.targetCalories);
+    } else {
+      $("#summary").html("You've achieved your calorie goal for the day! Feel free to search for more food to eat, but remember that you might owe some exercise after!");
+    }
   }
 
   function searchFoods() {

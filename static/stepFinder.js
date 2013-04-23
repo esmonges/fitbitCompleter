@@ -56,7 +56,13 @@ function submitFSVSearch(position) {
 // }
 
 function pairSortAndStore(venues, distObjs) {
-  var targetDist = (localStorage.remainingSteps / localStorage.stepsPerMile) / 2;
+  var targetDist;
+  if (localStorage.remainingSteps <= 0) {
+    targetDist = (localStorage.remainingSteps / localStorage.stepsPerMile) / 2;
+  } else {
+    targetDist = (2000 / localStorage.stepsPerMile) / 2;
+  }
+
   var pairedList = [];
   var i;
 

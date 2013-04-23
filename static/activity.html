@@ -14,14 +14,16 @@
       <img src="fitbit.png" alt="Fitbit" /> Completer
     </div>
 
-    <div class="content box">
-      You currently have
-      <span id="actualCalories"></span>
-      calories toward your goal of
-      <span id="caloriesGoal"></span>
-      calories today. You have
-      <span id="remainingCalories"></span>
-      calories remaining today.
+    <div id="summary" class="content box">
+      <p>
+        You currently have
+        <span id="actualCalories"></span>
+        calories toward your goal of
+        <span id="caloriesGoal"></span>
+        calories today. You have
+        <span id="remainingCalories"></span>
+        calories remaining today.
+      </p>
     </div>
 
     <ul id="suggestions" class="content box">
@@ -105,9 +107,14 @@
     var cGoalSpan = $("#caloriesGoal");
     var cRemSpan = $("#remainingCalories");
     g.caloriesTarget = g.caloriesGoal - g.actualCalories;
-    cActSpan.html(g.actualCalories);
-    cGoalSpan.html(g.caloriesGoal);
-    cRemSpan.html(g.caloriesTarget);
+
+    if (g.caloriesTarget > 0) {
+      cActSpan.html(g.actualCalories);
+      cGoalSpan.html(g.caloriesGoal);
+      cRemSpan.html(g.caloriesTarget);
+    } else {
+      $("#summary").html("You've achieved your calorie goal for the day! If you're still feeling up for more, try some of these exercises.");
+    }
   }
 
   function displayActivities() {

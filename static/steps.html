@@ -14,7 +14,7 @@
       <img src="fitbit.png" alt="Fitbit" /> Completer
     </div>
 
-    <div id="content" class="box">
+    <div id="summary" class="content box">
       <p>
         So far today you have taken
         <span id="actualSteps"></span>
@@ -24,22 +24,17 @@
         <span id="goalSteps"></span>
         steps.
       </p>
-
-      <p>
-        What would you like to do?
-        <form action="javascript:getGeoAndSubmit()">
-          <input id="fsvQuery" type="text">
-          <input type="submit" value="Find Venues">
-        </form>
-      </p>
-
     </div>
+
+    <form action="javascript:getGeoAndSubmit()" class="content box">
+      <input id="fsvQuery" type="text">
+      <input type="submit" value="Find Venues">
+    </form>
 
     <ul id="suggestions" class="content box">
     </ul>
 
     <div id="map-canvas" class="content hiddenMap">
-
     </div>
 
     <div id="footer">
@@ -74,9 +69,13 @@
           localStorage.remainingSteps = goalSteps - actualSteps;
           localStorage.stepsPerMile = stepsPerMile;
 
-          $("#actualSteps").text(actualSteps);
-          $("#remainingSteps").text(goalSteps - actualSteps);
-          $("#goalSteps").text(goalSteps);
+          if (localStorage.remainingSteps > 0) {
+            $("#actualSteps").text(actualSteps);
+            $("#remainingSteps").text(goalSteps - actualSteps);
+            $("#goalSteps").text(goalSteps);
+         } else {
+            $("#summary").html("You've achieved your step goal for the day! If you want to push yourself a little further, we'll suggest some venues that will earn you around another 2000 steps.");
+          }
         } else {
           console.log("Received an error from the server:");
           console.log(response.error);
