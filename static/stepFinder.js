@@ -147,6 +147,7 @@ function displaySuggestion(s, i) {
   var dirLink = $("<a>");
   var link;
 
+  newDiv.attr("id", i);
   newDiv.addClass("suggestion");
   newDiv.onButtonTap(markerHandler);
 
