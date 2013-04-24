@@ -1,0 +1,17 @@
+Calories page:
+  Allow user to put in a goal for calories that they want to complete now (maybe # servings too?)
+  Click on food for location or recipie?
+  Grammar: "you currently are x calories toward..." not "you currently have x calories toward..."
+
+General: 
+  Clicking on things should bring down options (directions, details, etc) in addition to option for logging on fitbit
+  Use localstorage to remember searches when navigating back from other pages (e.g. gmaps)
+  Truncate numbers properly (don't want 155.99999)
+  Bottom footer overtakes some of the page content
+  Fix homepage css glitch for mobile/smaller screen
+  Make main pages fit to screen size when there is no other content (map div in venues should have height:0 when hidden)
+  Desktop: Use mouse finger pointer icon thing on anything clickable (so there isn't just a cursor)
+  Back button (in browser, or app): Should it bring back to a previous search, or previous page?
+  Fitbit logo should link to homepage
+  Stylize logo better (match fitbit font)
+  
