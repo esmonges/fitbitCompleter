@@ -9,6 +9,27 @@ a {
   text-decoration: none
 }
 
+#home {
+  color: black;
+}
+
+#home:link {
+  color: black;
+}
+
+#home:active {
+  color: black;
+}
+
+#home:visited {
+  color: black;
+}
+
+#home:hover {
+  color: black;
+}
+
+
 #map-canvas {
   height: 100%;
   width: 100%;
