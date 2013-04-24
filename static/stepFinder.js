@@ -143,22 +143,23 @@ function displaySuggestionsStartingAt(index) {
 
 function displaySuggestion(s, i) {
   var resultsDiv = $("#suggestions");
-  var newDiv = $("<li>");
+  var newLI = $("<li>");
   var dirLink = $("<a>");
   var link;
 
-  newDiv.attr("id", i);
-  newDiv.addClass("suggestion");
-  newDiv.onButtonTap(markerHandler);
+  newLI.attr("id", i);
+  newLI.addClass("suggestion");
+  newLI.onButtonTap(markerHandler);
 
   link = generateDirectionsFromFSV(s.venue);
   dirLink.attr("href", link);
   dirLink.html("Get Directions");
+  dirLink.addClass("link");
   dirLink.addClass("hidden");
 
-  newDiv.html(s.venue.name + ", Steps (Each Way): " + s.distanceInSteps);
-  newDiv.append(dirLink);
-  resultsDiv.append(newDiv);
+  newLI.html(s.venue.name + ", Steps (Each Way): " + s.distanceInSteps);
+  newLI.append(dirLink);
+  resultsDiv.append(newLI);
 }
 
 function makeSuggestionsHighlightable() {

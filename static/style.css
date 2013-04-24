@@ -30,6 +30,10 @@ a {
   visibility: visible;
 }
 
+.link {
+  display: block;
+}
+
 body {
   /* for gmaps */
   height: 85%; /* TODO: I think this is causing a bug */
