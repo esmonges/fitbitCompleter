@@ -15,15 +15,6 @@
     </div>
 
     <div id="summary" class="content box">
-      <p>
-        You currently have 
-        <span id="actualCalories"></span>
-        calories toward your goal of
-        <span id="caloriesGoal"></span>
-        calories today. You have
-        <span id="remainingCalories"></span>
-        calories remaining today.
-      </p>
     </div>
 
     <form action="javascript:searchFoods()" class="content box">
@@ -44,6 +35,15 @@
 
   <script src="jquery-1.9.0.js"></script>
   <script src="addTappableJQPlugin.js"></script>
+  <script src="handlebars.js"></script>
+
+  <script id="summary-template" type="text/x-handlebars-template">
+    <p>
+      Your net calories for the day is currently {{actualCalories}}, {{remainingCalories}} below
+      your goal of {{calorieGoal}}. Have a bite to eat to work your way up to that goal?
+    </p>
+  </script>
+
   <script>
   var g = {};
 
@@ -71,15 +71,16 @@
   };
 
   function displayCalorieData() {
-    var cActSpan = $("#actualCalories");
-    var cGoalSpan = $("#caloriesGoal");
-    var cRemSpan = $("#remainingCalories");
-    g.targetCalories = g.caloriesGoal - g.actualCalories;
+    g.remainingCalories = g.caloriesGoal - g.actualCalories;
 
-    if (g.targetCalories > 0) {
-      cActSpan.html(g.actualCalories);
-      cGoalSpan.html(g.caloriesGoal);
-      cRemSpan.html(g.targetCalories);
+    if (g.remainingCalories > 0) {
+      var source = $("#summary-template").html();
+      var template = Handlebars.compile(source);
+      var data = {
+        actualCalories: g.actualCalories,
+        caloriesGoal: g.caloriesGoal,
+        remainingCalories: g.remainingCalories
+      };
     } else {
       $("#summary").html("You've achieved your calorie goal for the day! Feel free to search for more food to eat, but remember that you might owe some exercise after!");
     }
@@ -112,8 +113,8 @@
 
   function displayFoodSuggestions() {
     var sortedFoods = g.foods.sort(function(a, b) {
-      var adiff = Math.abs(a.calories - g.targetCalories);
-      var bdiff = Math.abs(b.calories - g.targetCalories);
+      var adiff = Math.abs(a.calories - g.remainingCalories);
+      var bdiff = Math.abs(b.calories - g.remainingCalories);
       return adiff - bdiff;
     });
 

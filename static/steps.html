@@ -15,15 +15,6 @@
     </div>
 
     <div id="summary" class="content box">
-      <!--<p>
-        So far today you have taken
-        <span id="actualSteps"></span>
-        steps,
-        <span id="remainingSteps"></span>
-        steps fewer than your goal of
-        <span id="goalSteps"></span>
-        steps.
-        </p>-->
     </div>
 
     <form action="javascript:getGeoAndSubmit()" class="content box">
@@ -54,7 +45,8 @@
 
   <script id="summary-template" type="text/x-handlebars-template">
     <p>
-      So far today you have taken {{actualSteps}} steps, {{remainingSteps}} steps fewer than your goal of {{goalSteps}}.
+      So far today you have taken {{actualSteps}} steps, {{remainingSteps}} steps fewer than your
+      goal of {{goalSteps}}. Consider going for a walk somewhere to knock off those remaining steps?
     </p>
   </script>
 
@@ -85,11 +77,6 @@
               goalSteps: goalSteps
             };
             $("#summary").html(template(data));
-            /*
-            $("#actualSteps").text(actualSteps);
-            $("#remainingSteps").text(goalSteps - actualSteps);
-            $("#goalSteps").text(goalSteps);
-            */
          } else {
             $("#summary").html("You've achieved your step goal for the day! If you want to push yourself a little further, we'll suggest some venues that will earn you around another 2000 steps.");
           }
