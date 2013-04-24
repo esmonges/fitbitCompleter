@@ -18,8 +18,7 @@
     </div>
 
     <ul id="suggestions" class="content box">
-
-    </div>
+    </ul>
 
     <div id="footer">
       <div class="tab"><a href="signedin.html">Home</a></div>
@@ -32,11 +31,18 @@
   <script src="jquery-1.9.0.js"></script>
   <script src="addTappableJQPlugin.js"></script>
   <script src="handlebars.js"></script>
+
   <script id="summary-template" type="text/x-handlebars-template">
     <p>
-      Your net calories for the day is currently {{actualCalories}}, {{-remainingCalories}} above
+      Your net calories for the day is currently {{actualCalories}}, {{remainingCalories}} above
       your goal of {{caloriesGoal}}. Get some exercise in to get closer to your goal?
     </p>
+  </script>
+
+  <script id="activity-list-template" type="text/x-handlebars-template">
+    {{#each activities}}
+      <li class="suggestion">{{name}}, {{mets}} calories per hour</li>
+    {{/each}}
   </script>
 
   <script>
@@ -110,7 +116,7 @@
       var data = {
         actualCalories: g.actualCalories,
         caloriesGoal: g.caloriesGoal,
-        remainingCalories: g.remainingCalories
+        remainingCalories: -g.remainingCalories
       };
       $("#summary").html(template(data));
     } else {
@@ -118,6 +124,7 @@
     }
   }
 
+  // TODO: Use BMI information
   function displayActivities() {
     var activitySuggestions = $("#suggestions");
     var newSuggestion;
@@ -127,16 +134,13 @@
       return adiff - bdiff;
     });
 
-    var nEntries = Math.min(sortedActivities.length, 5); // TODO MAKE A CONSTANT
-    var i;
+    // TODO MAKE A CONSTANT
+    var nEntries = Math.min(sortedActivities.length, 5);
 
-    for (i = 0; i < nEntries; i++) {
-      newSuggestion = $("<li>").addClass("suggestion");
-      newSuggestion.html(
-        sortedActivities[i].name + ", "  + (sortedActivities[i].mets * 60) + " Calories per hour"
-      );
-      activitySuggestions.append(newSuggestion);
-    }
+    var source = $("#activity-list-template").html();
+    var template = Handlebars.compile(source);
+    var data = { activities: sortedActivities.slice(0, nEntries) }; 
+    $("#suggestions").html(template(data));
   }
 
   function makeSuggestionsHighlightable() {
