@@ -35,6 +35,11 @@ a {
   width: 100%;
 }
 
+#map-canvas-hidden{
+  height: 0px;
+  width: 0px;
+}
+
 .hidden {
   visibility: hidden;
 }

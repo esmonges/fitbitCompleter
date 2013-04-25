@@ -4,7 +4,8 @@
  */
 
 function initGmap(lat, lng) {
-  var mapDiv = $("#map-canvas");
+  var mapDiv = $("#map-canvas-hidden");
+  mapDiv.attr("id", "map-canvas")
   mapDiv.removeClass("hiddenMap");
   mapDiv.addClass("visibleMap");
 
