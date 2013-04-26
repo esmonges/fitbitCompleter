@@ -52,6 +52,13 @@ export function init(server) {
           stepsPerMile = (fitbitActivities["summary"]["steps"]) / fitbitActivities["summary"]["distances"][0]["distance"];
         }
         console.log(fitbitActivities)
+
+        if(!fitbitActivities["goals"]){
+          fitbitActivities["goals"] = {};
+          fitbitActivities["goals"]["steps"] = undefined;
+          fitbitActivities["goals"]["caloriesOut"] = undefined;
+        }
+
         response.send({
           success: true,
           goalSteps: fitbitActivities["goals"]["steps"],

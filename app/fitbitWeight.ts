@@ -39,6 +39,12 @@ export function init(server) {
       results => {
         var parsed = JSON.parse(results.get_Response());
         console.log(parsed);
+
+        if(!parsed.weight[0]){
+          parsed.weight[0] = {};
+          parsed.weight[0].weight = undefined;
+        }
+
         response.send({
           success: true,
           weight: parsed.weight[0].weight

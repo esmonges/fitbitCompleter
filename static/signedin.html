@@ -32,15 +32,9 @@
 
 
 
-      <a href="steps.html" class="content box block">
-        You currently have 
-        <span id="remainingSteps"></span>
-        steps remaining for your daily goal.
+      <a href="steps.html" class="content box block" id="remainingSteps">
       </a>
-      <a href="calories.html" class="content box block">
-        You currently have
-        <span id="remainingCalories"></span>
-        calories remaining for your daily goal.
+      <a href="calories.html" class="content box block" id="remainingCalories">
       </a>
       <a href="activity.html" class="content box block">
         Touch here to find activities to unlock extra calories.
@@ -108,11 +102,28 @@
     }
 
     function displayUserData(){
-      var sSpan = $("#remainingSteps");
-      var cSpan = $("#remainingCalories");
+      var steps = $("#remainingSteps");
+      var calories = $("#remainingCalories");
 
-      sSpan.html(g.goalSteps - g.actualSteps);
-      cSpan.html(g.caloriesGoal - g.actualCalories);
+      if(!g.goalSteps || (g.goalSteps - g.actualSteps) < 0){
+        steps.html("You've completed your steps goal for the day, but if you want to go somewhere, click here!");
+      }
+      else{
+        steps.html("You have " + (g.goalSteps - g.actualSteps) + " steps remaining today. Click here to find places to go to complete this goal!");
+      }
+
+      if(!g.caloriesGoal || (g.caloriesGoal - g.actualCalories) < 0){
+        calories.html("You've eaten all your calories for the day, but I guess if you're still REALLY hungry you can click here.");
+      }
+      else{
+        calories.html("You have " + (g.caloriesGoal - g.actualCalories) + " calories remaining today. Click here to find food to complete thsi goal!");
+      }
+
+      console.log(g.goalSteps);
+      console.log(g.actualSteps);
+
+      // sSpan.html(g.goalSteps - g.actualSteps);
+      // cSpan.html(g.caloriesGoal - g.actualCalories);
     }
 
         /*navigator.geolocation.getCurrentPosition(function(position) {
