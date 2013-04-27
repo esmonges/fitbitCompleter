@@ -67,11 +67,25 @@ function submitFSVSearch(position) {
       },
       url: "foursquare-explore",
       success: function(data){
-        var stuff = JSON.parse(data.results);
-        console.log(stuff);
+        var results = JSON.parse(data.results);
+        var venues = collateVenues(results.response.groups[0].items);
+        getWalkingDistances(venues);
+        initGmap(lat, lon);
       }
     });
   }
+}
+
+function collateVenues(items){
+  var length = items.length;
+  var i;
+  var venues = new Array(length);
+
+  for(i=0; i < length; i++){
+    venues[i] = items[i].venue;
+  }
+
+  return venues;
 }
 
 function isInt(n){
@@ -97,7 +111,8 @@ function isInt(n){
 function pairSortAndStore(venues, distObjs) {
   var targetDist;
   if (localStorage.targetSteps >= 0) {
-    targetDist = (localStorage.goalSteps / localStorage.stepsPerMile) / 2;
+    targetDist = (localStorage.targetSteps / localStorage.stepsPerMile) / 2;
+    console.log(localStorage.targetSteps);
   } else { //TODO: put in a requirement for steps if none exists
     targetDist = (2000 / localStorage.stepsPerMile) / 2;
   }
@@ -109,7 +124,8 @@ function pairSortAndStore(venues, distObjs) {
     pairedList[i] = {};
     pairedList[i].venue = venues[i];
     pairedList[i].distanceInMiles = (distObjs[i].distance.value / 1000) * g.KM_TO_MI;
-    console.log(distObjs[i].distance);
+    // console.log("miles: " + pairedList[i].distanceInMiles);
+    // console.log("target: " + targetDist);
     pairedList[i].distanceInSteps = Math.round(pairedList[i].distanceInMiles * localStorage.stepsPerMile);
   }
 
