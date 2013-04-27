@@ -38,5 +38,35 @@ export function init(server) {
       }
     );
   });
+
+  server.get("/foursquare-explore", (request, response) =>{
+    var exploreChoreo = new foursquare.Explore(temboo.session);
+
+    var data = request.query;
+    var latitude = data.latitude;
+    var longitude = data.longitude;
+
+    // Instantiate and populate the input set for the choreo
+    var exploreInputs = exploreChoreo.newInputSet();
+
+    // Set inputs
+    exploreInputs.set_ClientID("2UBT5JSQ53KR4BPB3KXZCIK2OSTXRQNA2N2SQC322LGVKDNA");
+    exploreInputs.set_ClientSecret("WT4CXWCEERR04PQD45M4H3XQVO5C3YSOMH2UOK3DXRJYUULV");
+    exploreInputs.set_Latitude(latitude);
+    exploreInputs.set_Longitude(longitude);
+
+    // Run the choreo, specifying success and error callback handlers
+    exploreChoreo.execute(
+      exploreInputs,
+      function(results){
+        console.log(results);
+        response.send({ success: true, results: results.get_Response() });
+      },
+      function(error){
+
+        console.log(error.type); console.log(error.message);
+      }
+    );
+  });
 }
 

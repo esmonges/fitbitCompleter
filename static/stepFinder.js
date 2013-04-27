@@ -13,31 +13,70 @@ function getGeoAndSubmit() {
 
 function submitFSVSearch(position) {
   var fsvQuery = $("#fsvQuery");
+  var desiredSteps = $("#stepsDesired");
   var query = fsvQuery.val();
+  var nSteps = desiredSteps.val();
   var lat = position.coords.latitude;
   var lon = position.coords.longitude;
   g['lat'] = lat;
   g['lon'] = lon;
 
+  if(query === ""){
+    query = undefined;
+  }
+  else{
+    //do nothing
+  }
+
   fsvQuery.val("");
 
-  $.ajax({
-    type:"get",
-    data: {
-      query: query,
-      latitude: lat,
-      longitude: lon
-    },
-    url:"/foursquare-venues",
-    success: function(data) {
-      var results = JSON.parse(data.results);
-      var venues = results.response.venues;
-      getWalkingDistances(venues);
-      initGmap(lat, lon);
-    }
-  });
+  if(isInt(nSteps)){
+    localStorage.targetSteps = nSteps;
+  }
+  else{
+    localStorage.targetSteps = localStorage.remainingSteps;
+  }
+
+  desiredSteps.val("");
+
+  if(query !== undefined){
+
+    $.ajax({
+      type:"get",
+      data: {
+        query: query,
+        latitude: lat,
+        longitude: lon
+      },
+      url:"/foursquare-venues",
+      success: function(data) {
+        var results = JSON.parse(data.results);
+        var venues = results.response.venues;
+        getWalkingDistances(venues);
+        initGmap(lat, lon);
+      }
+    });
+  }
+
+  else{
+    $.ajax({
+      type: "get",
+      data: {
+        latitude: lat,
+        longitude: lon
+      },
+      url: "foursquare-explore",
+      success: function(data){
+        var stuff = JSON.parse(data.results);
+        console.log(stuff);
+      }
+    });
+  }
 }
 
+function isInt(n){
+  return ((n % 1) === 0);
+}
 // function displayVenuesAndDistances(venues, distObjs) {
 //   data.results = JSON.parse(data.results);
 //   var venues = data.results.response.venues;
@@ -57,9 +96,9 @@ function submitFSVSearch(position) {
 
 function pairSortAndStore(venues, distObjs) {
   var targetDist;
-  if (localStorage.remainingSteps <= 0) {
-    targetDist = (localStorage.remainingSteps / localStorage.stepsPerMile) / 2;
-  } else {
+  if (localStorage.targetSteps >= 0) {
+    targetDist = (localStorage.goalSteps / localStorage.stepsPerMile) / 2;
+  } else { //TODO: put in a requirement for steps if none exists
     targetDist = (2000 / localStorage.stepsPerMile) / 2;
   }
 

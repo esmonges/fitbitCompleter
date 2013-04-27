@@ -18,7 +18,10 @@
     </div>
 
     <form action="javascript:getGeoAndSubmit()" class="content box">
+      <div id="fsvDesc">What do you want to do?</div>
       <input id="fsvQuery" type="text">
+      <div id="stepsDesc">How many steps do you want to complete?</div>
+      <input id="stepsDesired" type="text">
       <input type="submit" value="Find Venues">
     </form>
 
@@ -78,12 +81,13 @@
             };
             $("#summary").html(template(data));
          } else {
-            $("#summary").html("You've achieved your step goal for the day! If you want to push yourself a little further, we'll suggest some venues that will earn you around another 2000 steps.");
+            $("#summary").html("You've achieved your step goal for the day! If you want to push yourself a little further, we'll suggest some more venues. Just put in the number of steps you want!");
           }
-        } else {
-          console.log("Received an error from the server:");
-          console.log(response.error);
         }
+        // } else {
+        //   console.log("Received an error from the server:");
+        //   console.log(response.error);
+        // }
       }
     });
   };
