@@ -45,8 +45,30 @@
     {{/each}}
   </script>
 
+  <script id="suggestion-overlay-template" type="text/x-handlebars-template">
+    <div id="overlay" class="box">
+      <h3>Lorem ipsum</h3>
+      <div id="close-overlay">X</div>
+    </div>
+  </script>
+
   <script>
   var g = {};
+
+  var placeOverlay = function() {
+    var source = $("#suggestion-overlay-template").html();
+    var template = Handlebars.compile(source);
+    var data = { };
+    $("body").append(template(data));
+    $("#close-overlay").onButtonTap(
+      function() { $("#overlay").remove(); },
+      function() {}
+    );
+  }
+
+  var removeOverlay = function() {
+    // TODO
+  }
 
   window.onload = function() {
     addTappableJQPlugin(); // TODO: Don't need?
@@ -150,7 +172,7 @@
 
   function makeSuggestionsHighlightable() {
     $.each($(".suggestion"), function (index, suggestion) {
-      var onTap = function() { }; // TODO
+      var onTap = placeOverlay; // TODO: Should have data arguments
       var onLong = function() { }; // TODO
       ($(suggestion)).onButtonTap(onTap, onLong);
     });

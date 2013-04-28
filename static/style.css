@@ -35,7 +35,7 @@ a {
   width: 100%;
 }
 
-#map-canvas-hidden{
+#map-canvas-hidden {
   height: 0px;
   width: 0px;
 }
@@ -73,7 +73,7 @@ body {
 
 /* general style */
 
-.block{
+.block {
   display: block;
 }
 
@@ -156,5 +156,19 @@ li:last-child {
 #current-page {
   font-weight: bold;
   font-size: 1.25rem;
+}
+
+/* TODO */
+#overlay {
+  position: fixed;
+  top: 20%;
+  height: 60%;
+  margin: 1rem;
+}
+
+#close-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
