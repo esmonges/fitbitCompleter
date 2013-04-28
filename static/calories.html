@@ -18,7 +18,10 @@
     </div>
 
     <form action="javascript:searchFoods()" class="content box">
+      <div id="foodDesc">What kind of food do you want to eat?</div>
       <input type="text" id="foodQuery">
+      <div id="calorieDesc">How many calories do you want to eat per serving?</div>
+      <input type="text" id="caloriesDesired">
       <input type="submit" value="Search for foods!">
     </form>
 
@@ -89,8 +92,19 @@
   function searchFoods() {
     var foodQuery = $("#foodQuery");
     var searchQuery = foodQuery.val();
+    var calQuery = $("#caloriesDesired");
+    var nCals = calQuery.val();
 
     foodQuery.val("");
+
+    if(isInt(nCals)){
+      g.targetCalories = nCals;
+    }
+    else{
+      g.targetCalories = g.remainingCalories;
+    }
+
+    calQuery.val("");
 
     $.ajax({
       type: "get",
@@ -113,8 +127,8 @@
 
   function displayFoodSuggestions() {
     var sortedFoods = g.foods.sort(function(a, b) {
-      var adiff = Math.abs(a.calories - g.remainingCalories);
-      var bdiff = Math.abs(b.calories - g.remainingCalories);
+      var adiff = Math.abs(a.calories - g.targetCalories);
+      var bdiff = Math.abs(b.calories - g.targetCalories);
       return adiff - bdiff;
     });
 
@@ -142,6 +156,11 @@
       ($(suggestion)).onButtonTap(onTap, onLong);
     });
   }
+
+  function isInt(n){
+    return ((n%1) === 0);
+  }
+
   </script>
 </body>
 </html>
