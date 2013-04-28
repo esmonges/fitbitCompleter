@@ -41,7 +41,7 @@
 
   <script id="activity-list-template" type="text/x-handlebars-template">
     {{#each activities}}
-      <li class="suggestion">{{name}}, {{mets}} calories per hour</li>
+      <li class="suggestion">{{name}}, {{calories}} calories per hour</li>
     {{/each}}
   </script>
 
@@ -139,7 +139,12 @@
 
     var source = $("#activity-list-template").html();
     var template = Handlebars.compile(source);
+
     var data = { activities: sortedActivities.slice(0, nEntries) }; 
+    var weight = localStorage["fitbitCompleter" + "weight"]
+    for (var i = 0; i < data.activities.length; i++) {
+      data.activities[i].calories = Math.round(data.activities[i].mets * weight);
+    }
     $("#suggestions").html(template(data));
   }
 
