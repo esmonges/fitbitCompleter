@@ -47,6 +47,12 @@
     </p>
   </script>
 
+  <script id="food-list-template" type="text/x-handlebars-template">
+    {{#each foods}}
+      <li class="suggestion">{{name}}, Calories per serving: {{calories}}
+    {{/each}}
+  </script>
+
   <script>
   var g = {};
 
@@ -97,10 +103,9 @@
 
     foodQuery.val("");
 
-    if(isInt(nCals)){
+    if (isInt(nCals)) {
       g.targetCalories = nCals;
-    }
-    else{
+    } else {
       g.targetCalories = g.remainingCalories;
     }
 
@@ -135,18 +140,12 @@
     var i;
     // TODO REPLACE 5 WITH CONST
     var nEntries = Math.min(sortedFoods.length, 5);
-    var suggestions = $("#suggestions");
-    var newSuggestion;
 
-    suggestions.html("");
+    var source = $("#food-list-template").html();
+    var template = Handlebars.compile(source);
+    var data = { foods: sortedFoods.slice(0, nEntries) };
 
-    for (i = 0; i < nEntries; i++) {
-      newSuggestion = $("<li>").addClass("suggestion");
-      newSuggestion.html(
-        sortedFoods[i].name + ", Calories per serving: " + sortedFoods[i].calories
-      );
-      suggestions.append(newSuggestion);
-    }
+    $("#suggestions").html(template(data));
   }
 
   function makeSuggestionsHighlightable() {
