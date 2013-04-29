@@ -41,13 +41,26 @@
 
   <script id="activity-list-template" type="text/x-handlebars-template">
     {{#each activities}}
-      <li class="suggestion">{{name}}, {{calories}} calories per hour</li>
+      <li class="suggestion">
+        <span id="name">{{name}}</span>,
+        <span id="calories">{{calories}}</span>
+        calories per hour
+      </li>
     {{/each}}
   </script>
 
   <script id="suggestion-overlay-template" type="text/x-handlebars-template">
     <div id="overlay" class="box">
-      <h3>Lorem ipsum</h3>
+      <p id="exercise-name">{{exercise_name}}</p>
+
+      <p class="exercise-info">
+        This exercise burns {{calories_per_hour}} every hour.
+      </p>
+
+      <p class="exercise-info">
+        Do this exercise for {{time_needed}} minutes to reach your net calorie goal.
+      </p>
+        
       <div id="close-overlay">X</div>
     </div>
   </script>
@@ -55,19 +68,21 @@
   <script>
   var g = {};
 
-  var placeOverlay = function() {
-    var source = $("#suggestion-overlay-template").html();
-    var template = Handlebars.compile(source);
-    var data = { };
-    $("body").append(template(data));
-    $("#close-overlay").onButtonTap(
-      function() { $("#overlay").remove(); },
-      function() {}
-    );
-  }
-
-  var removeOverlay = function() {
-    // TODO
+  var placeOverlay = function(name, calories_per_hour, time_needed) {
+    return function() {
+      var source = $("#suggestion-overlay-template").html();
+      var template = Handlebars.compile(source);
+      var data = {
+        exercise_name: name,
+        calories_per_hour: calories_per_hour,
+        time_needed: time_needed
+      };
+      $("body").append(template(data));
+      $("#close-overlay").onButtonTap(
+        function() { $("#overlay").remove(); },
+        function() {}
+      );
+    }
   }
 
   window.onload = function() {
@@ -146,10 +161,8 @@
     }
   }
 
-  // TODO: Use BMI information
   function displayActivities() {
     var activitySuggestions = $("#suggestions");
-    var newSuggestion;
     var sortedActivities = g.exercises.sort(function(a, b) {
       var adiff = Math.abs((a.mets * 60) - (- g.remainingCalories));
       var bdiff = Math.abs((b.mets * 60) - (- g.remainingCalories));
@@ -172,7 +185,13 @@
 
   function makeSuggestionsHighlightable() {
     $.each($(".suggestion"), function (index, suggestion) {
-      var onTap = placeOverlay; // TODO: Should have data arguments
+      var time = Math.ceil(-g.remainingCalories * 60 / $(suggestion).children("#calories").html());
+      console.log(time);
+      var onTap = placeOverlay(
+        $(suggestion).children("#name").html(),
+        $(suggestion).children("#calories").html(),
+        time
+      );
       var onLong = function() { }; // TODO
       ($(suggestion)).onButtonTap(onTap, onLong);
     });
