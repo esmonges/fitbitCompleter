@@ -40,7 +40,7 @@ export function init(server) {
         var parsed = JSON.parse(results.get_Response());
         console.log(parsed);
 
-        if(!parsed.weight[0]){
+        if (!parsed.weight[0]) {
           parsed.weight[0] = {};
           parsed.weight[0].weight = undefined;
         }
