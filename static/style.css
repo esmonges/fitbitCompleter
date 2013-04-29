@@ -174,6 +174,10 @@ li:last-child {
   font-size: 1.2rem;
 }
 
+input {
+  width: 90%;
+}
+
 #close-overlay {
   position: absolute;
   top: 0;

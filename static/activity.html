@@ -41,7 +41,7 @@
 
   <script id="activity-list-template" type="text/x-handlebars-template">
     {{#each activities}}
-      <li class="suggestion">
+      <li class="suggestion" data-name="{{name}}" data-calories="{{calories}}" data-id="{{id}}">
         <span id="name">{{name}}</span>,
         <span id="calories">{{calories}}</span>
         calories per hour
@@ -50,8 +50,10 @@
   </script>
 
   <script id="suggestion-overlay-template" type="text/x-handlebars-template">
-    <div id="overlay" class="box">
+    <div id="overlay" class="box" data-id="{{id}}">
       <p id="exercise-name">{{exercise_name}}</p>
+
+      <hr />
 
       <p class="exercise-info">
         This exercise burns {{calories_per_hour}} every hour.
@@ -60,6 +62,19 @@
       <p class="exercise-info">
         Do this exercise for {{time_needed}} minutes to reach your net calorie goal.
       </p>
+
+      <hr />
+
+      <p class="exercise-info">Log time spent on {{exercise_name}}:
+
+      <form id="log-activity" action="javascript:logActivity()">
+        <p class="form-field-description">Start Time (HH:mm)</p>
+          <input type="text" id="start-time" />
+        <p class="form-field-description">Duration (minutes)</p>
+          <input type="text" id="duration" />
+        <input type="submit" value="Log Activity">
+
+      </form> <!-- TODO: make start time current time, duration default 1 hour -->
         
       <div id="close-overlay">X</div>
     </div>
@@ -68,12 +83,38 @@
   <script>
   var g = {};
 
-  var placeOverlay = function(name, calories_per_hour, time_needed) {
+  var logActivity = function() {
+    var startTime = $("#start-time").val();
+    var duration = $("#duration").val();
+    var activityId = $("#overlay").data("id");
+    $.ajax({
+      type: "put",
+      url: "log-fitbit-exercise",
+      data: {
+        accessToken: localStorage["fitbitCompleter" + "AccessToken"],
+        accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"],
+        startTime: startTime,
+        duration: duration,
+        activityId: activityId // TODO
+      },
+      success: function(response) {
+        if (response.success) {
+          console.log("Success!");
+        } else {
+          console.log("Failure: ");
+          console.log(response.error);
+        }
+      }
+    });
+  };
+
+  var placeOverlay = function(name, id, calories_per_hour, time_needed) {
     return function() {
       var source = $("#suggestion-overlay-template").html();
       var template = Handlebars.compile(source);
       var data = {
         exercise_name: name,
+        id: id,
         calories_per_hour: calories_per_hour,
         time_needed: time_needed
       };
@@ -133,7 +174,6 @@
       },
       success: function(response) {
         if (response.success) {
-          console.log(response);
           g.exercises = response.exercises;
           displayActivities();
           makeSuggestionsHighlightable();
@@ -185,11 +225,11 @@
 
   function makeSuggestionsHighlightable() {
     $.each($(".suggestion"), function (index, suggestion) {
-      var time = Math.ceil(-g.remainingCalories * 60 / $(suggestion).children("#calories").html());
-      console.log(time);
+      var time = Math.ceil(-g.remainingCalories * 60 / $(suggestion).data("calories"));
       var onTap = placeOverlay(
-        $(suggestion).children("#name").html(),
-        $(suggestion).children("#calories").html(),
+        $(suggestion).data("name"),
+        $(suggestion).data("id"),
+        $(suggestion).data("calories"),
         time
       );
       var onLong = function() { }; // TODO
