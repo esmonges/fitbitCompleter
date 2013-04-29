@@ -30,5 +30,29 @@ export function init(server) {
       }
     );
   });
+
+  server.put("/log-fitbit-food", (request, response) => {
+    var logFoodChoreo = new Fitbit.LogFood(session);
+    var logFoodInputs = logFoodChoreo.newInputSet();
+
+    logFoodInputs.set_AccessToken(request.query["accessToken"]);
+    logFoodInputs.set_AccessTokenSecret(request.query["accessTokenSecret"]);
+    logFoodInputs.set_ConsumerKey("63678ae84a134e38ad62a70d473a7d57");
+    logFoodInputs.set_ConsumerSecret("f9f4cfc32cc14ad6bc97057d3000fab2");
+    logFoodInputs.set_Amount(request.body.amount);
+    logFoodInputs.set_Date(request.body.date); // TODO: Just use current date?
+    logFoodInputs.set_FoodID(request.body.foodId);
+    logFoodInputs.set_MealType(request.body.mealType);
+    logFoodInputs.set_UnitID(request.body.unitId);
+
+    logFoodChoreo.execute(
+      logFoodInputs,
+      results => response.send({ success: true }),
+      error => {
+        console.log("Failed to log food from Fitbit");
+        response.send({ success: false, error: error });
+      }
+    );
+  });
 }
 
