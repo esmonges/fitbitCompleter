@@ -3,8 +3,6 @@ import express = module("express");
 
 var fitbit = require("../node_modules/temboo/Library/Fitbit");
 
-var searchFoodsChoreo = new fitbit.SearchFoods(temboo.session);
-
 export function init(server) {
   server.get("/get-fitbit-foods", (request, response) => {
     var searchFoodsChoreo = new fitbit.SearchFoods(temboo.session);
@@ -32,7 +30,7 @@ export function init(server) {
   });
 
   server.put("/log-fitbit-food", (request, response) => {
-    var logFoodChoreo = new Fitbit.LogFood(session);
+    var logFoodChoreo = new fitbit.LogFood(temboo.session);
     var logFoodInputs = logFoodChoreo.newInputSet();
 
     logFoodInputs.set_AccessToken(request.query["accessToken"]);
