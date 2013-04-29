@@ -166,6 +166,14 @@ li:last-child {
   margin: 1rem;
 }
 
+#exercise-name {
+  font-size: 1.4rem;
+}
+
+.exercise-info {
+  font-size: 1.2rem;
+}
+
 #close-overlay {
   position: absolute;
   top: 0;
