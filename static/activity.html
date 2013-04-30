@@ -104,9 +104,9 @@
 
       <form id="log-activity" action="javascript:logActivity()">
         <p class="form-field-description">Start Time (HH:mm)</p>
-          <input type="text" id="start-time" />
+          <input type="text" id="start-time" value="{{current_time}}" />
         <p class="form-field-description">Duration (minutes)</p>
-          <input type="text" id="duration" />
+          <input type="text" id="duration" value="{{time_needed}}" />
         <input type="submit" value="Log Activity">
 
       </form> <!-- TODO: make start time current time, duration default 1 hour -->
@@ -147,11 +147,20 @@
     return function() {
       var source = $("#suggestion-overlay-template").html();
       var template = Handlebars.compile(source);
+      var now = new Date();
+      var hours = now.getHours();
+      var hoursString = (hours < 10) ? ("0" + hours) : ("" + hours);
+      var minutes = now.getMinutes();
+      var minutesString = (minutes < 10) ? ("0" + minutes) : ("" + minutes);
+      var timeString = hoursString + ":" + minutesString;
+      console.log(timeString);
+
       var data = {
         exercise_name: name,
         id: id,
         calories_per_hour: calories_per_hour,
-        time_needed: time_needed
+        time_needed: time_needed,
+        current_time: timeString
       };
       $("body").append(template(data));
       $("#close-overlay").onButtonTap(
