@@ -49,12 +49,73 @@
 
   <script id="food-list-template" type="text/x-handlebars-template">
     {{#each foods}}
-      <li class="suggestion">{{name}}, Calories per serving: {{calories}}
+    <li class="suggestion" data-name="{{name}}" data-calories="{{calories}}" data-id="{{id}}">
+        {{name}}, Calories per serving: {{calories}}
+      </li>
     {{/each}}
   </script>
 
+
+  <script id="suggestion-overlay-template" type="text/x-handlebars-template">
+    <div id="overlay" class="box" data-id="{{id}}">
+      <p id="exercise-name">{{food_name}}</p>
+
+      <hr />
+
+      <p class="exercise-info">
+        This foods contains {{calories_per_serving}} per serving.
+      </p>
+
+      <p class="exercise-info">
+        Eat up to {{servings_allowed}} servings to stay under your calorie goal.
+      </p>
+
+      <hr />
+
+      <p class="exercise-info">Log servings of {{food_name}} eaten:
+
+      <form id="log-food" action="javascript:logFood()">
+        <p class="form-field-description">Servings</p>
+          <input type="text" id="servings" />
+          <p class="form-field-description">Meal</p>
+          <select name="meal">
+            <option value="Breakfast">Breakfast</option>
+            <option value="Morning Snack">Morning Snack</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Afternoon Snack">Afternoon Snack</option>
+            <option value="Dinner">Dinner</option>
+            <option value="Anytime">Anytime</option>
+          </select>
+        <input type="submit" value="Log Food">
+      </form>
+        
+      <div id="close-overlay">X</div>
+    </div>
+  </script>
+
+
+
+
   <script>
   var g = {};
+
+  var placeOverlay = function(name, id, calories_per_serving, servings_allowed) {
+    return function() {
+      var source = $("#suggestion-overlay-template").html();
+      var template = Handlebars.compile(source);
+      var data = {
+        food_name: name,
+        id: id,
+        calories_per_serving: calories_per_serving,
+        servings_allowed: servings_allowed
+      };
+      $("body").append(template(data));
+      $("#close-overlay").onButtonTap(
+        function() { $("#overlay").remove(); },
+        function() {}
+      );
+    }
+  }
 
   window.onload = function() {
     $.ajax({
@@ -150,14 +211,20 @@
 
   function makeSuggestionsHighlightable() {
     $.each($(".suggestion"), function (index, suggestion) {
-      var onTap = function() { }; // TODO
+      var servings = Math.floor(-g.remainingCalories / $(suggestion).data("calories"));
+      var onTap = placeOverlay(
+        $(suggestion).data("name"),
+        $(suggestion).data("id"),
+        $(suggestion).data("calories"),
+        servings
+      );
       var onLong = function() { }; // TODO
       ($(suggestion)).onButtonTap(onTap, onLong);
     });
   }
 
-  function isInt(n){
-    return ((n%1) === 0);
+  function isInt(n) {
+    return (n % 1) === 0;
   }
 
   </script>

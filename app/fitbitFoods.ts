@@ -3,6 +3,27 @@ import express = module("express");
 
 var fitbit = require("../node_modules/temboo/Library/Fitbit");
 
+// TODO: Consolidate with other identical functions!
+var getCurrentFitbitDate = (): string => {
+  var today = new Date();
+  var day;
+  if (today.getDate() < 10) {
+    day = "0" + (today.getDate().toString());
+  } else {
+    day = today.getDate().toString();
+  }
+
+  var month;
+  if ((today.getMonth() + 1) < 10) {
+    month = "0" + (today.getMonth()).toString();
+  } else {
+    month = (today.getMonth() + 1).toString();
+  }
+
+  var year = today.getFullYear().toString();
+  return "" + year + "-" + month + "-" + day; // TODO
+}
+
 export function init(server) {
   server.get("/get-fitbit-foods", (request, response) => {
     var searchFoodsChoreo = new fitbit.SearchFoods(temboo.session);
@@ -33,12 +54,12 @@ export function init(server) {
     var logFoodChoreo = new fitbit.LogFood(temboo.session);
     var logFoodInputs = logFoodChoreo.newInputSet();
 
-    logFoodInputs.set_AccessToken(request.query["accessToken"]);
-    logFoodInputs.set_AccessTokenSecret(request.query["accessTokenSecret"]);
+    logFoodInputs.set_AccessToken(request.body.accessToken);
+    logFoodInputs.set_AccessTokenSecret(request.body.accessTokenSecret);
     logFoodInputs.set_ConsumerKey("63678ae84a134e38ad62a70d473a7d57");
     logFoodInputs.set_ConsumerSecret("f9f4cfc32cc14ad6bc97057d3000fab2");
     logFoodInputs.set_Amount(request.body.amount);
-    logFoodInputs.set_Date(request.body.date); // TODO: Just use current date?
+    logFoodInputs.set_Date(getCurrentFitbitDate());
     logFoodInputs.set_FoodID(request.body.foodId);
     logFoodInputs.set_MealType(request.body.mealType);
     logFoodInputs.set_UnitID(request.body.unitId);
