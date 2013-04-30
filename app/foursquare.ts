@@ -39,7 +39,7 @@ export function init(server) {
     );
   });
 
-  server.get("/foursquare-explore", (request, response) =>{
+  server.get("/foursquare-explore", (request, response) => {
     var exploreChoreo = new foursquare.Explore(temboo.session);
 
     var data = request.query;
@@ -58,7 +58,7 @@ export function init(server) {
     // Run the choreo, specifying success and error callback handlers
     exploreChoreo.execute(
       exploreInputs,
-      function(results){
+      function(results) {
         console.log(results);
         response.send({ success: true, results: results.get_Response() });
       },

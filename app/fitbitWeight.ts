@@ -20,7 +20,8 @@ var getCurrentFitbitDate = (): string => {
   }
 
   var year = today.getFullYear().toString();
-  return "" + year + "-" + month + "-" + day + "/1m"; // TODO
+  // NOTE: Special case here for retrieving full month of data
+  return "" + year + "-" + month + "-" + day + "/1m";
 }
 
 export function init(server) {

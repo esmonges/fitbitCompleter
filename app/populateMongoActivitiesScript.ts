@@ -4,7 +4,6 @@ import express = module("express");
 var fitbit = require("../node_modules/temboo/Library/Fitbit/Activities");
 import activities = module("./activities");
 
-// TODO: Consolidate with other identical functions!
 var getCurrentFitbitDate = (): string => {
   var today = new Date();
   var day;
@@ -22,11 +21,10 @@ var getCurrentFitbitDate = (): string => {
   }
 
   var year = today.getFullYear().toString();
-  return "" + year + "-" + month + "-" + day; // TODO
+  return "" + year + "-" + month + "-" + day;
 }
 
 export function populate() {
-  console.log("hi");
   var browseActivitiesChoreo = new fitbit.BrowseActivities(temboo.session);
   var browseActivitiesInputs = browseActivitiesChoreo.newInputSet();
 
@@ -54,9 +52,7 @@ export function populate() {
         });
       });
     },
-    error => {
-      console.log("Failed to get activities from Fitbit");
-    }
+    error => console.log("Failed to get activities from Fitbit")
   );
 }
 

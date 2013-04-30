@@ -10,7 +10,6 @@ export function init(server) {
     var initializeOAuthInputs = initializeOAuthChoreo.newInputSet();
 
     // Set inputs
-    // TODO: Move these constants somewhere nicer
     initializeOAuthInputs.set_AccountName("omer");
     initializeOAuthInputs.set_AppKeyName("FitbitCompleter");
     initializeOAuthInputs.set_AppKeyValue("61191725-521b-4900-a");
@@ -34,8 +33,6 @@ export function init(server) {
       error => response.send({ error: error, success: false })
     );
   });
-
-
 
   server.get("/finalize-fitbit-oauth", (request, response) => {
     var oauthTokenSecret = request.query["oauthTokenSecret"];

@@ -2,7 +2,6 @@ import temboo = module("./temboo");
 import express = module("express");
 
 var fitbit = require("../node_modules/temboo/Library/Fitbit");
-//var fitbitFoods = require("../node_modules/temboo/Library/Fitbit/Foods");
 
 var getCurrentFitbitDate = (): string => {
   var today = new Date();
@@ -46,14 +45,13 @@ export function init(server) {
         var fitbitActivities = JSON.parse(results.get_Response());
         var stepsPerMile;
         if (fitbitActivities["summary"]["distances"][0]["distance"] === 0) {
-          // TODO: Should use previous day's data instead
           stepsPerMile = 1000;
         } else {
           stepsPerMile = (fitbitActivities["summary"]["steps"]) / fitbitActivities["summary"]["distances"][0]["distance"];
         }
         console.log(fitbitActivities)
 
-        if(!fitbitActivities["goals"]){
+        if (!fitbitActivities["goals"]) {
           fitbitActivities["goals"] = {};
           fitbitActivities["goals"]["steps"] = undefined;
           fitbitActivities["goals"]["caloriesOut"] = undefined;
@@ -67,35 +65,9 @@ export function init(server) {
           caloriesGoal: fitbitActivities["goals"]["caloriesOut"],
           actualCalories: fitbitActivities["summary"]["caloriesOut"]
         });
-
-        //console.log("Net Calories Goal: " + fitbitActivities["goals"]["caloriesOut"]);
-        //console.log("Actual Net Calories: " + fitbitActivities["summary"]["caloriesOut"]);
       },
       error => response.send({ success: false, error: error })
     );
   });
-
-/*
-  server.get("/get-foods-data", (request, response) => {
-    var getFoodGoalChoreo = new fitbitFoods.GetFoodGoal(temboo.session);
-    var getFoodGoalInputs = new getFoodGoalChoreo.newInputSet();
-
-    getFoodGoalChoreo.execute(
-      getFoodGoalInputs,
-      results => {
-        var calorieData = JSON.parse(results.get_Response());
-
-        response.send({
-          success: true,
-          data: calorieData
-        });
-      },
-      error => {
-        response.send({ success: false, error: error});
-      }
-    );
-  });
-*/
-
 }
 

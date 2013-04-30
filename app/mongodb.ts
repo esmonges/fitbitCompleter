@@ -16,9 +16,7 @@ declare module "mongodb" {
 }
 
 
-interface MongoDb {
-
-}
+interface MongoDb { }
 
 interface MongoCollection {
   find(query: any): MongoCursor;
