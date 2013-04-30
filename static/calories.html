@@ -49,15 +49,20 @@
 
   <script id="food-list-template" type="text/x-handlebars-template">
     {{#each foods}}
-    <li class="suggestion" data-name="{{name}}" data-calories="{{calories}}" data-id="{{id}}">
+    <li class="suggestion"
+       data-name="{{name}}"
+       data-calories="{{calories}}"
+       data-id="{{foodId}}"
+       data-unit-name="{{defaultUnit.name}}"
+       data-unit-id="{{defaultUnit.id}}"
+      >
         {{name}}, Calories per serving: {{calories}}
       </li>
     {{/each}}
   </script>
 
-
   <script id="suggestion-overlay-template" type="text/x-handlebars-template">
-    <div id="overlay" class="box" data-id="{{id}}">
+    <div id="overlay" class="box" data-id="{{id}}" data-unit-id="{{unitId}}">
       <p id="exercise-name">{{food_name}}</p>
 
       <hr />
@@ -78,7 +83,7 @@
         <p class="form-field-description">Servings</p>
           <input type="text" id="servings" />
           <p class="form-field-description">Meal</p>
-          <select name="meal">
+          <select id="meal" name="meal">
             <option value="Breakfast">Breakfast</option>
             <option value="Morning Snack">Morning Snack</option>
             <option value="Lunch">Lunch</option>
@@ -99,7 +104,34 @@
   <script>
   var g = {};
 
-  var placeOverlay = function(name, id, calories_per_serving, servings_allowed) {
+  var logFood = function() {
+    var servings = $("#servings").val();
+    var mealType = $("#meal").val();
+    var foodId = $("#overlay").data("id");
+    var unitId = $("#overlay").data("unit-id");
+    $.ajax({
+      type: "put",
+      url: "log-fitbit-food",
+      data: {
+        accessToken: localStorage["fitbitCompleter" + "AccessToken"],
+        accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"],
+        foodId: foodId,
+        amount: servings,
+        mealType: mealType,
+        unitId: unitId
+      },
+      success: function(response) {
+        if (response.success) {
+          console.log("Success!");
+        } else {
+          console.log("Failure: ");
+          console.log(response.error);
+        }
+      }
+    });
+  };
+
+  var placeOverlay = function(name, id, calories_per_serving, servings_allowed, unitId) {
     return function() {
       var source = $("#suggestion-overlay-template").html();
       var template = Handlebars.compile(source);
@@ -107,7 +139,8 @@
         food_name: name,
         id: id,
         calories_per_serving: calories_per_serving,
-        servings_allowed: servings_allowed
+        servings_allowed: servings_allowed,
+        unitId: unitId
       };
       $("body").append(template(data));
       $("#close-overlay").onButtonTap(
@@ -180,7 +213,6 @@
       },
       success: function(response) {
         if (response.success) {
-          console.log(response);
           g.foods = response.foods;
           displayFoodSuggestions();
           makeSuggestionsHighlightable();
@@ -216,7 +248,8 @@
         $(suggestion).data("name"),
         $(suggestion).data("id"),
         $(suggestion).data("calories"),
-        servings
+        servings,
+        $(suggestion).data("unit-id")
       );
       var onLong = function() { }; // TODO
       ($(suggestion)).onButtonTap(onTap, onLong);

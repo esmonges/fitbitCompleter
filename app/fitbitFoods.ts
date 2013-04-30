@@ -15,13 +15,26 @@ var getCurrentFitbitDate = (): string => {
 
   var month;
   if ((today.getMonth() + 1) < 10) {
-    month = "0" + (today.getMonth()).toString();
+    month = "0" + (today.getMonth() + 1).toString();
   } else {
     month = (today.getMonth() + 1).toString();
   }
 
   var year = today.getFullYear().toString();
   return "" + year + "-" + month + "-" + day; // TODO
+}
+
+var convertMealTypeToId = function(mealType) {
+  switch (mealType) {
+    case "Breakfast": return 1;
+    case "Morning Snack": return 2;
+    case "Lunch": return 3;
+    case "Afternoon Snack": return 4;
+    case "Dinner": return 5;
+    // THERE IS NO 6
+    case "Anytime": return 7;
+    default: throw new Error;
+  }
 }
 
 export function init(server) {
@@ -60,15 +73,15 @@ export function init(server) {
     logFoodInputs.set_ConsumerSecret("f9f4cfc32cc14ad6bc97057d3000fab2");
     logFoodInputs.set_Amount(request.body.amount);
     logFoodInputs.set_Date(getCurrentFitbitDate());
-    logFoodInputs.set_FoodID(request.body.foodId);
     logFoodInputs.set_MealType(request.body.mealType);
-    logFoodInputs.set_UnitID(request.body.unitId);
+    logFoodInputs.set_FoodId(request.body.foodId);
+    logFoodInputs.set_UnitId(request.body.unitId);
 
     logFoodChoreo.execute(
       logFoodInputs,
       results => response.send({ success: true }),
       error => {
-        console.log("Failed to log food from Fitbit");
+        console.log("Failed to log food to Fitbit");
         response.send({ success: false, error: error });
       }
     );
