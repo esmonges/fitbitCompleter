@@ -11,45 +11,49 @@
   <link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
 </head>
 <body>
-  <div id="container">
-    <div id="header" class="box">
-      <a id="home" href="/signedin.html"><img src="fitbit.png" alt="Fitbit" /> Completer</a>
-    </div>
-
-    <div id="summary" class="content box">
-    </div>
-
-    <form action="javascript:getGeoAndSubmit()" class="content box">
-      <div id="fsvDesc">What kind of venue would you like to walk to?</div>
-      <input id="fsvQuery" type="text" placeholder="Dive Bar">
-      <div id="stepsDesc">How many total steps do you want to take?</div>
-      <input id="stepsDesired" type="text" placeholder="1000">
-      <input type="submit" value="Find Venues">
-    </form>
-
-    <ul id="suggestions" class="content box">
-    </ul>
-
-    <div id="map-canvas-hidden" class="content hiddenMap">
-    </div>
-
-    <div id="footer">
-      <div class="tab home">
-        <a href="signedin.html"><div class="tabtext">Home</div></a>
+  <div id="wrapper">
+    <!-- <div id="container"> -->
+      <div id="header" class="box">
+        <a id="home" href="/signedin.html"><img src="fitbit.png" alt="Fitbit" /> Completer</a>
       </div>
-      <div id="current-page" class="tab steps">
-        <a href="steps.html"><div class="tabtext">Steps</div></a>
+    
+      <div id="bodyid">
+        <div id="summary" class="content box">
+        </div>
+            
+        <form action="javascript:getGeoAndSubmit()" class="content box">
+          <div id="fsvDesc">What kind of venue would you like to walk to?</div>
+          <input id="fsvQuery" type="text" placeholder="Dive Bar">
+          <div id="stepsDesc">How many total steps do you want to take?</div>
+          <input id="stepsDesired" type="text" placeholder="1000">
+          <input type="submit" value="Find Venues">
+        </form>
+            
+        <ul id="suggestions" class="content box">
+        </ul>
+    
+        <div id="map-canvas-hidden" class="content hiddenMap">
+        </div>
       </div>
-      <div class="tab calories">
-        <a href="calories.html"><div class="tabtext">Food</div></a>
+      
+      <div id="footer">
+        <div class="tab home">
+          <a href="signedin.html"><div class="tabtext">Home</div></a>
+        </div>
+        <div id="current-page" class="tab steps">
+          <a href="steps.html"><div class="tabtext">Steps</div></a>
+        </div>
+        <div class="tab calories">
+          <a href="calories.html"><div class="tabtext">Food</div></a>
+        </div>
+        <div class="tab activity">
+          <a href="activity.html"><div class="tabtext">Activity</div></a>
+        </div>
+        <div class="tab logout" id="logout">
+          <a href="javascript:popupLogout()"><div class="tabtext">Logout</div></a>
+        </div>
       </div>
-      <div class="tab activity">
-        <a href="activity.html"><div class="tabtext">Activity</div></a>
-      </div>
-      <div class="tab logout" id="logout">
-        <a href="javascript:popupLogout()"><div class="tabtext">Logout</div></a>
-      </div>
-    </div>
+    <!-- </div> -->
   </div>
 
   <script id="loading-template" type="text/x-handlebars-template">

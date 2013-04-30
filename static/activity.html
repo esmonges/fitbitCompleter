@@ -11,35 +11,39 @@
   <link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
 </head>
 <body>
-  <div id="container">
-    <div id="header" class="box">
-      <a id="home" href="/signedin.html"><img id="logo" src="fitbit.png" alt="Fitbit" /> Completer</a>
-    </div>
+  <div id="wrapper">
+  <!-- <div id="container"> -->
+      <div id="header" class="box">
+        <a id="home" href="/signedin.html"><img id="logo" src="fitbit.png" alt="Fitbit" /> Completer</a>
+      </div>
 
-    <div id="summary" class="content box">
-    </div>
+      <div id="bodyid">   
+        <div id="summary" class="content box">
+        </div>
+         
+        <ul id="suggestions" class="content box">
+        </ul>   
+      </div>  
 
-    <ul id="suggestions" class="content box">
-    </ul>
-
-    <div id="footer">
-      <div class="tab home">
-        <a href="signedin.html"><div class="tabtext">Home</div></a>
+      <div id="footer">
+        <div class="tab home">
+          <a href="signedin.html"><div class="tabtext">Home</div></a>
+        </div>
+        <div class="tab steps">
+          <a href="steps.html"><div class="tabtext">Steps</div></a>
+        </div>
+        <div class="tab calories">
+          <a href="calories.html"><div class="tabtext">Food</div></a>
+        </div>
+        <div id="current-page" class="tab activity">
+          <a href="activity.html"><div class="tabtext">Activity</div></a>
+        </div>
+        <div class="tab logout" id="logout">
+          <a href="javascript:popupLogout()"><div class="tabtext">Logout</div></a>
+        </div>
       </div>
-      <div class="tab steps">
-        <a href="steps.html"><div class="tabtext">Steps</div></a>
-      </div>
-      <div class="tab calories">
-        <a href="calories.html"><div class="tabtext">Food</div></a>
-      </div>
-      <div id="current-page" class="tab activity">
-        <a href="activity.html"><div class="tabtext">Activity</div></a>
-      </div>
-      <div class="tab logout" id="logout">
-        <a href="javascript:popupLogout()"><div class="tabtext">Logout</div></a>
-      </div>
-    </div>
-  </div>
+  <!--   </div> -->
+  </div>  
 
   <script src="jquery-1.9.0.js"></script>
   <script src="addTappableJQPlugin.js"></script>
@@ -208,10 +212,10 @@
   }
 
   window.onload = function() {
-    openLoadingPopup();
-    if (!checkLogin()) {
-      return;
-    };
+    // openLoadingPopup();
+    // if (!checkLogin()) {
+    //   return;
+    // };
 
     $.ajax({
       type: "get",
