@@ -91,7 +91,10 @@
   <script>
   window.onload = function() {
     openLoadingPopup();
-    if(!checkLogin()){return;};
+    if (!checkLogin()) {
+      return;
+    };
+
     $.ajax({
       type: "get",
       url: "get-fitbit-data",
