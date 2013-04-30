@@ -245,9 +245,7 @@
     $.ajax({
       type: "get",
       url: "get-fitbit-foods",
-      data: {
-        query: searchQuery // TODO
-      },
+      data: { query: searchQuery },
       success: function(response) {
         if (response.success) {
           g.foods = response.foods;
