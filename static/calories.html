@@ -32,6 +32,12 @@
         
         <ul id="suggestions" class="content box">
       </div>
+
+
+    <form action="javascript:dummyCalorieData()">
+      <button type="submit">Dummy calorie data</button>
+    </form>
+
       
       <div id="footer">
         <div class="tab home">
@@ -191,35 +197,35 @@
     }
   }
 
-  window.onload = function() {
-    // openLoadingPopup();
-    // if (!checkLogin()) {
-    //   return;
-    // };
+  // window.onload = function() {
+  //   openLoadingPopup();
+  //   if (!checkLogin()) {
+  //     return;
+  //   };
 
-    $.ajax({
-      type: "get",
-      url: "get-fitbit-data",
-      data: {
-        accessToken: localStorage["fitbitCompleter" + "AccessToken"],
-        accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"]
-      },
-      success: function(response) {
-        if (response.success) {
-          g.caloriesGoal = response.caloriesGoal;
-          g.actualCalories = response.actualCalories;
-        } else {
-          console.log("ERROR");
-          g.caloriesGoal = 2000;
-          g.actualCalories = 200;
-        }
-        displayCalorieData();
-        makeSuggestionsHighlightable();
-        closeLoadingPopup();
-        makeLogoutTappable(); // in initializationCode.js
-      }
-    });
-  };
+  //   $.ajax({
+  //     type: "get",
+  //     url: "get-fitbit-data",
+  //     data: {
+  //       accessToken: localStorage["fitbitCompleter" + "AccessToken"],
+  //       accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"]
+  //     },
+  //     success: function(response) {
+  //       if (response.success) {
+  //         g.caloriesGoal = response.caloriesGoal;
+  //         g.actualCalories = response.actualCalories;
+  //       } else {
+  //         console.log("ERROR");
+  //         g.caloriesGoal = 2000;
+  //         g.actualCalories = 200;
+  //       }
+  //       displayCalorieData();
+  //       makeSuggestionsHighlightable();
+  //       closeLoadingPopup();
+  //       makeLogoutTappable(); // in initializationCode.js
+  //     }
+  //   });
+  // };
 
   function displayCalorieData() {
     g.remainingCalories = g.caloriesGoal - g.actualCalories;
@@ -229,7 +235,7 @@
       var template = Handlebars.compile(source);
       var data = {
         actualCalories: g.actualCalories,
-        caloriesGoal: g.caloriesGoal,
+        calorieGoal: g.caloriesGoal,
         remainingCalories: g.remainingCalories
       };
 
@@ -238,6 +244,12 @@
     } else {
       $("#summary").html("You've achieved your calorie goal for the day! Feel free to search for more food to eat, but remember that you might owe some exercise after!");
     }
+  }
+
+  function dummyCalorieData(){
+    g.caloriesGoal = 2000;
+    g.actualCalories = 500;
+    displayCalorieData();
   }
 
   function searchFoods() {
