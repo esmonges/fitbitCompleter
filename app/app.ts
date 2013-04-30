@@ -6,6 +6,7 @@
 import http = module("http");
 import url = module("url");
 import express = module("express");
+import activities = module("./activities");
 
 import database = module("./database");
 import temboo = module("./temboo");
@@ -16,6 +17,9 @@ import fitbitSteps = module("./fitbitSteps");
 import fitbitFoods = module("./fitbitFoods");
 import fitbitExercises = module("./fitbitExercises");
 import fitbitWeight = module("./fitbitWeight");
+
+import populateMongoActivitiesScript = module("./populateMongoActivitiesScript");
+//populateMongoActivitiesScript.populate();
 
 var server = express.createServer();
 server.use(express.bodyParser());
