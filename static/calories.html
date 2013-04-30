@@ -22,7 +22,7 @@
     <form action="javascript:searchFoods()" class="content box">
       <div id="foodDesc">What kind of food do you want to eat?</div>
       <input type="text" id="foodQuery" placeholder="Single Malt Scotch">
-      <div id="calorieDesc">How many calories do you want to eat per serving?</div>
+      <div id="calorieDesc">How many calories should it have in a serving?</div>
       <input type="text" id="caloriesDesired" placeholder="150">
       <input type="submit" value="Search for foods!">
     </form>
@@ -65,7 +65,7 @@
 
   <script id="logout-template" type="text/x-handlebars-template">
     <div id="overlay" class="box">
-      Do you really want to logout?
+      Do you really want to log out?
       <form action="" id="logout-form">
         <button type="submit" formaction="javascript:logout()">Yes</button>
         <button type="submit" formaction="javascript:closeLogoutPopup()">No</button>

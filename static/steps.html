@@ -20,9 +20,9 @@
     </div>
 
     <form action="javascript:getGeoAndSubmit()" class="content box">
-      <div id="fsvDesc">What do you want to do?</div>
+      <div id="fsvDesc">What kind of venue would you like to walk to?</div>
       <input id="fsvQuery" type="text" placeholder="Dive Bar">
-      <div id="stepsDesc">How many steps do you want to complete?</div>
+      <div id="stepsDesc">How many total steps do you want to take?</div>
       <input id="stepsDesired" type="text" placeholder="1000">
       <input type="submit" value="Find Venues">
     </form>
@@ -78,7 +78,7 @@
 
   <script id="logout-template" type="text/x-handlebars-template">
     <div id="overlay" class="box">
-      Do you really want to logout?
+      Do you really want to log out?
       <form action="" id="logout-form">
         <button type="submit" formaction="javascript:logout()">Yes</button>
         <button type="submit" formaction="javascript:closeLogoutPopup()">No</button>
@@ -122,7 +122,7 @@
             $("#summary").html(template(data));
             $("#stepsDesired").val(goalSteps);
          } else {
-            $("#summary").html("You've achieved your step goal for the day! If you want to push yourself a little further, we'll suggest some more venues. Just put in the number of steps you want!");
+            $("#summary").html("You've achieved your step goal for the day! If you want to push yourself a little further, we'll suggest some more venues.");
           }
 
           closeLoadingPopup();

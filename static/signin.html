@@ -54,7 +54,7 @@
               // TODO: What if no localStorage?
               localStorage["fitbitCompleter" + "oauthTokenSecret"] = response.oauthTokenSecret;
               localStorage["fitbitCompleter" + "callbackId"] = response.callbackId;
-              signInBox.append("<a id='fitbit-oauth-link' href='" + response.url + "'>Sign in with <img src='fitbit.png' alt='Fitbit' /></a>");
+              signInBox.append("<a id='fitbit-oauth-link' href='" + response.url + "'>Log in with <img src='fitbit.png' alt='Fitbit' /></a>");
             } else {
               console.log(response.error);
             }
