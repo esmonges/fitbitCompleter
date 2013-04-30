@@ -203,24 +203,24 @@
         }
         closeLoadingPopup();
         displayCalorieData();
-      }
-    });
 
-    $.ajax({
-      type: "get",
-      url: "/get-fitbit-exercises",
-      data: {
-        accessToken: localStorage["fitbitCompleter" + "AccessToken"],
-        accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"],
-      },
-      success: function(response) {
-        if (response.success) {
-          g.exercises = response.exercises;
-          displayActivities();
-          makeSuggestionsHighlightable();
-        } else {
-          console.log("Error");
-        }
+        $.ajax({
+          type: "get",
+          url: "/get-fitbit-exercises",
+          data: {
+            accessToken: localStorage["fitbitCompleter" + "AccessToken"],
+            accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"],
+          },
+          success: function(response) {
+            if (response.success) {
+              g.exercises = response.exercises;
+              displayActivities();
+              makeSuggestionsHighlightable();
+            } else {
+              console.log("Error");
+            }
+          }
+        });
       }
     });
   };
