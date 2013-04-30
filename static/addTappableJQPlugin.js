@@ -33,63 +33,64 @@ function addTappableJQPlugin() {
   }
 
   TapManager.prototype = {
-  //========================
-  //  STATE
-  //========================
-  down: function(x, y, event) {
-    this.state.startX = x;
-    this.state.startY = y;
-    this.state.potentialTap = true;
-    this.onDown(event)
-    setTimeout(this.checkLong.bind(this), 500);
-  },
-  move: function(x, y, event) {
-    if (this.state.potentialTap && this.movedTooMuch(x, y)) {
-      this.state.potentialTap = false;
-      this.onUp(event);
-    }
-  },
-  movedTooMuch: function(x, y) {
-    return (window.Math.abs(x - this.state.startX) > 10 || 
-           window.Math.abs(y - this.state.startY) > 10);
-  },
-  up: function(event) {
-    if (this.state.potentialTap) {
-      this.onUp(event);
-      this.onTap(event);
-      this.state.potentialTap = false;
-    }
-  },
-  exit: function(event) {
-    if (this.state.potentialTap) {
-      this.state.potentialTap = false;
-      this.onUp(event);
-    }
-  },
-  checkLong: function(event) {
-    if (this.state.potentialTap) {
-      this.state.potentialTap = false;
-      this.onLong(event);
-      this.onUp(event);
-    }
-  },
+    //========================
+    //  STATE
+    //========================
+    down: function(x, y, event) {
+      this.state.startX = x;
+      this.state.startY = y;
+      this.state.potentialTap = true;
+      this.onDown(event)
+      setTimeout(this.checkLong.bind(this), 500);
+    },
+    move: function(x, y, event) {
+      if (this.state.potentialTap && this.movedTooMuch(x, y)) {
+        this.state.potentialTap = false;
+        this.onUp(event);
+      }
+    },
+    movedTooMuch: function(x, y) {
+      return (window.Math.abs(x - this.state.startX) > 10 || 
+             window.Math.abs(y - this.state.startY) > 10);
+    },
+    up: function(event) {
+      if (this.state.potentialTap) {
+        this.onUp(event);
+        this.onTap(event);
+        this.state.potentialTap = false;
+      }
+    },
+    exit: function(event) {
+      if (this.state.potentialTap) {
+        this.state.potentialTap = false;
+        this.onUp(event);
+      }
+    },
+    checkLong: function(event) {
+      if (this.state.potentialTap) {
+        this.state.potentialTap = false;
+        this.onLong(event);
+        this.onUp(event);
+      }
+    },
 
-  //========================
-  //  INIT
-  //========================
+    //========================
+    //  INIT
+    //========================
 
-  // Default jq behavior
-  bindFnsToDom: function() {
-    this.onDown = this.onDown.bind(this.dom);
-    this.onUp = this.onUp.bind(this.dom);
-    this.onTap = this.onTap.bind(this.dom);
-    this.onLong = this.onLong.bind(this.dom);
-  },
-  registerEvents: function() {
-    if ('ontouchstart' in document.documentElement) {
-      this.registerTouchEvents();
-    } else {
-      this.registerMouseEvents();
+    // Default jq behavior
+    bindFnsToDom: function() {
+      this.onDown = this.onDown.bind(this.dom);
+      this.onUp = this.onUp.bind(this.dom);
+      this.onTap = this.onTap.bind(this.dom);
+      this.onLong = this.onLong.bind(this.dom);
+    },
+    registerEvents: function() {
+      if ('ontouchstart' in document.documentElement) {
+        this.registerTouchEvents();
+      } else {
+        this.registerMouseEvents();
+      }
     },
     registerTouchEvents: function() {
       this.dom.on('touchstart', function(event) {
@@ -122,7 +123,6 @@ function addTappableJQPlugin() {
     }
   }
 }
-
 
 window.addEventListener('load', function() {
     addTappableJQPlugin();
