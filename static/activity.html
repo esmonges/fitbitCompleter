@@ -212,10 +212,10 @@
   }
 
   window.onload = function() {
-    // openLoadingPopup();
-    // if (!checkLogin()) {
-    //   return;
-    // };
+    openLoadingPopup();
+    if (!checkLogin()) {
+      return;
+    };
 
     $.ajax({
       type: "get",
