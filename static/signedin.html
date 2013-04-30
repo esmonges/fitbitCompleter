@@ -43,11 +43,21 @@
 
 <!-- TODO: fix footer scrolling bug -->
     <div id="footer">
-      <div id="current-page" class="tab"><a href="signedin.html">Home</a></div>
-      <div class="tab"><a href="steps.html">Steps</a></div>
-      <div class="tab"><a href="calories.html">Calories</a></div>
-      <div class="tab"><a href="activity.html">Activity</a></div>
-      <div class="tab" id="logout">Logout</div>
+      <div id="current-page" class="tab home">
+        <a href="signedin.html"><div class="tabtext">Home</div></a>
+      </div>
+      <div class="tab steps">
+        <a href="steps.html"><div class="tabtext">Steps</div></a>
+      </div>
+      <div class="tab calories">
+        <a href="calories.html"><div class="tabtext">Food</div></a>
+      </div>
+      <div class="tab activity">
+        <a href="activity.html"><div class="tabtext">Activity</div></a>
+      </div>
+      <div class="tab logout" id="logout">
+        <a href=""><div class="tabtext">Logout</div></a>
+      </div>
     </div>
 
   <script id="logout-template" type="text/x-handlebars-template">
@@ -79,7 +89,7 @@
   var g = {};
 
   window.onload = function() {
-    openLoadingPopup();
+  //  openLoadingPopup();
 
     $.ajax({
       type: "get",

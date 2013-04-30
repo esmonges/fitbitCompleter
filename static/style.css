@@ -135,18 +135,22 @@ li:last-child {
   bottom: 0px;
   width: 100%;
   height: 4rem;
+  padding-bottom: 32px;
 
   background-color: #45C2C5;
 }
 
 .tab {
-  padding-left: 2.5%;
+/*  padding-left: 2.5%;
   padding-right: 2.5%;
   padding-top: 1rem;
   margin-top: 0.5rem;
   padding-bottom: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1rem;*/
   display: inline-block;
+  height: 84px;
+  width: 52px;
+  position: relative;
 
   border-width: 1px;
   border-radius: 8px;
@@ -194,5 +198,59 @@ input {
   font-size: 1.5rem;
   top: 0.5rem;
   right: 0.5rem;
+}
+
+/* sprites
+http://www.google.com/imgres?um=1&sa=N&hl=en&biw=1366&bih=643&tbm=isch&tbnid=5yMdmSwiTbyaJM:&imgrefurl=http://findicons.com/search/home&docid=1SXqLK9EiAAZTM&imgurl=http://png-1.findicons.com/files/icons/1580/devine_icons_part_2/128/home.png&w=128&h=128&ei=J0N_UdaBNbXG4APg_YDwDA&zoom=1&ved=1t:3588,r:3,s:0,i:161&iact=rc&dur=341&page=1&tbnh=102&tbnw=100&start=0&ndsp=19&tx=35&ty=18
+http://www.google.com/imgres?um=1&hl=en&biw=1366&bih=643&tbm=isch&tbnid=_Q9TrTB25fp6LM:&imgrefurl=http://sweetclipart.com/two-black-footprint-silhouettes-484&docid=Y5a36By1g-FKKM&imgurl=http://sweetclipart.com/multisite/sweetclipart/files/foot_prints_black_silhouette.png&w=4909&h=5025&ei=TUN_UZHQMte64AOxuYGADw&zoom=1&ved=1t:3588,r:2,s:0,i:103
+http://www.google.com/imgres?um=1&hl=en&biw=1366&bih=643&tbm=isch&tbnid=5bfNCRp92MfrBM:&imgrefurl=http://illustration-pictures.feedio.net/gourmet-food-icon-set-vector-illustration-download-food-royalty-free/watermarked.cutcaster.com*cutcaster-photo-100634292-gourmet-food-icon-set.jpg/&docid=pZ8UBz3YiykGaM&imgurl=http://static6.depositphotos.com/1014999/603/v/950/depositphotos_6030267-Gourmet-food-icon-set.jpg&w=842&h=1024&ei=9kN_UYztDpKu4AObpIGgBw&zoom=1&ved=1t:3588,r:5,s:0,i:164
+http://www.google.com/imgres?um=1&hl=en&biw=1366&bih=643&tbm=isch&tbnid=vgsz2d7IV7oFoM:&imgrefurl=http://www.istockphoto.com/stock-illustration-14254250-fitness-yoga-and-palates-exercise-black-amp-white-icon-set.php&docid=fBrpxd9yXtwVcM&imgurl=http://i.istockimg.com/file_thumbview_approve/14254250/2/stock-illustration-14254250-fitness-yoga-and-palates-exercise-black-amp-white-icon-set.jpg&w=371&h=380&ei=N0R_Ue_GOLa64AP4v4HIDw&zoom=1&ved=1t:3588,r:4,s:0,i:161
+http://www.google.com/imgres?um=1&hl=en&biw=1366&bih=643&tbm=isch&tbnid=W7tMvEhe4S6_dM:&imgrefurl=http://findicons.com/icon/158145/lock&docid=P4_JVHnBAlaMTM&imgurl=http://png-1.findicons.com/files/icons/1579/devine/256/lock.png&w=256&h=256&ei=dUR_UcWFEbWh4APM2oGACg&zoom=1&ved=1t:3588,r:2,s:0,i:155
+ */
+
+.tab > a{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.steps{
+  background-image: url("./spritesheet.gif");
+  background-repeat: no-repeat;
+  background-position: -51px 0px;
+}
+
+.home{
+  background-image: url("./spritesheet.gif");
+  background-repeat: no-repeat;
+  background-position: 1px 0px;
+}
+
+.calories{
+
+  background-image: url("./spritesheet.gif");
+  background-repeat: no-repeat;
+  background-position: -102px 0px;
+}
+
+.activity{
+
+  background-image: url("./spritesheet.gif");
+  background-repeat: no-repeat;
+  background-position: -157px 0px;
+}
+
+.logout{
+
+  background-image: url("./spritesheet.gif");
+  background-repeat: no-repeat;
+  background-position: -206px 0px;
+}
+
+.tabtext{
+  position: relative;
+  bottom: -60px;
 }
 
