@@ -31,10 +31,16 @@ function submitFSVSearch(position) {
   fsvQuery.val("");
 
   if (isInt(nSteps)) {
+    console.log("Here");
     localStorage.targetSteps = nSteps;
-  } else {
+  } else if (isInt(localStorage.remainingSteps)){
+    console.log("here");
     localStorage.targetSteps = localStorage.remainingSteps;
+  } else{
+    console.log("h");
+    localStorage.targetSteps = 1000;
   }
+
 
   desiredSteps.val("");
 
@@ -85,14 +91,13 @@ function collateVenues(items) {
 }
 
 function isInt(n){
-  return (n % 1) === 0;
+  return ((n % 1) === 0 && n !== "");
 }
 
 function pairSortAndStore(venues, distObjs) {
   var targetDist;
   if (localStorage.targetSteps >= 0) {
     targetDist = (localStorage.targetSteps / localStorage.stepsPerMile) / 2;
-    console.log(localStorage.targetSteps);
   } else { //TODO: put in a requirement for steps if none exists
     targetDist = (2000 / localStorage.stepsPerMile) / 2;
   }

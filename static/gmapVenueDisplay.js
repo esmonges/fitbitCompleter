@@ -11,7 +11,7 @@ function initGmap(lat, lng) {
 
   var mapOptions = {
     center: new google.maps.LatLng(lat, lng),
-    zoom: 12,
+    zoom: 14,
     draggable: false,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };

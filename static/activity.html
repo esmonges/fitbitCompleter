@@ -228,7 +228,8 @@
         if (response.success) {
           localStorage["fitbitCompleter" + "weight"] = response.weight;
         } else {
-          console.log("ERROR");
+          console.log("Error:")
+          console.log(response.error);
         }
 
         makeLogoutTappable(); // in initializationCode.js
@@ -245,7 +246,8 @@
               g.caloriesGoal = response.caloriesGoal;
               g.actualCalories = response.actualCalories;
             } else {
-              console.log("ERROR");
+              console.log("Error:")
+              console.log(response.error);
               g.caloriesGoal = 2000;
               g.actualCalories = 200;
             }
@@ -265,7 +267,8 @@
                   displayActivities();
                   makeSuggestionsHighlightable();
                 } else {
-                  console.log("Error");
+                  console.log("Error:")
+                  console.log(response.error);
                 }
               }
             });

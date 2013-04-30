@@ -102,29 +102,40 @@
   window.onload = function() {
     openLoadingPopup();
 
-    $.ajax({
-      type: "get",
-      url: "finalize-fitbit-oauth",
-      data: {
-        oauthTokenSecret: localStorage["fitbitCompleter" + "oauthTokenSecret"],
-        callbackId: localStorage["fitbitCompleter" + "callbackId"]
-      },
-      success: function(response) {
-        if (response.success) {
-          localStorage["fitbitCompleter" + "AccessToken"] = response.accessToken;
-          localStorage["fitbitCompleter" + "AccessTokenSecret"] = response.accessTokenSecret;
-          localStorage["fitbitCompleter" + "UserID"] = response.userId;
-        } else {
-          console.log(response.error);
-        }
+    //assume that if one is not present, the oauth token has not been used
+    if(!localStorage["fitbitCompleter" + "AccessToken"]
+      ||!localStorage["fitbitCompleter" + "AccessTokenSecret"]
+      ||!localStorage["fitbitCompleter" + "UserID"]){
+      $.ajax({
+        type: "get",
+        url: "finalize-fitbit-oauth",
+        data: {
+          oauthTokenSecret: localStorage["fitbitCompleter" + "oauthTokenSecret"],
+          callbackId: localStorage["fitbitCompleter" + "callbackId"]
+        },
+        success: function(response) {
+          if (response.success) {
+            localStorage["fitbitCompleter" + "AccessToken"] = response.accessToken;
+            localStorage["fitbitCompleter" + "AccessTokenSecret"] = response.accessTokenSecret;
+            localStorage["fitbitCompleter" + "UserID"] = response.userId;
+          } else {
+            console.log(response.error);
+          }
 
+          if (!checkLogin()) { // In initializationCode.js
+            return;
+          };
+          makeLogoutTappable(); // In initializationCode.js
+          getFitbitData();
+        }
+      });
+    } else{
         if (!checkLogin()) { // In initializationCode.js
           return;
         };
         makeLogoutTappable(); // In initializationCode.js
         getFitbitData();
-      }
-    });
+    }
 
     function getFitbitData() {
       $.ajax({
@@ -159,7 +170,6 @@
       steps.html("");
       calories.html("");
 
-console.log('here' + g.goalSteps);
       if (!g.goalSteps || (g.goalSteps - g.actualSteps) < 0) {
         steps.html("You've completed your steps goal for the day, but tap here for more suggestions on places to walk to.");
       } else {
@@ -172,8 +182,6 @@ console.log('here' + g.goalSteps);
         calories.html("You are " + (g.caloriesGoal - g.actualCalories) + " calories below your goal for today. Tap here for suggestions on how to complete your goal.");
       }
 
-      console.log(g.goalSteps);
-      console.log(g.actualSteps);
   }
 }
   function dummyData(){
