@@ -6,15 +6,32 @@ html {
 }
 
 a {
-  text-decoration: none
+  text-decoration: none;
+}
+
+#fitbit-oauth-link {
+  text-color: black;
+}
+
+#fitbit-oauth-link:link {
+  color: black;
+}
+
+#fitbit-oauth-link:active {
+  color: black;
+}
+
+#fitbit-oauth-link:visited {
+  color: black;
+}
+
+#fitbit-oauth-link:hover {
+  color: black;
 }
 
 #home {
   color: black;
   font-family: "Quicksand", Helvetica, sans-serif;
-}
-
-#logo {
 }
 
 #home:link {
@@ -32,7 +49,6 @@ a {
 #home:hover {
   color: black;
 }
-
 
 #map-canvas {
   height: 100%;
@@ -157,6 +173,22 @@ li:last-child {
   border-color: #8C8C8B;
 
   background-color: white;
+}
+
+.tab > a:link {
+  color: black;
+}
+
+.tab > a:active {
+  color: black;
+}
+
+.tab > a:visited {
+  color: black;
+}
+
+.tab > a:hover {
+  color: black;
 }
 
 #current-page {
