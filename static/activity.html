@@ -118,29 +118,66 @@
   <script>
   var g = {};
 
+  var isValidStartTime = function(startTime) {
+    var chars = startTime.split("");
+    var hours = startTime.substring(0, 2);
+    var minutes = startTime.substring(3, 5);
+
+    return (0 <= chars[0] && chars[0] <= 2)
+        && (0 <= chars[1] && chars[1] <= 9)
+        && (chars[2] === ":")
+        && (0 <= chars[3] && chars[3] <= 5)
+        && (0 <= chars[4] && chars[4] <= 9)
+        && (0 <= hours && hours <= 23)
+        && (0 <= minutes && minutes <= 59)
+        && chars.length === 5;
+  };
+
+  var isValidDuration = function(duration) {
+    return duration >= 0;
+  }
+
   var logActivity = function() {
     var startTime = $("#start-time").val();
     var duration = $("#duration").val();
     var activityId = $("#overlay").data("id");
-    $.ajax({
-      type: "put",
-      url: "log-fitbit-exercise",
-      data: {
-        accessToken: localStorage["fitbitCompleter" + "AccessToken"],
-        accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"],
-        startTime: startTime,
-        duration: duration,
-        activityId: activityId
-      },
-      success: function(response) {
-        if (response.success) {
-          console.log("Success!");
-        } else {
-          console.log("Failure: ");
-          console.log(response.error);
+
+    if (isValidStartTime(startTime) && isValidDuration(duration)) {
+      $("#start-time").css("color", "black");
+      $("#duration").css("color", "black");
+
+      $.ajax({
+        type: "put",
+        url: "log-fitbit-exercise",
+        data: {
+          accessToken: localStorage["fitbitCompleter" + "AccessToken"],
+          accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"],
+          startTime: startTime,
+          duration: duration,
+          activityId: activityId
+        },
+        success: function(response) {
+          if (response.success) {
+            console.log("Success!");
+          } else {
+            console.log("Failure: ");
+            console.log(response.error);
+          }
         }
+      });
+    } else {
+      if (!isValidStartTime(startTime)) {
+        $("#start-time").css("color", "red");
+      } else {
+        $("#start-time").css("color", "black");
       }
-    });
+
+      if (!isValidDuration(duration)) {
+        $("#duration").css("color", "red");
+      } else {
+        $("#duration").css("color", "black");
+      }
+    }
   };
 
   var placeOverlay = function(name, id, calories_per_hour, time_needed) {
