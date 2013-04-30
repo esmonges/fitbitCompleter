@@ -184,7 +184,9 @@
 
   window.onload = function() {
     openLoadingPopup();
-    if(!checkLogin()){return;};
+    if (!checkLogin()) {
+      return;
+    };
 
     $.ajax({
       type: "get",
@@ -266,7 +268,6 @@
     });
 
     var i;
-    // TODO REPLACE 5 WITH CONST
     var nEntries = Math.min(sortedFoods.length, 5);
 
     var source = $("#food-list-template").html();
@@ -286,7 +287,7 @@
         servings,
         $(suggestion).data("unit-id")
       );
-      var onLong = function() { }; // TODO
+      var onLong = function() { };
       ($(suggestion)).onButtonTap(onTap, onLong);
     });
   }
