@@ -1,36 +1,37 @@
-@keyframes grads{
-  0%, 100%{
+@keyframes grads {
+  0%, 100% {
     background-color: #03787a;
-
   }
-  33%{
+
+  33% {
     background-color: #68dbdd;
 
   }
-  66%{
+
+  66% {
+    background-color: #21a3a5;
+  }
+}
+
+@-webkit-keyframes grads {
+ 0%, 100% {
+    background-color: #03787a;
+
+  }
+
+  33% {
+    background-color: #68dbdd;
+
+  }
+
+  66% {
     background-color: #21a3a5;
 
   }
 }
 
-@-webkit-keyframes grads{
- 0%, 100%{
-    background-color: #03787a;
-
-  }
-  33%{
-    background-color: #68dbdd;
-
-  }
-  66%{
-    background-color: #21a3a5;
-
-  }
-}
-
-#loading{
-  
-  opacity: 0.95;
+#loading {
+  opacity: 0.95 ;
 
   padding-top: 10%;
 
@@ -48,3 +49,4 @@
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear;
 }
+
