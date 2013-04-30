@@ -197,35 +197,35 @@
     }
   }
 
-  // window.onload = function() {
-  //   openLoadingPopup();
-  //   if (!checkLogin()) {
-  //     return;
-  //   };
+  window.onload = function() {
+    openLoadingPopup();
+    if (!checkLogin()) {
+      return;
+    };
 
-  //   $.ajax({
-  //     type: "get",
-  //     url: "get-fitbit-data",
-  //     data: {
-  //       accessToken: localStorage["fitbitCompleter" + "AccessToken"],
-  //       accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"]
-  //     },
-  //     success: function(response) {
-  //       if (response.success) {
-  //         g.caloriesGoal = response.caloriesGoal;
-  //         g.actualCalories = response.actualCalories;
-  //       } else {
-  //         console.log("ERROR");
-  //         g.caloriesGoal = 2000;
-  //         g.actualCalories = 200;
-  //       }
-  //       displayCalorieData();
-  //       makeSuggestionsHighlightable();
-  //       closeLoadingPopup();
-  //       makeLogoutTappable(); // in initializationCode.js
-  //     }
-  //   });
-  // };
+    $.ajax({
+      type: "get",
+      url: "get-fitbit-data",
+      data: {
+        accessToken: localStorage["fitbitCompleter" + "AccessToken"],
+        accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"]
+      },
+      success: function(response) {
+        if (response.success) {
+          g.caloriesGoal = response.caloriesGoal;
+          g.actualCalories = response.actualCalories;
+        } else {
+          console.log("ERROR");
+          g.caloriesGoal = 2000;
+          g.actualCalories = 200;
+        }
+        displayCalorieData();
+        makeSuggestionsHighlightable();
+        closeLoadingPopup();
+        makeLogoutTappable(); // in initializationCode.js
+      }
+    });
+  };
 
   function displayCalorieData() {
     g.remainingCalories = g.caloriesGoal - g.actualCalories;
