@@ -7,7 +7,6 @@ import url = module("url");
 import express = module("express");
 import activities = module("./activities");
 
-import database = module("./database");
 import temboo = module("./temboo");
 import foursquare = module("./foursquare");
 import googlewalkingdistance = module("./googlewalkingdistance");
