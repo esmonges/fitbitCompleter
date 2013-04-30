@@ -11,6 +11,10 @@ a {
 
 #home {
   color: black;
+  font-family: "Quicksand", Helvetica, sans-serif;
+}
+
+#logo {
 }
 
 #home:link {
@@ -84,10 +88,9 @@ body {
 
 #header {
   height: 2.5rem;
-
+  font-size: 1.8rem;
   background-color: white;
   text-align: center;
-  font-size: 25px; /* TODO: rems */
 }
 
 .box {
@@ -163,10 +166,10 @@ li:last-child {
   position: fixed;
   top: 20%;
   height: 60%;
-  margin: 1rem;
+  padding: 1rem;
 }
 
-#loading{
+#loading {
   position: fixed;
   top: 10%;
   height: 80%;
@@ -178,11 +181,8 @@ li:last-child {
 }
 
 #exercise-name {
-  font-size: 1.4rem;
-}
-
-.exercise-info {
   font-size: 1.2rem;
+  text-align: left;
 }
 
 input {
@@ -191,7 +191,8 @@ input {
 
 #close-overlay {
   position: absolute;
-  top: 0;
-  right: 0;
+  font-size: 1.5rem;
+  top: 0.5rem;
+  right: 0.5rem;
 }
 
