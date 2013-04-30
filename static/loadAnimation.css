@@ -1,0 +1,35 @@
+@keyframes grads{
+  0%, 100%{
+    background-color: #68dbdd;
+  }
+  33%{
+    background-color: #21a3a5;
+  }
+  66%{
+    background-color: #03787a;
+  }
+}
+
+@-webkit-keyframes grads{
+  0%, 100%{
+    background-color: #68dbdd;
+  }
+  33%{
+    background-color: #21a3a5;
+  }
+  66%{
+    background-color: #03787a;
+  }
+}
+
+#loading{
+  animation-name: grads;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+
+  -webkit-animation-name: grads;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+}
