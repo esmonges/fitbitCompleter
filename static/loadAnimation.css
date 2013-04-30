@@ -1,28 +1,41 @@
 @keyframes grads{
   0%, 100%{
-    background-color: #68dbdd;
+    background-color: #03787a;
+
   }
   33%{
-    background-color: #21a3a5;
+    background-color: #68dbdd;
+
   }
   66%{
-    background-color: #03787a;
+    background-color: #21a3a5;
+
   }
 }
 
 @-webkit-keyframes grads{
-  0%, 100%{
-    background-color: #68dbdd;
+ 0%, 100%{
+    background-color: #03787a;
+
   }
   33%{
-    background-color: #21a3a5;
+    background-color: #68dbdd;
+
   }
   66%{
-    background-color: #03787a;
+    background-color: #21a3a5;
+
   }
 }
 
 #loading{
+  
+  opacity: 0.95;
+
+  font-size: 48px;
+  font-family: Tahoma, Geneva, sans-serif;
+  font-style: bold;
+
   animation-name: grads;
   animation-duration: 3s;
   animation-iteration-count: infinite;
