@@ -32,7 +32,7 @@ function openLoadingPopup(){
 }
 
 function closeLoadingPopup(){
-  $("#overlay").remove();
+  $("#loading").remove();
 }
 
 function checkLoginBeforeAjax(){
@@ -51,7 +51,6 @@ function loggedInBeforeAjax(){
 
 function checkLogin(){
   if(!loggedIn()){
-    console.log("errrror");
     $("#load-error").html("Error, please log in to Fitbit");
     window.setTimeout(function(){
       window.location.href = "./signin.html";
