@@ -68,7 +68,8 @@ body {
   /* for gmaps */
   height: 85%; /* TODO: I think this is causing a bug */
   margin: 0;
-  padding: 0;
+  padding-bottom: 100px; /*should fix scroll prob*/
+  /*padding: 0;*/
 
   /* general style */
   font-family: Helvetica, sans-serif;

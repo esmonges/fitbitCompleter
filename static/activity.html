@@ -7,6 +7,7 @@
 
   <link href="reset.css" rel="stylesheet" type="text/css">
   <link href="style.css" rel="stylesheet" type="text/css">
+  <link href="loadAnimation.css" rel="stylesheet" type="text/css">
   <link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -43,12 +44,34 @@
   <script src="jquery-1.9.0.js"></script>
   <script src="addTappableJQPlugin.js"></script>
   <script src="handlebars.js"></script>
+  <script src="initializationCode.js"></script>
+
+  <script id="loading-template" type="text/x-handlebars-template">
+    <div id="loading" class="box">
+      Loading...
+      <div id="load-error">
+
+      </div>
+    </div>
+  </script>
 
   <script id="summary-template" type="text/x-handlebars-template">
     <p>
       Your net calories for the day is currently {{actualCalories}}, {{remainingCalories}} above
       your goal of {{caloriesGoal}}. Get some exercise in to get closer to your goal?
     </p>
+  </script>
+
+  <script id="logout-template" type="text/x-handlebars-template">
+    <div id="overlay" class="box">
+      Do you really want to logout?
+      <form action="" id="logout-form">
+        <button type="submit" formaction="javascript:logout()">Yes</button>
+        <button type="submit" formaction="javascript:closeLogoutPopup()">No</button>
+      </form>
+
+      <div id="close-overlay">X</div>
+    </div>
   </script>
 
   <script id="activity-list-template" type="text/x-handlebars-template">
@@ -141,6 +164,9 @@
   window.onload = function() {
     addTappableJQPlugin(); // TODO: Don't need?
 
+    openLoadingPopup();
+    if(!checkLogin()){return;};
+
     $.ajax({
       type: "get",
       url: "get-fitbit-weight",
@@ -154,6 +180,8 @@
         } else {
           console.log("ERROR");
         }
+
+        makeLogoutTappable(); // in initializationCode.js
       }
     });
 
