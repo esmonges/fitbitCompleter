@@ -61,10 +61,6 @@ export function init(server) {
     logActivityInputs.set_ConsumerSecret("f9f4cfc32cc14ad6bc97057d3000fab2");
     logActivityInputs.set_ActivityID(request.body.activityId);
     logActivityInputs.set_Date(getCurrentFitbitDate());
-    /*if (request.body.distance !== undefined) {
-      logActivityInputs.set_Distance(request.body.distance);
-    }
-    logActivityInputs.set_DistanceUnit("Mile");*/
     logActivityInputs.set_Duration(request.body.duration * 60 * 1000);
     logActivityInputs.set_StartTime(request.body.startTime); // TODO: Careful to get formatting right
 
