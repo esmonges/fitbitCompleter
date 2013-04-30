@@ -5,7 +5,6 @@
 
   33% {
     background-color: #68dbdd;
-
   }
 
   66% {
@@ -14,19 +13,16 @@
 }
 
 @-webkit-keyframes grads {
- 0%, 100% {
+  0%, 100% {
     background-color: #03787a;
-
   }
 
   33% {
     background-color: #68dbdd;
-
   }
 
   66% {
     background-color: #21a3a5;
-
   }
 }
 

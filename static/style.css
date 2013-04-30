@@ -65,18 +65,14 @@ a {
 }
 
 body {
-  /* for gmaps */
+  /* For gmaps */
   height: 100%; /* TODO: I think this is causing a bug */
   margin: 0;
-  padding-bottom: 100px; /*should fix scroll prob*/
-  /*padding: 0;*/
+  padding-bottom: 100px; /* Should fix scroll problem */
 
-  /* general style */
   font-family: Helvetica, sans-serif;
   text-align: justify;
 }
-
-/* general style */
 
 .block {
   display: block;
@@ -152,12 +148,6 @@ li:last-child {
 }
 
 .tab {
-/*  padding-left: 2.5%;
-  padding-right: 2.5%;
-  padding-top: 1rem;
-  margin-top: 0.5rem;
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;*/
   display: inline-block;
   height: 84px;
   width: 52px;
@@ -176,7 +166,6 @@ li:last-child {
   font-size: 1rem;
 }
 
-/* TODO */
 #overlay {
   position: fixed;
   top: 20%;
@@ -219,7 +208,7 @@ http://www.google.com/imgres?um=1&hl=en&biw=1366&bih=643&tbm=isch&tbnid=vgsz2d7I
 http://www.google.com/imgres?um=1&hl=en&biw=1366&bih=643&tbm=isch&tbnid=W7tMvEhe4S6_dM:&imgrefurl=http://findicons.com/icon/158145/lock&docid=P4_JVHnBAlaMTM&imgurl=http://png-1.findicons.com/files/icons/1579/devine/256/lock.png&w=256&h=256&ei=dUR_UcWFEbWh4APM2oGACg&zoom=1&ved=1t:3588,r:2,s:0,i:155
  */
 
-.tab > a{
+.tab > a {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -227,40 +216,37 @@ http://www.google.com/imgres?um=1&hl=en&biw=1366&bih=643&tbm=isch&tbnid=W7tMvEhe
   left: 0;
 }
 
-.steps{
+.steps {
   background-image: url("./spritesheet.gif");
   background-repeat: no-repeat;
   background-position: -51px 0px;
 }
 
-.home{
+.home {
   background-image: url("./spritesheet.gif");
   background-repeat: no-repeat;
   background-position: 1px 0px;
 }
 
-.calories{
-
+.calories {
   background-image: url("./spritesheet.gif");
   background-repeat: no-repeat;
   background-position: -102px 0px;
 }
 
-.activity{
-
+.activity {
   background-image: url("./spritesheet.gif");
   background-repeat: no-repeat;
   background-position: -157px 0px;
 }
 
-.logout{
-
+.logout {
   background-image: url("./spritesheet.gif");
   background-repeat: no-repeat;
   background-position: -206px 0px;
 }
 
-.tabtext{
+.tabtext {
   position: relative;
   bottom: -60px;
 }

@@ -1,9 +1,23 @@
-html { height: 100% }
+html {
+  height: 100%
+}
 
-body { height: 100%; margin: 0; padding: 0 }
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
-#map-canvas { height: 500px; width: 500px }
+#map-canvas {
+  height: 500px;
+  width: 500px;
+}
 
-.hidden{ visibility: hidden;}
+.hidden {
+  visibility: hidden;
+}
 
-.visible{ visibility: visible;}
+.visible {
+  visibility: visible;
+}
+
