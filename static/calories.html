@@ -141,26 +141,32 @@
     var mealType = $("#meal").val();
     var foodId = $("#overlay").data("id");
     var unitId = $("#overlay").data("unit-id");
-    $.ajax({
-      type: "put",
-      url: "log-fitbit-food",
-      data: {
-        accessToken: localStorage["fitbitCompleter" + "AccessToken"],
-        accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"],
-        foodId: foodId,
-        amount: servings,
-        mealType: mealType,
-        unitId: unitId
-      },
-      success: function(response) {
-        if (response.success) {
-          console.log("Success!");
-        } else {
-          console.log("Failure: ");
-          console.log(response.error);
+
+    if (servings > 0) {
+      $("#servings").css("color", "black");
+      $.ajax({
+        type: "put",
+        url: "log-fitbit-food",
+        data: {
+          accessToken: localStorage["fitbitCompleter" + "AccessToken"],
+          accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"],
+          foodId: foodId,
+          amount: servings,
+          mealType: mealType,
+          unitId: unitId
+        },
+        success: function(response) {
+          if (response.success) {
+            console.log("Success!");
+          } else {
+            console.log("Failure: ");
+            console.log(response.error);
+          }
         }
-      }
-    });
+      });
+    } else {
+      $("#servings").css("color", "red");
+    }
   };
 
   var placeOverlay = function(name, id, calories_per_serving, servings_allowed, unitId) {
