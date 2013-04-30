@@ -187,8 +187,16 @@ var g = {};
     var template = Handlebars.compile(source);
 
     var data = { activities: sortedActivities.slice(0, nEntries) }; 
-    var weight = localStorage["fitbitCompleter" + "weight"]
+    var weight = parseInt(localStorage["fitbitCompleter" + "weight"]);
+    console.log(weight);
+    if(!isInt(weight)){
+      console.log("not weight");
+      weight = 150;
+    }
+    a = weight
     for (var i = 0; i < data.activities.length; i++) {
+      console.log("Mets : " + data.activities[i].mets);
+      console.log("weight: " + weight);
       data.activities[i].calories = Math.round(data.activities[i].mets * weight);
     }
     $("#suggestions").html(template(data));
@@ -206,4 +214,8 @@ var g = {};
       var onLong = function() { };
       ($(suggestion)).onButtonTap(onTap, onLong);
     });
+  }
+
+  function isInt(n){
+    return (n%1 === 0) && (n !== "");
   }
