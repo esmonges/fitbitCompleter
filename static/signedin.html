@@ -11,12 +11,12 @@
     <link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
   </head>
   <body>
-    <div id="wrapper"><!-- 
+    <div id="wrapper"><!--
       <div id="container"> -->
         <div id="header" class="box">
           <a id="home" href="/signedin.html"><img src="fitbit.png" alt="Fitbit" /> Completer</a>
         </div>
-      
+
         <div id="bodyid">
           <div class="content box">
             <p>
@@ -36,9 +36,7 @@
             </p>
             <p>Good luck, and welcome to Fitbit Completer!</p>
           </div>
-                
-                
-                
+
           <a href="steps.html" class="content box block" id="remainingSteps">
           </a>
           <a href="calories.html" class="content box block" id="remainingCalories">
@@ -48,8 +46,7 @@
           </a>
         </div>
      <!--  </div> -->
-      
-      <!-- TODO: fix footer scrolling bug -->
+
     <div id="footer">
       <div id="current-page" class="tab home">
         <a href="signedin.html"><div class="tabtext">Home</div></a>
@@ -115,7 +112,7 @@
         } else {
           console.log(response.error);
         }
-        
+
         if (!checkLogin()) { // In initializationCode.js
           return;
         };
