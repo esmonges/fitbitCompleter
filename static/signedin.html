@@ -46,6 +46,9 @@
           </a>
         </div>
      <!--  </div> -->
+  <form action="javascript:dummyData()">
+    <button type="submit">Make goals unreached</button>
+  </form>
 
     <div id="footer">
       <div id="current-page" class="tab home">
@@ -151,7 +154,10 @@
     function displayUserData(){
       var steps = $("#remainingSteps");
       var calories = $("#remainingCalories");
+      steps.html("");
+      calories.html("");
 
+console.log('here' + g.goalSteps);
       if (!g.goalSteps || (g.goalSteps - g.actualSteps) < 0) {
         steps.html("You've completed your steps goal for the day, but if you want to go somewhere, click here!");
       } else {
@@ -167,7 +173,17 @@
 
       console.log(g.goalSteps);
       console.log(g.actualSteps);
-  };
+  }
+
+  function dummyData(){
+    console.log("here");
+    g.goalSteps = 2000;
+    g.actualSteps = 500;
+    g.caloriesGoal = 2000;
+    g.actualCalories = 1000;
+    displayUserData();
+
+  }
 }
   </script>
   </body>
