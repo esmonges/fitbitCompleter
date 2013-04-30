@@ -109,13 +109,13 @@
           console.log(response.error);
         }
         
-        if(!checkLogin()){ return; }; // in initializationCode.js
-        makeLogoutTappable(); // in initializationCode.js
+        if (!checkLogin()) { // In initializationCode.js
+          return;
+        };
+        makeLogoutTappable(); // In initializationCode.js
         getFitbitData();
       }
     });
-
-    
 
     function getFitbitData() {
       $.ajax({
@@ -148,14 +148,13 @@
       var steps = $("#remainingSteps");
       var calories = $("#remainingCalories");
 
-      if(!g.goalSteps || (g.goalSteps - g.actualSteps) < 0){
+      if (!g.goalSteps || (g.goalSteps - g.actualSteps) < 0) {
         steps.html("You've completed your steps goal for the day, but if you want to go somewhere, click here!");
-      }
-      else{
+      } else {
         steps.html("You have " + (g.goalSteps - g.actualSteps) + " steps remaining today. Click here to find places to go to complete this goal!");
       }
 
-      if(!g.caloriesGoal || (g.caloriesGoal - g.actualCalories) < 0){
+      if (!g.caloriesGoal || (g.caloriesGoal - g.actualCalories) < 0) {
         calories.html("You've eaten all your calories for the day, but I guess if you're still REALLY hungry you can click here.");
       }
       else{
@@ -164,24 +163,6 @@
 
       console.log(g.goalSteps);
       console.log(g.actualSteps);
-
-      // sSpan.html(g.goalSteps - g.actualSteps);
-      // cSpan.html(g.caloriesGoal - g.actualCalories);
-    }
-
-        /*navigator.geolocation.getCurrentPosition(function(position) {
-          var myLongitude = position.coords.longitude;
-          var myLatitude = position.coords.latitude;
-
-            $.ajax({
-              type: "get",
-              url: "../foursquare-venues/" + myLatitude + "," + myLongitude + "," + "asianfood",
-              success: function(response) {
-                console.log("success: " + response.results);
-              },
-              dataType: "json"
-            });
-  });*/
   };
   </script>
   </body>
