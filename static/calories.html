@@ -223,6 +223,9 @@
         caloriesGoal: g.caloriesGoal,
         remainingCalories: g.remainingCalories
       };
+
+      $("#summary").html(template(data));
+      $("#caloriesDesired").val(g.remainingCalories);
     } else {
       $("#summary").html("You've achieved your calorie goal for the day! Feel free to search for more food to eat, but remember that you might owe some exercise after!");
     }
@@ -241,8 +244,6 @@
     } else {
       g.targetCalories = g.remainingCalories;
     }
-
-    calQuery.val("");
 
     $.ajax({
       type: "get",
