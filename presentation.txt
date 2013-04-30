@@ -1,0 +1,46 @@
+
+1. Required Elements
+   - JavaScript used extensively for front-end
+   - HTML used extensively for the front-end including some forms,
+     mobile UI, and more.
+   - CSS used extensively for the front-end including all sorts of
+     selectors, animations, and a CSS reset.
+   - DOM Manipulation and JQuery were both used extensively (together with
+     Handlebars) to create and modify our user interface on the fly.
+     Both are also used for things like making invalid input fields red.
+   - We made Custom UI Widgets using Handlebars and general
+     HTML/CSS/JQuery to create, for example, pop-up overlays for our pages.
+   - Our client makes many AJAX calls to our server for authentication
+     and gathering data.
+   - Our server makes AJAX calls to Temboo for Google Maps, Fitbit, and
+     Foursquare authentication, data retrieval, and data logging.
+   - Node.js with Express was used throughout.
+   - Client-side caching / localStorage was used for storing data and
+     for making a smooth OAuth process possible.
+   - MongoDB was used to store a database of activity suggestions
+     "borrowed" from Fitbit. We have somewhat type-safe access to
+     Mongo, including with callbacks, thanks to TypeScript.
+   - We used TypeScript for all our server-side code for organization
+     and type-checking.
+   - We used Handlebars for much of our front-end code to reduce code
+     clutter, make more code reusable, and make things generally easier.
+   - We used a web library called Temboo to interface with Fitbit's,
+     Google's, and Foursquare's APIs.
+
+2. Robust App
+   - Show examples of input validation, different orders of accessing,
+     etc.
+
+3. User Experience
+   - Show off pop-ups, Google Maps moving around, logout
+
+4. Iterative Design
+   - Show document and compare to final product
+
+5. Effort
+   - Discuss different libraries and technologies used
+
+6. Code Design / Style
+   - Discuss Handlebars use, CSS modularity, and, most of all, nice
+     TypeScript modularization
+
