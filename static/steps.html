@@ -120,6 +120,7 @@
               goalSteps: goalSteps
             };
             $("#summary").html(template(data));
+            $("#stepsDesired").val(goalSteps);
          } else {
             $("#summary").html("You've achieved your step goal for the day! If you want to push yourself a little further, we'll suggest some more venues. Just put in the number of steps you want!");
           }
