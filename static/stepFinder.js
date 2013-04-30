@@ -31,13 +31,10 @@ function submitFSVSearch(position) {
   fsvQuery.val("");
 
   if (isInt(nSteps)) {
-    console.log("Here");
     localStorage.targetSteps = nSteps;
   } else if (isInt(localStorage.remainingSteps)){
-    console.log("here");
     localStorage.targetSteps = localStorage.remainingSteps;
   } else{
-    console.log("h");
     localStorage.targetSteps = 1000;
   }
 
@@ -172,21 +169,24 @@ function displaySuggestionsStartingAt(index) {
 function displaySuggestion(s, i) {
   var resultsDiv = $("#suggestions");
   var newLI = $("<li>");
+  var newSpan = $("<span>");
   var dirLink = $("<a>");
   var link;
 
-  newLI.attr("id", i);
+  newLI.attr("num", i);
   newLI.addClass("suggestion");
-  newLI.onButtonTap(markerHandler);
 
   link = generateDirectionsFromFSV(s.venue);
   dirLink.attr("href", link);
-  dirLink.html("Get Directions");
+  dirLink.html(s.venue.name + ", Steps (Each Way): " + s.distanceInSteps + " Click again to get directions");
   dirLink.addClass("link");
   dirLink.addClass("hidden");
 
-  newLI.html(s.venue.name + ", Steps (Each Way): " + s.distanceInSteps);
+  newSpan.html(s.venue.name + ", Steps (Each Way): " + s.distanceInSteps);
+  newSpan.attr("num", i);
+  newLI.append(newSpan);
   newLI.append(dirLink);
+  newLI.onButtonTap(markerHandler);
   resultsDiv.append(newLI);
 }
 

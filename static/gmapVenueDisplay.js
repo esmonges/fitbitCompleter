@@ -30,16 +30,32 @@ function initGmap(lat, lng) {
 }
 
 function markerHandler(event) {
-  var visibles = $(".visible");
+  var visibles = $("li > a");
+  var spans = $("li > span");
+  spans.removeClass("hidden");
+  spans.addClass("visible");
+
   visibles.removeClass("visible");
   visibles.addClass("hidden");
 
-  var i = event.target.id;
+  var jqtarget = $(event.target);
 
-  var link = $(event.target).children();
+  var i = jqtarget.attr("num");
+console.log(i);
+console.log(jqtarget);
 
-  link.removeClass("hidden");
-  link.addClass("visible");
+  var link = jqtarget.children();
+
+  if(link.length != 2){
+    link = jqtarget.parent().children();
+  }
+  //target.textContent = "";
+
+  $(link[0]).removeClass("visible");
+  $(link[0]).addClass("hidden");
+  $(link[1]).removeClass("hidden");
+  $(link[1]).addClass("visible");
+
 
   var lat = g.displayedVenues[i].venue.location.lat;
   var lng = g.displayedVenues[i].venue.location.lng;

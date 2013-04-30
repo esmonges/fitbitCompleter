@@ -62,6 +62,8 @@ a {
 
 .hidden {
   visibility: hidden;
+  height: 0px;
+  display: none;
 }
 
 .hiddenMap {
