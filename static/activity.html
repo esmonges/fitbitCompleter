@@ -182,43 +182,43 @@
         }
 
         makeLogoutTappable(); // in initializationCode.js
-      }
-    });
-
-    $.ajax({
-      type: "get",
-      url: "get-fitbit-data",
-      data: {
-        accessToken: localStorage["fitbitCompleter" + "AccessToken"],
-        accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"]
-      },
-      success: function(response) {
-        if (response.success) {
-          g.caloriesGoal = response.caloriesGoal;
-          g.actualCalories = response.actualCalories;
-        } else {
-          console.log("ERROR");
-          g.caloriesGoal = 2000;
-          g.actualCalories = 200;
-        }
-        closeLoadingPopup();
-        displayCalorieData();
 
         $.ajax({
           type: "get",
-          url: "/get-fitbit-exercises",
+          url: "get-fitbit-data",
           data: {
             accessToken: localStorage["fitbitCompleter" + "AccessToken"],
-            accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"],
+            accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"]
           },
           success: function(response) {
             if (response.success) {
-              g.exercises = response.exercises;
-              displayActivities();
-              makeSuggestionsHighlightable();
+              g.caloriesGoal = response.caloriesGoal;
+              g.actualCalories = response.actualCalories;
             } else {
-              console.log("Error");
+              console.log("ERROR");
+              g.caloriesGoal = 2000;
+              g.actualCalories = 200;
             }
+            closeLoadingPopup();
+            displayCalorieData();
+
+            $.ajax({
+              type: "get",
+              url: "/get-fitbit-exercises",
+              data: {
+                accessToken: localStorage["fitbitCompleter" + "AccessToken"],
+                accessTokenSecret: localStorage["fitbitCompleter" + "AccessTokenSecret"],
+              },
+              success: function(response) {
+                if (response.success) {
+                  g.exercises = response.exercises;
+                  displayActivities();
+                  makeSuggestionsHighlightable();
+                } else {
+                  console.log("Error");
+                }
+              }
+            });
           }
         });
       }
