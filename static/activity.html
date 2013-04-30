@@ -36,7 +36,7 @@
         <a href="activity.html"><div class="tabtext">Activity</div></a>
       </div>
       <div class="tab logout" id="logout">
-        <a href=""><div class="tabtext">Logout</div></a>
+        <a href="javascript:popupLogout()"><div class="tabtext">Logout</div></a>
       </div>
     </div>
   </div>
@@ -201,6 +201,7 @@
           g.caloriesGoal = 2000;
           g.actualCalories = 200;
         }
+        closeLoadingPopup();
         displayCalorieData();
       }
     });
@@ -217,8 +218,6 @@
           g.exercises = response.exercises;
           displayActivities();
           makeSuggestionsHighlightable();
-          closeLoadingPopup();
-
         } else {
           console.log("Error");
         }

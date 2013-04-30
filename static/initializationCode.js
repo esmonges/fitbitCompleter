@@ -1,8 +1,8 @@
-function makeLogoutTappable(){
-  $("#logout").onButtonTap(popupLogout, function(){});
+function makeLogoutTappable() {
+  //$("#logout").onButtonTap(popupLogout, function() {});
 }
 
-function popupLogout(){
+function popupLogout() {
   var source = $("#logout-template").html();
   var template = Handlebars.compile(source);
   var data = {};
@@ -13,57 +13,56 @@ function popupLogout(){
   );
 }
 
-function logout(){
+function logout() {
   console.log("logout");
   window.localStorage.clear();
   closeLogoutPopup();
   window.location.href = "./signin.html";
 }
 
-function closeLogoutPopup(){
+function closeLogoutPopup() {
   $("#overlay").remove();
 }
 
-function openLoadingPopup(){
+function openLoadingPopup() {
   var source = $("#loading-template").html();
   var template = Handlebars.compile(source);
   var data = {};
   $("body").append(template(data));
 }
 
-function closeLoadingPopup(){
+function closeLoadingPopup() {
   $("#loading").remove();
 }
 
-function checkLoginBeforeAjax(){
-  if(!loggedInBeforeAjax()){
+function checkLoginBeforeAjax() {
+  if (!loggedInBeforeAjax()) {
     window.location.href = "./signin.html";
-  }
-  else{
-    //should be good...
+  } else {
+    // Should be good...
   }
 }
 
-function loggedInBeforeAjax(){
-  return ((localStorage["fitbitCompleter" + "oauthTokenSecret"] !== undefined)
-        &&(localStorage["fitbitCompleter" + "callbackId"] !== undefined));
+function loggedInBeforeAjax() {
+  return (localStorage["fitbitCompleter" + "oauthTokenSecret"] !== undefined)
+        && (localStorage["fitbitCompleter" + "callbackId"] !== undefined);
 }
 
-function checkLogin(){
-  if(!loggedIn()){
+function checkLogin() {
+  if (!loggedIn()) {
     $("#load-error").html("Error, please log in to Fitbit");
-    window.setTimeout(function(){
+    window.setTimeout(function() {
       window.location.href = "./signin.html";
-    },2000);
+    }, 2000);
     return false;
-  }
-  else{
-    //good to go!
+  } else {
+    // Good to go!
     return true;
   }
 }
 
-function loggedIn(){
+function loggedIn() {
   return ((localStorage["fitbitCompleter" + "AccessToken"] !== undefined)
-        &&(localStorage["fitbitCompleter" + "AccessTokenSecret"] !== undefined));
+        && (localStorage["fitbitCompleter" + "AccessTokenSecret"] !== undefined));
 }
+
