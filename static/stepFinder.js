@@ -21,7 +21,7 @@ function submitFSVSearch(position) {
   g['lat'] = lat;
   g['lon'] = lon;
 
-  if(query === ""){
+  if (query === "") {
     query = undefined;
   }
   else{
@@ -30,17 +30,15 @@ function submitFSVSearch(position) {
 
   fsvQuery.val("");
 
-  if(isInt(nSteps)){
+  if (isInt(nSteps)) {
     localStorage.targetSteps = nSteps;
-  }
-  else{
+  } else {
     localStorage.targetSteps = localStorage.remainingSteps;
   }
 
   desiredSteps.val("");
 
-  if(query !== undefined){
-
+  if (query !== undefined){
     $.ajax({
       type:"get",
       data: {
@@ -56,9 +54,7 @@ function submitFSVSearch(position) {
         initGmap(lat, lon);
       }
     });
-  }
-
-  else{
+  } else {
     $.ajax({
       type: "get",
       data: {
@@ -66,7 +62,7 @@ function submitFSVSearch(position) {
         longitude: lon
       },
       url: "foursquare-explore",
-      success: function(data){
+      success: function(data) {
         var results = JSON.parse(data.results);
         var venues = collateVenues(results.response.groups[0].items);
         getWalkingDistances(venues);
@@ -76,12 +72,12 @@ function submitFSVSearch(position) {
   }
 }
 
-function collateVenues(items){
+function collateVenues(items) {
   var length = items.length;
   var i;
   var venues = new Array(length);
 
-  for(i=0; i < length; i++){
+  for (i=0; i < length; i++) {
     venues[i] = items[i].venue;
   }
 
@@ -89,24 +85,8 @@ function collateVenues(items){
 }
 
 function isInt(n){
-  return ((n % 1) === 0);
+  return (n % 1) === 0;
 }
-// function displayVenuesAndDistances(venues, distObjs) {
-//   data.results = JSON.parse(data.results);
-//   var venues = data.results.response.venues;
-//   var MAXENTRIES = 5;
-//   var i;
-
-//   var nEntries = Math.min(venues.length, MAXENTRIES);
-
-//   var sortedVenues = venues.sort(function(a, b) {
-//     return a.location.distance - b.location.distance;
-//   });
-
-//   g.sortedVenues = sortedVenues;
-
-//   getAndDisplayWalkingDistance(sortedVenues.slice(0, nEntries + 1))
-// }
 
 function pairSortAndStore(venues, distObjs) {
   var targetDist;
@@ -124,8 +104,6 @@ function pairSortAndStore(venues, distObjs) {
     pairedList[i] = {};
     pairedList[i].venue = venues[i];
     pairedList[i].distanceInMiles = (distObjs[i].distance.value / 1000) * g.KM_TO_MI;
-    // console.log("miles: " + pairedList[i].distanceInMiles);
-    // console.log("target: " + targetDist);
     pairedList[i].distanceInSteps = Math.round(pairedList[i].distanceInMiles * localStorage.stepsPerMile);
   }
 
@@ -167,16 +145,6 @@ function getWalkingDistances(venues) {
 
       displaySuggestionsStartingAt(0);
       makeSuggestionsHighlightable();
-/*        var resultsDiv = $("#results");
-        resultsDiv.html("");
-        for(i = 0; i < venues.length; i++) {
-          var newDiv = $("<li>");
-          newDiv.attr("id", i);
-          newDiv.onButtonTap(markerHandler);
-          newDiv.html(venues[i].name + ", Steps: "
-            + results.rows[0].elements[i].distance.text);
-          resultsDiv.append(newDiv);
-        } */
     }
   });
 }
@@ -219,48 +187,9 @@ function displaySuggestion(s, i) {
 
 function makeSuggestionsHighlightable() {
   $.each($(".suggestion"), function (index, suggestion) {
-    var onTap = function() { }; // TODO
-    var onLong = function() { }; // TODO
+    var onTap = function() { };
+    var onLong = function() { };
     ($(suggestion)).onButtonTap(onTap, onLong);
   });
 }
 
-// function getAndDisplayWalkingDistance(venues) {
-//   var queries = "";
-//   var origins;
-//   var i = 0;
-
-//   g.displayedVenues = venues;
-
-//   for(i = 0; i < venues.length; i++) {
-//     queries = queries + venues[i].location.lat + ","
-//     + venues[i].location.lng + "|";
-//   }
-
-//   queries = queries.substring(0, queries.length - 1);
-
-//   origins = g.lat + "," + g.lon;
-
-//   $.ajax({
-//     type:"get",
-//     data:{queries:queries,
-//       origins:origins},
-//       url:"/google-walking-distance",
-//       success: function(data) {
-//         var results = JSON.parse(data.results);
-//         var resultsDiv = $("#results");
-//         resultsDiv.html("");
-//         for(i = 0; i < venues.length; i++) {
-//           var newDiv = $("<li>");
-
-//           newDiv.attr("id", i);
-//           newDiv.onButtonTap(markerHandler);
-
-//           newDiv.html(venues[i].name + ", Steps: "
-//             + results.rows[0].elements[i].distance.text);
-//           resultsDiv.append(newDiv);
-//         }
-//       }
-//     });
-
-// }

@@ -45,7 +45,7 @@ function checkLoginBeforeAjax() {
 
 function loggedInBeforeAjax() {
   return (localStorage["fitbitCompleter" + "oauthTokenSecret"] !== undefined)
-        && (localStorage["fitbitCompleter" + "callbackId"] !== undefined);
+      && (localStorage["fitbitCompleter" + "callbackId"] !== undefined);
 }
 
 function checkLogin() {
