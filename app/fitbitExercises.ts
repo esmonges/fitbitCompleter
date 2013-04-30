@@ -15,7 +15,7 @@ var getCurrentFitbitDate = (): string => {
 
   var month;
   if ((today.getMonth() + 1) < 10) {
-    month = "0" + (today.getMonth()).toString();
+    month = "0" + (today.getMonth() + 1).toString();
   } else {
     month = (today.getMonth() + 1).toString();
   }
