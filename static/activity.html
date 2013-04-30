@@ -217,6 +217,8 @@
           g.exercises = response.exercises;
           displayActivities();
           makeSuggestionsHighlightable();
+          closeLoadingPopup();
+
         } else {
           console.log("Error");
         }
