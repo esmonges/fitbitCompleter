@@ -13,15 +13,15 @@
 <body>
     <div id="wrapper">
 <!--       <div id="container">
- -->      
+ -->
       <div id="header" class="box">
         <a id="home" href="/signedin.html"><img src="fitbit.png" alt="Fitbit" /> Completer</a>
       </div>
-      
+
       <div id="bodyid">
         <div id="summary" class="content box">
         </div>
-        
+
         <form action="javascript:searchFoods()" class="content box">
           <div id="foodDesc">What kind of food do you want to eat?</div>
           <input type="text" id="foodQuery" placeholder="Single Malt Scotch">
@@ -29,7 +29,7 @@
           <input type="text" id="caloriesDesired" placeholder="150">
           <input type="submit" value="Search for foods!">
         </form>
-        
+
         <ul id="suggestions" class="content box"></ul>
 
 <!--            <form action="javascript:dummyCalorieData()">
@@ -38,9 +38,9 @@
       </div> -->
 
 
-   
 
-      
+
+
       <div id="footer">
         <div class="tab home">
           <a href="signedin.html"><div class="tabtext">Home</div></a>
@@ -89,7 +89,8 @@
 
   <script id="summary-template" type="text/x-handlebars-template">
     <p>
-      Your net calories for the day is currently {{actualCalories}}, {{remainingCalories}} below
+      Your net calories for the day is currently {{actualCalories}}
+      calories, {{remainingCalories}} below
       your goal of {{calorieGoal}}. Have a bite to eat to work your way up to that goal?
     </p>
   </script>
@@ -115,7 +116,7 @@
       <hr />
 
       <p class="exercise-info">
-        This foods contains {{calories_per_serving}} per serving.
+        This foods contains {{calories_per_serving}} calories per serving.
       </p>
 
       <p class="exercise-info">
@@ -140,7 +141,6 @@
           </select>
         <input type="submit" value="Log Food">
       </form>
-        
       <div id="close-overlay">X</div>
     </div>
   </script>
