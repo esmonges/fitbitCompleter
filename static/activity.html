@@ -162,10 +162,10 @@
   }
 
   window.onload = function() {
-    addTappableJQPlugin(); // TODO: Don't need?
-
     openLoadingPopup();
-    if(!checkLogin()){return;};
+    if (!checkLogin()) {
+      return;
+    };
 
     $.ajax({
       type: "get",
@@ -250,7 +250,6 @@
       return adiff - bdiff;
     });
 
-    // TODO MAKE A CONSTANT
     var nEntries = Math.min(sortedActivities.length, 5);
 
     var source = $("#activity-list-template").html();
@@ -273,7 +272,7 @@
         $(suggestion).data("calories"),
         time
       );
-      var onLong = function() { }; // TODO
+      var onLong = function() { };
       ($(suggestion)).onButtonTap(onTap, onLong);
     });
   }
